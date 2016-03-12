@@ -35,7 +35,7 @@ BasicGame.Game.prototype = {
 		var spr = this.add.sprite(
 			this.game.world.centerX,
 			this.game.world.centerY,
-			'duke'
+			'iltan'
 		);
 		spr.pivot.x = spr.width * .5;
 		spr.pivot.y = spr.height * .5;

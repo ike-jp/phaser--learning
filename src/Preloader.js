@@ -19,7 +19,7 @@ BasicGame.Preloader.prototype = {
 		this.preloadBar.pivot.y = this.preloadBar.height/2;
 		this.load.setPreloadSprite(this.preloadBar);
 
-		this.load.spritesheet('duke', 'assets/spritesheet-duke.png', 50, 72);
+		this.load.spritesheet('iltan', 'assets/iltan.png', 16, 16);
 	},
 
 	create: function () {
