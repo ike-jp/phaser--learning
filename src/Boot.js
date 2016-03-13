@@ -21,7 +21,7 @@ BasicGame.Boot.prototype = {
 	init: function() {
 		this.input.maxPointers = 1;
 		this.stage.disableVisibilityChange = true;
-		this.stage.backgroundColor = '#336699';
+		this.stage.backgroundColor = '#000000';
 
 		this.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL;
 		this.scale.fullScreenScaleMode = Phaser.ScaleManager.SHOW_ALL;

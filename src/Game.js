@@ -38,7 +38,7 @@ BasicGame.Game.prototype = {
 
 	create: function() {
 		this.game.physics.startSystem(Phaser.Physics.ARCADE);
-		this.game.stage.backgroundColor = '#787878';
+		this.game.stage.backgroundColor = Phaser.Color.getColor(72, 147, 227);
 
 		this.map = this.game.add.tilemap('map', 16, 16);
 		this.map.addTilesetImage('tiles');
