@@ -31,8 +31,9 @@ BasicGame.Game = function(game) {
 	this.map;
 	this.layer;
 	this.player;
-	this.player_move_vx;
-	this.player_move_vy;
+	this.player_move_vx = 0;
+	this.player_move_vy = 0;
+	this.is_failed = false;
 	this.cursors;
 };
 
@@ -71,12 +72,8 @@ BasicGame.Game.prototype = {
 		this.player.animations.add('run', [2, 3], 12, true);
 		this.player.animations.add('quickturn', [4], 10, false);
 		this.player.animations.add('jump', [5], 10, false);
-		this.player.animations.add('missed', [6], 10, false);
+		this.player.animations.add('failed', [6], 10, false);
 		this.player.play('stand');
-
-		// 移動初期化
-		this.player_move_vx = 0;
-		this.player_move_vy = 0;
 
 		// ゲーム設定
 		this.game.camera.follow(this.player);
@@ -96,6 +93,10 @@ BasicGame.Game.prototype = {
 	},
 
 	update: function() {
+		if (this.is_failed) {
+			return;
+		}
+
 		this.game.physics.arcade.collide(this.player, this.layer);
 
 		// プレイヤー移動処理
@@ -116,6 +117,12 @@ BasicGame.Game.prototype = {
 			if (this.player.body.onFloor()) {
 				this.player.body.velocity.y = -200;
 			}
+		}
+
+		// テスト用
+		if (this.game.input.keyboard.isDown(Phaser.Keyboard.SPACEBAR)) {
+			this.failedGame();
+			return;
 		}
 
 		// アニメーション制御
@@ -148,5 +155,12 @@ BasicGame.Game.prototype = {
 
 	quitGame: function(pointer) {
 		this.state.start('MainMenu');
+	},
+
+	failedGame: function() {
+		this.is_failed = true;
+		this.player.body.velocity.x = 0;
+		this.player.body.velocity.y = -100;
+		this.player.play("failed");
 	},
 };
