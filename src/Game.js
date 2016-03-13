@@ -54,8 +54,8 @@ BasicGame.Game.prototype = {
 
 		// プレイヤー設定
 		this.player = this.game.add.sprite(
-			this.game.world.centerX,
-			this.game.world.centerY,
+			16*5, // this.game.world.centerX,
+			16*13,// this.game.world.centerY,
 			'iltan'
 		);
 		this.player.anchor.setTo(0.5, 0.5); // for flip
@@ -148,5 +148,5 @@ BasicGame.Game.prototype = {
 
 	quitGame: function(pointer) {
 		this.state.start('MainMenu');
-	}
+	},
 };

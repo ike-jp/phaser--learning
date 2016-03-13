@@ -19,6 +19,10 @@ BasicGame.Preloader.prototype = {
 		this.preloadBar.pivot.y = this.preloadBar.height/2;
 		this.load.setPreloadSprite(this.preloadBar);
 
+		// title
+		this.load.image('title', 'assets/title.png');
+
+		// game
 		this.load.spritesheet('iltan', 'assets/iltan.png', 16, 16);
 		this.load.tilemap('map', 'assets/tilemaps/csv/level1.csv');
 		this.load.image('tiles', 'assets/tilemaps/tiles/terrain.png');
