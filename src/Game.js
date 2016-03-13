@@ -5,7 +5,7 @@ BasicGame.Game = function(game) {
 	// following properties set on it, even if they already exist:
 	//
 	this.game;		//  a reference to the currently running game
-	this.add;		//  used to add sprites, text, groups, etc
+	this.add;		//  used to add this.playerites, text, groups, etc
 	this.camera;	//  a reference to the game camera
 	this.cache;		//  the game cache
 	this.input;		//  the global input manager (you can access
@@ -30,24 +30,31 @@ BasicGame.Game = function(game) {
 	//
 	this.map;
 	this.layer;
+	this.player;
 	this.cursors;
 };
 
 BasicGame.Game.prototype = {
 
 	create: function() {
-		var spr = this.add.sprite(
+		this.player = this.add.sprite(
 			this.game.world.centerX,
 			this.game.world.centerY,
 			'iltan'
 		);
-		spr.pivot.x = spr.width * .5;
-		spr.pivot.y = spr.height * .5;
-		spr.animations.add('wave', null, 8, true);
-		spr.play('wave');
+		this.player.pivot.x = this.player.width * .5;
+		this.player.pivot.y = this.player.height * .5;
+		//this.player.animations.add('wave', null, 8, true);
+		//this.player.play('wave');
+		this.game.physics.enable(this.player);
+		this.game.physics.arcade.gravity.y = 250;
+		this.game.camera.follow(this.player);
+		this.player.body.collideWorldBouns = true;
+		this.player.body.linearDamping = 1;
 
 		this.map = this.game.add.tilemap('map', 16, 16);
 		this.map.addTilesetImage('tiles');
+		this.map.setCollision(1);
 
 		this.layer = this.map.createLayer(0);
 		this.layer.resizeWorld();
@@ -68,18 +75,21 @@ BasicGame.Game.prototype = {
 	},
 
 	update: function() {
+		this.game.physics.arcade.collide(this.player, this.layer);
 
+		this.player.body.velocity.x = 0;
 		if (this.cursors.left.isDown) {
-			this.game.camera.x -= 4;
+			this.player.body.velocity.x -= 150;
 		} else if (this.cursors.right.isDown) {
-			this.game.camera.x += 4;
+			this.player.body.velocity.x = 150;
 		}
 
-		if (this.cursors.up.isDown) {
+		if (this.cursors.down.isDown) {
 			this.game.camera.y -= 4;
-		} else if (this.cursors.down.isDown) {
+		} else if (this.cursors.up.isDown) {
 			this.game.camera.y += 4;
 		}
+
 	},
 
 	quitGame: function(pointer) {
