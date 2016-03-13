@@ -56,6 +56,7 @@ BasicGame.Game.prototype = {
 			this.game.world.centerY,
 			'iltan'
 		);
+		this.player.anchor.setTo(0.5, 0.5);
 		this.player.smoothed = false;
 		this.game.physics.enable(this.player);
 		this.game.physics.arcade.gravity.y = 250;
@@ -95,9 +96,11 @@ BasicGame.Game.prototype = {
 		if (this.cursors.left.isDown) {
 			this.player.body.velocity.x = -150;
 			this.player.play('walk');
+			this.player.scale.x = -1;
 		} else if (this.cursors.right.isDown) {
 			this.player.body.velocity.x = 150;
 			this.player.play('walk');
+			this.player.scale.x = 1;
 		}
 
 		if (this.cursors.up.isDown) {
