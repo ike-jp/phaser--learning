@@ -43,6 +43,7 @@ BasicGame.Game.prototype = {
 		this.map = this.game.add.tilemap('map', 16, 16);
 		this.map.addTilesetImage('tiles');
 		this.map.setCollision(1);
+		this.map.smoothed = false;
 
 		this.layer = this.map.createLayer(0); //('World1')
 		//this.layer.debug = true;
@@ -53,6 +54,7 @@ BasicGame.Game.prototype = {
 			this.game.world.centerY,
 			'iltan'
 		);
+		this.player.smoothed = false;
 		this.game.physics.enable(this.player);
 		this.game.physics.arcade.gravity.y = 250;
 
