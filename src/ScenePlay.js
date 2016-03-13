@@ -131,30 +131,7 @@ BasicGame.ScenePlay.prototype = {
 			}
 		}
 		this.player.body.velocity.x = this.player_move_vx;
-/*
-		// プレイヤー移動処理
-		if (this.cursors.left.isDown) {
-			if (is_pressed_dash_button) {
-				this.player_move_vx = Phaser.Math.minSub(this.player_move_vx, 5, -150);
-			} else {
-				this.player_move_vx = -30;
-			}
-		} else if (this.cursors.right.isDown) {
-			if (is_pressed_dash_button) {
-				this.player_move_vx = Phaser.Math.maxAdd(this.player_move_vx, 5, 150);
-			} else {
-				this.player_move_vx = 30;
-			}
-		} else {
-			// すべり処理
-			if (this.player_move_vx < 0) {
-				this.player_move_vx = Phaser.Math.maxAdd(this.player_move_vx, 12, 0);
-			} else if (this.player_move_vx > 0) {
-				this.player_move_vx = Phaser.Math.minSub(this.player_move_vx, 12, 0);
-			}
-		}
-		this.player.body.velocity.x = this.player_move_vx;
-*/
+
 		// ジャンプ
 		if (this.cursors.up.isDown
 		||  this.input.keyboard.isDown(Phaser.Keyboard.Z)) {
