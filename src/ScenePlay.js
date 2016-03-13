@@ -137,14 +137,15 @@ BasicGame.ScenePlay.prototype = {
 
 		// ジャンプ
 		if (this.cursors.up.isDown
-		||  this.input.keyboard.isDown(Phaser.Keyboard.Z)) {
+		||  this.input.keyboard.isDown(Phaser.Keyboard.Z)
+		||  this.input.keyboard.isDown(Phaser.Keyboard.SPACEBAR)) {
 			if (this.player.body.onFloor()) {
 				this.player.body.velocity.y = -200;
 			}
 		}
 
 		// テスト用
-		if (this.game.input.keyboard.isDown(Phaser.Keyboard.SPACEBAR)) {
+		if (this.game.input.keyboard.isDown(Phaser.Keyboard.Q)) {
 			this.failedGame();
 			return;
 		}
@@ -158,7 +159,11 @@ BasicGame.ScenePlay.prototype = {
 				this.player.play('quickturn');
 			} else {
 				this.player.scale.x = -1;
-				this.player.play('walk');
+				if (is_pressed_dash_button) {
+					this.player.play('run');
+				} else {
+					this.player.play('walk');
+				}
 			}
 		} else if (this.player.body.velocity.x > 0) {
 			if (this.cursors.left.isDown) {
@@ -166,7 +171,11 @@ BasicGame.ScenePlay.prototype = {
 				this.player.play('quickturn');
 			} else {
 				this.player.scale.x = 1;
-				this.player.play('walk');
+				if (is_pressed_dash_button) {
+					this.player.play('run');
+				} else {
+					this.player.play('walk');
+				}
 			}
 		} else {
 			this.player.play('stand');
