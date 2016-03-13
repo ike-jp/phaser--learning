@@ -10,10 +10,12 @@ BasicGame.SceneLoad.prototype = {
 	},
 
 	create: function() {
-		this.game.time.events.add(Phaser.Timer.SECOND * 1.5, this.playStart, this);
+		this.game.time.events.add(
+			Phaser.Timer.SECOND * 1.5,
+			function() {
+				this.state.start('ScenePlay');
+			},
+			this
+		);
 	},
-
-	playStart: function() {
-		this.state.start('ScenePlay');
-	}
 };
