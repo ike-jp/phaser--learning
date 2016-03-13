@@ -40,6 +40,7 @@ BasicGame.Game.prototype = {
 		this.game.physics.startSystem(Phaser.Physics.ARCADE);
 		this.game.stage.backgroundColor = Phaser.Color.getColor(72, 147, 227);
 
+		// マップ設定
 		this.map = this.game.add.tilemap('map', 16, 16);
 		this.map.addTilesetImage('tiles');
 		this.map.setCollision(1);
@@ -49,6 +50,7 @@ BasicGame.Game.prototype = {
 		//this.layer.debug = true;
 		this.layer.resizeWorld();
 
+		// プレイヤー設定
 		this.player = this.game.add.sprite(
 			this.game.world.centerX,
 			this.game.world.centerY,
@@ -57,12 +59,19 @@ BasicGame.Game.prototype = {
 		this.player.smoothed = false;
 		this.game.physics.enable(this.player);
 		this.game.physics.arcade.gravity.y = 250;
-
-		//this.player.animations.add('wave', null, 8, true);
-		//this.player.play('wave');
 		this.player.body.linearDamping = 1;
 		this.player.body.collideWorldBouns = true;
 
+		// プレイヤーアニメーション設定
+		this.player.animations.add('stand', [0], 10, false);
+		this.player.animations.add('walk', [1, 2], 8, true);
+		this.player.animations.add('run', [2, 3], 12, true);
+		this.player.animations.add('quickturn', [4], 10, false);
+		this.player.animations.add('jump', [5], 10, false);
+		this.player.animations.add('missed', [6], 10, false);
+		this.player.play('stand');
+
+		// ゲーム設定
 		this.game.camera.follow(this.player);
 		this.cursors = this.game.input.keyboard.createCursorKeys();
 /*
@@ -85,13 +94,16 @@ BasicGame.Game.prototype = {
 		this.player.body.velocity.x = 0;
 		if (this.cursors.left.isDown) {
 			this.player.body.velocity.x = -150;
+			this.player.play('walk');
 		} else if (this.cursors.right.isDown) {
 			this.player.body.velocity.x = 150;
+			this.player.play('walk');
 		}
 
 		if (this.cursors.up.isDown) {
 			if (this.player.body.onFloor()) {
 				this.player.body.velocity.y = -200;
+				this.player.play('jump');
 			}
 		}
 	},
