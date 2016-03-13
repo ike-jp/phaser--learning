@@ -56,7 +56,7 @@ BasicGame.Game.prototype = {
 			this.game.world.centerY,
 			'iltan'
 		);
-		this.player.anchor.setTo(0.5, 0.5);
+		this.player.anchor.setTo(0.5, 0.5); // for flip
 		this.player.smoothed = false;
 		this.game.physics.enable(this.player);
 		this.game.physics.arcade.gravity.y = 250;
@@ -95,19 +95,28 @@ BasicGame.Game.prototype = {
 		this.player.body.velocity.x = 0;
 		if (this.cursors.left.isDown) {
 			this.player.body.velocity.x = -150;
-			this.player.play('walk');
-			this.player.scale.x = -1;
 		} else if (this.cursors.right.isDown) {
 			this.player.body.velocity.x = 150;
 			this.player.play('walk');
-			this.player.scale.x = 1;
 		}
 
 		if (this.cursors.up.isDown) {
 			if (this.player.body.onFloor()) {
 				this.player.body.velocity.y = -200;
-				this.player.play('jump');
 			}
+		}
+
+		// アニメーション制御
+		if (this.player.body.velocity.y != 0) {
+			this.player.play('jump');
+		} else if (this.player.body.velocity.x < 0) {
+			this.player.play('walk');
+			this.player.scale.x = -1;
+		} else if (this.player.body.velocity.x > 0) {
+			this.player.play('walk');
+			this.player.scale.x = 1;
+		} else {
+			this.player.play('stand');
 		}
 	},
 
