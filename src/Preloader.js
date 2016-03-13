@@ -30,6 +30,6 @@ BasicGame.Preloader.prototype = {
 
 	create: function () {
 		this.preloadBar.cropEnabled = false;
-		this.state.start('MainMenu');
+		this.state.start('SceneTitle');
 	},
 };

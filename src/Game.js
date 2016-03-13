@@ -162,12 +162,12 @@ BasicGame.Game.prototype = {
 	},
 
 	quitGame: function(pointer) {
-		this.state.start('MainMenu');
+		this.state.start('SceneTitle');
 	},
 
 	continueGame: function() {
 		//this.state.start('Ready');
-		this.state.start('MainMenu');
+		this.state.start('SceneTitle');
 	},
 
 	failedGame: function() {

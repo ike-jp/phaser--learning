@@ -1,8 +1,8 @@
 
-BasicGame.MainMenu = function(game) {
+BasicGame.SceneTitle = function(game) {
 };
 
-BasicGame.MainMenu.prototype = {
+BasicGame.SceneTitle.prototype = {
 
 	create: function() {
 		this.game.stage.backgroundColor = Phaser.Color.getColor(72, 147, 227);
