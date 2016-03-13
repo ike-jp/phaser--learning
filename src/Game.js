@@ -31,6 +31,8 @@ BasicGame.Game = function(game) {
 	this.map;
 	this.layer;
 	this.player;
+	this.player_move_vx;
+	this.player_move_vy;
 	this.cursors;
 };
 
@@ -72,6 +74,10 @@ BasicGame.Game.prototype = {
 		this.player.animations.add('missed', [6], 10, false);
 		this.player.play('stand');
 
+		// 移動初期化
+		this.player_move_vx = 0;
+		this.player_move_vy = 0;
+
 		// ゲーム設定
 		this.game.camera.follow(this.player);
 		this.cursors = this.game.input.keyboard.createCursorKeys();
@@ -92,14 +98,20 @@ BasicGame.Game.prototype = {
 	update: function() {
 		this.game.physics.arcade.collide(this.player, this.layer);
 
-		this.player.body.velocity.x = 0;
+		// プレイヤー移動処理
 		if (this.cursors.left.isDown) {
-			this.player.body.velocity.x = -150;
+			this.player_move_vx = Phaser.Math.minSub(this.player_move_vx, 5, -150);
 		} else if (this.cursors.right.isDown) {
-			this.player.body.velocity.x = 150;
-			this.player.play('walk');
+			this.player_move_vx = Phaser.Math.maxAdd(this.player_move_vx, 5, 150);
+		// すべり処理
+		} else if (this.player_move_vx < 0) {
+			this.player_move_vx = Phaser.Math.maxAdd(this.player_move_vx, 12, 0);
+		} else if (this.player_move_vx > 0) {
+			this.player_move_vx = Phaser.Math.minSub(this.player_move_vx, 12, 0);
 		}
+		this.player.body.velocity.x = this.player_move_vx;
 
+		// ジャンプ
 		if (this.cursors.up.isDown) {
 			if (this.player.body.onFloor()) {
 				this.player.body.velocity.y = -200;
@@ -110,11 +122,21 @@ BasicGame.Game.prototype = {
 		if (this.player.body.velocity.y != 0) {
 			this.player.play('jump');
 		} else if (this.player.body.velocity.x < 0) {
-			this.player.play('walk');
-			this.player.scale.x = -1;
+			if (this.cursors.right.isDown) {
+				this.player.scale.x = 1;
+				this.player.play('quickturn');
+			} else {
+				this.player.scale.x = -1;
+				this.player.play('walk');
+			}
 		} else if (this.player.body.velocity.x > 0) {
-			this.player.play('walk');
-			this.player.scale.x = 1;
+			if (this.cursors.left.isDown) {
+				this.player.scale.x = -1;
+				this.player.play('quickturn');
+			} else {
+				this.player.scale.x = 1;
+				this.player.play('walk');
+			}
 		} else {
 			this.player.play('stand');
 		}
