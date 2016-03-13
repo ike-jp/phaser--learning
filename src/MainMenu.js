@@ -49,20 +49,20 @@ BasicGame.MainMenu.prototype = {
 		this.game.camera.follow(this.player);
 		this.cursors = this.game.input.keyboard.createCursorKeys();
 
-/*
-		var button = this.add.button(
+		var fontStyle = {
+			font: "10px famaniaregular",
+			fill: "#FFFFFF",
+			align: "center"
+		};
+		var textPlayGame = this.game.add.text(
 			this.game.width/2,
-			3.25*this.game.height/4,
-			'start',
-			function() {
-				this.state.start("Game");
-			},
-			this,
-			'over', 'up', 'down'
+			this.game.height * 3/5,
+			'PRESS SPACE KEY',
+			fontStyle
 		);
-		button.pivot.x = button.width * .5;
-		button.pivot.y = button.height * .5;
-
+		textPlayGame.anchor.set(0.5);
+		textPlayGame.smoothed = false;
+/*
 		var fullscreen = this.add.button(
 			this.game.width-8,
 			this.game.height-8,
@@ -78,9 +78,9 @@ BasicGame.MainMenu.prototype = {
 
 	update: function() {
 		this.game.physics.arcade.collide(this.player, this.layer);
-	},
 
-	startGame: function(pointer) {
-		this.state.start('Game');
+		if (this.game.input.keyboard.isDown(Phaser.Keyboard.SPACEBAR)) {
+			this.state.start('Game');
+		}
 	},
 };
