@@ -27,6 +27,10 @@ BasicGame.Game = function(game) {
 	//  But do consider them as being 'reserved words', i.e. don't create
 	//  a property for your own game called "world" or you'll over-write
 	//  the world reference.
+	//
+	this.map;
+	this.layer;
+	this.cursors;
 };
 
 BasicGame.Game.prototype = {
@@ -42,11 +46,13 @@ BasicGame.Game.prototype = {
 		spr.animations.add('wave', null, 8, true);
 		spr.play('wave');
 
-		map = this.game.add.tilemap('map', 16, 16);
-		map.addTilesetImage('tiles');
+		this.map = this.game.add.tilemap('map', 16, 16);
+		this.map.addTilesetImage('tiles');
 
-		layer = map.createLayer(0);
-		layer.resizeWorld();
+		this.layer = this.map.createLayer(0);
+		this.layer.resizeWorld();
+
+		this.cursors = this.game.input.keyboard.createCursorKeys();
 /*
 		var fullscreen = this.add.button(
 			this.game.width-8,
@@ -62,6 +68,18 @@ BasicGame.Game.prototype = {
 	},
 
 	update: function() {
+
+		if (this.cursors.left.isDown) {
+			this.game.camera.x -= 4;
+		} else if (this.cursors.right.isDown) {
+			this.game.camera.x += 4;
+		}
+
+		if (this.cursors.up.isDown) {
+			this.game.camera.y -= 4;
+		} else if (this.cursors.down.isDown) {
+			this.game.camera.y += 4;
+		}
 	},
 
 	quitGame: function(pointer) {
