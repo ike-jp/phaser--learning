@@ -41,6 +41,12 @@ BasicGame.Game.prototype = {
 		spr.pivot.y = spr.height * .5;
 		spr.animations.add('wave', null, 8, true);
 		spr.play('wave');
+
+		map = this.game.add.tilemap('map', 16, 16);
+		map.addTilesetImage('tiles');
+
+		layer = map.createLayer(0);
+		layer.resizeWorld();
 /*
 		var fullscreen = this.add.button(
 			this.game.width-8,
