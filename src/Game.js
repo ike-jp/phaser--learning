@@ -31,13 +31,17 @@ BasicGame.Game = function(game) {
 	this.map;
 	this.layer;
 	this.player;
-	this.player_move_vx = 0;
-	this.player_move_vy = 0;
-	this.is_failed = false;
+	this.player_move_vx;
+	this.player_move_vy;
+	this.is_failed;
 	this.cursors;
 };
 
 BasicGame.Game.prototype = {
+
+	preload: function () {
+		console.log("game.preload");
+	},
 
 	create: function() {
 		this.game.physics.startSystem(Phaser.Physics.ARCADE);
@@ -78,6 +82,10 @@ BasicGame.Game.prototype = {
 		// ゲーム設定
 		this.game.camera.follow(this.player);
 		this.cursors = this.game.input.keyboard.createCursorKeys();
+		this.player.revive();
+		this.player_move_vx = 0;
+		this.player_move_vy = 0;
+		this.is_failed = false;
 /*
 		var fullscreen = this.add.button(
 			this.game.width-8,
@@ -157,10 +165,22 @@ BasicGame.Game.prototype = {
 		this.state.start('MainMenu');
 	},
 
+	continueGame: function() {
+		//this.state.start('Ready');
+		this.state.start('MainMenu');
+	},
+
 	failedGame: function() {
 		this.is_failed = true;
 		this.player.body.velocity.x = 0;
 		this.player.body.velocity.y = -100;
 		this.player.play("failed");
+
+		// 残機チェック
+		if (true) {
+			this.game.time.events.add(Phaser.Timer.SECOND * 3, this.continueGame, this);
+		} else {
+			this.quitGame();
+		}
 	},
 };
