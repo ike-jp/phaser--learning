@@ -35,6 +35,8 @@ BasicGame.ScenePlay = function(game) {
 	this.player_move_vy;
 	this.is_failed;
 	this.cursors;
+
+	this.ready = false;
 };
 
 BasicGame.ScenePlay.prototype = {

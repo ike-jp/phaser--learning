@@ -2,7 +2,6 @@
 BasicGame.Preloader = function (game) {
 
 	this.preloadBar = null;
-	this.ready = false;
 };
 
 BasicGame.Preloader.prototype = {
@@ -28,7 +27,7 @@ BasicGame.Preloader.prototype = {
 		this.load.image('tiles', 'assets/tilemaps/tiles/terrain.png');
 	},
 
-	create: function () {
+	create: function() {
 		this.preloadBar.cropEnabled = false;
 		this.state.start('SceneTitle');
 	},

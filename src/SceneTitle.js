@@ -80,7 +80,7 @@ BasicGame.SceneTitle.prototype = {
 		this.game.physics.arcade.collide(this.player, this.layer);
 
 		if (this.game.input.keyboard.isDown(Phaser.Keyboard.SPACEBAR)) {
-			this.state.start('ScenePlay');
+			this.state.start('SceneLoad');
 		}
 	},
 };
