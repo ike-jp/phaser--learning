@@ -53,6 +53,7 @@ BasicGame.ScenePlay.prototype = {
 		this.map = this.game.add.tilemap('map', 16, 16);
 		this.map.addTilesetImage('tiles');
 		this.map.setCollision(1);
+		this.map.setCollisionBetween(2, 4);
 		this.map.smoothed = false;
 
 		this.layer = this.map.createLayer(0); //('World1')
