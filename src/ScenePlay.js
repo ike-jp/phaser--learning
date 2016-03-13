@@ -112,22 +112,25 @@ BasicGame.ScenePlay.prototype = {
 		var is_pressed_dash_button = this.input.keyboard.isDown(Phaser.Keyboard.X);
 		if (this.cursors.left.isDown) {
 			if (is_pressed_dash_button) {
-				this.player_move_vx = Phaser.Math.minSub(this.player_move_vx, 3, -170);
+				this.player_move_vx = Phaser.Math.minSub(this.player_move_vx, 6, -120);
 			} else if (this.player_move_vx >= -60) {
-				this.player_move_vx = Phaser.Math.minSub(this.player_move_vx, 3, -60);
+				this.player_move_vx = Phaser.Math.minSub(this.player_move_vx, 5, -60);
 			}
 		} else if (this.cursors.right.isDown) {
 			if (is_pressed_dash_button) {
-				this.player_move_vx = Phaser.Math.maxAdd(this.player_move_vx, 3, 170);
-			} else if (this.player_move_vx <=60) {
-				this.player_move_vx = Phaser.Math.maxAdd(this.player_move_vx, 3, 60);
+				this.player_move_vx = Phaser.Math.maxAdd(this.player_move_vx, 4, 120);
+			} else if (this.player_move_vx <= 60) {
+				this.player_move_vx = Phaser.Math.maxAdd(this.player_move_vx, 5, 60);
 			}
-		} else {
+		}
+		// ダッシュ中にダッシュボタンが離されたらwalkまで戻す
+		if (!this.cursors.left.isDown && !this.cursors.right.isDown
+		|| (!is_pressed_dash_button && Math.abs(this.player_move_vx) >= 60)) {
 			// すべり処理
 			if (this.player_move_vx < 0) {
-				this.player_move_vx = Phaser.Math.maxAdd(this.player_move_vx, 8, 0);
+				this.player_move_vx = Phaser.Math.maxAdd(this.player_move_vx, 5, 0);
 			} else if (this.player_move_vx > 0) {
-				this.player_move_vx = Phaser.Math.minSub(this.player_move_vx, 8, 0);
+				this.player_move_vx = Phaser.Math.minSub(this.player_move_vx, 5, 0);
 			}
 		}
 		this.player.body.velocity.x = this.player_move_vx;
