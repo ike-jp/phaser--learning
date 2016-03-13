@@ -168,8 +168,7 @@ BasicGame.ScenePlay.prototype = {
 	},
 
 	continueGame: function() {
-		//this.state.start('Ready');
-		this.state.start('SceneTitle');
+		this.state.start('SceneLoad');
 	},
 
 	failedGame: function() {
