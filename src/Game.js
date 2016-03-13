@@ -37,28 +37,31 @@ BasicGame.Game = function(game) {
 BasicGame.Game.prototype = {
 
 	create: function() {
-		this.player = this.add.sprite(
-			this.game.world.centerX,
-			this.game.world.centerY,
-			'iltan'
-		);
-		this.player.pivot.x = this.player.width * .5;
-		this.player.pivot.y = this.player.height * .5;
-		//this.player.animations.add('wave', null, 8, true);
-		//this.player.play('wave');
-		this.game.physics.enable(this.player);
-		this.game.physics.arcade.gravity.y = 250;
-		this.game.camera.follow(this.player);
-		this.player.body.collideWorldBouns = true;
-		this.player.body.linearDamping = 1;
+		this.game.physics.startSystem(Phaser.Physics.ARCADE);
+		this.game.stage.backgroundColor = '#787878';
 
 		this.map = this.game.add.tilemap('map', 16, 16);
 		this.map.addTilesetImage('tiles');
 		this.map.setCollision(1);
 
-		this.layer = this.map.createLayer(0);
+		this.layer = this.map.createLayer(0); //('World1')
+		//this.layer.debug = true;
 		this.layer.resizeWorld();
 
+		this.player = this.game.add.sprite(
+			this.game.world.centerX,
+			this.game.world.centerY,
+			'iltan'
+		);
+		this.game.physics.enable(this.player);
+		this.game.physics.arcade.gravity.y = 250;
+
+		//this.player.animations.add('wave', null, 8, true);
+		//this.player.play('wave');
+		this.player.body.linearDamping = 1;
+		this.player.body.collideWorldBouns = true;
+
+		this.game.camera.follow(this.player);
 		this.cursors = this.game.input.keyboard.createCursorKeys();
 /*
 		var fullscreen = this.add.button(
@@ -79,17 +82,16 @@ BasicGame.Game.prototype = {
 
 		this.player.body.velocity.x = 0;
 		if (this.cursors.left.isDown) {
-			this.player.body.velocity.x -= 150;
+			this.player.body.velocity.x = -150;
 		} else if (this.cursors.right.isDown) {
 			this.player.body.velocity.x = 150;
 		}
 
-		if (this.cursors.down.isDown) {
-			this.game.camera.y -= 4;
-		} else if (this.cursors.up.isDown) {
-			this.game.camera.y += 4;
+		if (this.cursors.up.isDown) {
+			if (this.player.body.onFloor()) {
+				this.player.body.velocity.y = -200;
+			}
 		}
-
 	},
 
 	quitGame: function(pointer) {
