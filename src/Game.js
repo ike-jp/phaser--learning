@@ -94,6 +94,10 @@ BasicGame.Game.prototype = {
 		}
 	},
 
+	render: function() {
+		//this.game.debug.bodyInfo(this.player, 0, 0);
+	},
+
 	quitGame: function(pointer) {
 		this.state.start('MainMenu');
 	}
