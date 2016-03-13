@@ -68,14 +68,14 @@ BasicGame.ScenePlay.prototype = {
 		this.player.anchor.setTo(0.5, 0.5); // for flip
 		this.player.smoothed = false;
 		this.game.physics.enable(this.player);
-		this.game.physics.arcade.gravity.y = 250;
+		this.game.physics.arcade.gravity.y = 300;
 		this.player.body.linearDamping = 1;
 		this.player.body.collideWorldBouns = true;
 
 		// プレイヤーアニメーション設定
 		this.player.animations.add('stand', [0], 10, false);
 		this.player.animations.add('walk', [1, 2], 8, true);
-		this.player.animations.add('run', [2, 3], 12, true);
+		this.player.animations.add('run', [2, 3], 15, true);
 		this.player.animations.add('quickturn', [4], 10, false);
 		this.player.animations.add('jump', [5], 10, false);
 		this.player.animations.add('failed', [6], 10, false);
@@ -109,21 +109,55 @@ BasicGame.ScenePlay.prototype = {
 
 		this.game.physics.arcade.collide(this.player, this.layer);
 
-		// プレイヤー移動処理
+		var is_pressed_dash_button = this.input.keyboard.isDown(Phaser.Keyboard.X);
 		if (this.cursors.left.isDown) {
-			this.player_move_vx = Phaser.Math.minSub(this.player_move_vx, 5, -150);
+			if (is_pressed_dash_button) {
+				this.player_move_vx = Phaser.Math.minSub(this.player_move_vx, 3, -170);
+			} else if (this.player_move_vx >= -60) {
+				this.player_move_vx = Phaser.Math.minSub(this.player_move_vx, 3, -60);
+			}
 		} else if (this.cursors.right.isDown) {
-			this.player_move_vx = Phaser.Math.maxAdd(this.player_move_vx, 5, 150);
-		// すべり処理
-		} else if (this.player_move_vx < 0) {
-			this.player_move_vx = Phaser.Math.maxAdd(this.player_move_vx, 12, 0);
-		} else if (this.player_move_vx > 0) {
-			this.player_move_vx = Phaser.Math.minSub(this.player_move_vx, 12, 0);
+			if (is_pressed_dash_button) {
+				this.player_move_vx = Phaser.Math.maxAdd(this.player_move_vx, 3, 170);
+			} else if (this.player_move_vx <=60) {
+				this.player_move_vx = Phaser.Math.maxAdd(this.player_move_vx, 3, 60);
+			}
+		} else {
+			// すべり処理
+			if (this.player_move_vx < 0) {
+				this.player_move_vx = Phaser.Math.maxAdd(this.player_move_vx, 8, 0);
+			} else if (this.player_move_vx > 0) {
+				this.player_move_vx = Phaser.Math.minSub(this.player_move_vx, 8, 0);
+			}
 		}
 		this.player.body.velocity.x = this.player_move_vx;
-
+/*
+		// プレイヤー移動処理
+		if (this.cursors.left.isDown) {
+			if (is_pressed_dash_button) {
+				this.player_move_vx = Phaser.Math.minSub(this.player_move_vx, 5, -150);
+			} else {
+				this.player_move_vx = -30;
+			}
+		} else if (this.cursors.right.isDown) {
+			if (is_pressed_dash_button) {
+				this.player_move_vx = Phaser.Math.maxAdd(this.player_move_vx, 5, 150);
+			} else {
+				this.player_move_vx = 30;
+			}
+		} else {
+			// すべり処理
+			if (this.player_move_vx < 0) {
+				this.player_move_vx = Phaser.Math.maxAdd(this.player_move_vx, 12, 0);
+			} else if (this.player_move_vx > 0) {
+				this.player_move_vx = Phaser.Math.minSub(this.player_move_vx, 12, 0);
+			}
+		}
+		this.player.body.velocity.x = this.player_move_vx;
+*/
 		// ジャンプ
-		if (this.cursors.up.isDown) {
+		if (this.cursors.up.isDown
+		||  this.input.keyboard.isDown(Phaser.Keyboard.Z)) {
 			if (this.player.body.onFloor()) {
 				this.player.body.velocity.y = -200;
 			}
