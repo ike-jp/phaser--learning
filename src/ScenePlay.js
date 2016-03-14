@@ -33,6 +33,7 @@ BasicGame.ScenePlay = function(game) {
 	this.player;
 	this.player_move_vx;
 	this.player_move_vy;
+	this.is_dashed;
 	this.is_failed;
 	this.cursors;
 
@@ -47,7 +48,7 @@ BasicGame.ScenePlay.prototype = {
 
 	create: function() {
 		this.game.physics.startSystem(Phaser.Physics.ARCADE);
-		this.game.stage.backgroundColor = Phaser.Color.getColor(72, 147, 227);
+		this.game.stage.backgroundColor = Phaser.Color.getColor(80, 128, 255);
 
 		// マップ設定
 		this.map = this.game.add.tilemap('map', 16, 16);
@@ -69,7 +70,7 @@ BasicGame.ScenePlay.prototype = {
 		this.player.anchor.setTo(0.5, 0.5); // for flip
 		this.player.smoothed = false;
 		this.game.physics.enable(this.player);
-		this.game.physics.arcade.gravity.y = 300;
+		this.game.physics.arcade.gravity.y = 1500;
 		this.player.body.linearDamping = 1;
 		this.player.body.collideWorldBouns = true;
 
@@ -88,6 +89,7 @@ BasicGame.ScenePlay.prototype = {
 		this.player.revive();
 		this.player_move_vx = 0;
 		this.player_move_vy = 0;
+		this.is_dashed = false;
 		this.is_failed = false;
 /*
 		var fullscreen = this.add.button(
@@ -109,29 +111,60 @@ BasicGame.ScenePlay.prototype = {
 		}
 
 		this.game.physics.arcade.collide(this.player, this.layer);
-
 		var is_pressed_dash_button = this.input.keyboard.isDown(Phaser.Keyboard.X);
+
+		// ダッシュボタン押下状態とその反対では、
+		// 加速値に若干の差がある
 		if (this.cursors.left.isDown) {
 			if (is_pressed_dash_button) {
-				this.player_move_vx = Phaser.Math.minSub(this.player_move_vx, 6, -120);
-			} else if (this.player_move_vx >= -60) {
-				this.player_move_vx = Phaser.Math.minSub(this.player_move_vx, 5, -60);
+				this.player_move_vx -= 6;
+				// ダッシュ中にダッシュボタンを放した際に、
+				// 歩き速度用のクランプをされる問題を回避するためのフラグ
+				if (!this.is_dashed && this.player_move_vx < -80) {
+					this.is_dashed = true;
+				}
+				if (this.player_move_vx <= -140) {
+					this.player_move_vx = -140;
+				}
+			} else {
+				if (!this.is_dashed) {
+					this.player_move_vx -= 5;
+					if (this.player_move_vx <= -80) {
+						this.player_move_vx = -80;
+					}
+				}
 			}
 		} else if (this.cursors.right.isDown) {
 			if (is_pressed_dash_button) {
-				this.player_move_vx = Phaser.Math.maxAdd(this.player_move_vx, 4, 120);
-			} else if (this.player_move_vx <= 60) {
-				this.player_move_vx = Phaser.Math.maxAdd(this.player_move_vx, 5, 60);
+				// ダッシュ中にダッシュボタンを放した際に、
+				// 歩き速度用のクランプをされる問題を回避するためのフラグ
+				if (!this.is_dashed && this.player_move_vx > 80) {
+					this.is_dashed = true;
+				}
+				this.player_move_vx += 6;
+				if (this.player_move_vx >= 140) {
+					this.player_move_vx = 140;
+				}
+			} else {
+				if (!this.is_dashed) {
+					this.player_move_vx += 5;
+					if (this.player_move_vx >= 80) {
+						this.player_move_vx = 80;
+					}
+				}
 			}
 		}
-		// ダッシュ中にダッシュボタンが離されたらwalkまで戻す
-		if (!this.cursors.left.isDown && !this.cursors.right.isDown
-		|| (!is_pressed_dash_button && Math.abs(this.player_move_vx) >= 60)) {
-			// すべり処理
-			if (this.player_move_vx < 0) {
-				this.player_move_vx = Phaser.Math.maxAdd(this.player_move_vx, 5, 0);
-			} else if (this.player_move_vx > 0) {
-				this.player_move_vx = Phaser.Math.minSub(this.player_move_vx, 5, 0);
+
+		// すべり処理
+		if (this.player_move_vx < 0) {
+			this.player_move_vx = Phaser.Math.maxAdd(this.player_move_vx, 2, 0);
+			if (this.is_dashed && !is_pressed_dash_button && this.player_move_vx >= -80) {
+				this.is_dashed = false;
+			}
+		} else if (this.player_move_vx > 0) {
+			this.player_move_vx = Phaser.Math.minSub(this.player_move_vx, 2, 0);
+			if (this.is_dashed && !is_pressed_dash_button && this.player_move_vx <= 80) {
+				this.is_dashed = false;
 			}
 		}
 		this.player.body.velocity.x = this.player_move_vx;
@@ -141,7 +174,7 @@ BasicGame.ScenePlay.prototype = {
 		||  this.input.keyboard.isDown(Phaser.Keyboard.Z)
 		||  this.input.keyboard.isDown(Phaser.Keyboard.SPACEBAR)) {
 			if (this.player.body.onFloor()) {
-				this.player.body.velocity.y = -200;
+				this.player.body.velocity.y = -350;
 			}
 		}
 

@@ -5,7 +5,7 @@ BasicGame.SceneTitle = function(game) {
 BasicGame.SceneTitle.prototype = {
 
 	create: function() {
-		this.game.stage.backgroundColor = Phaser.Color.getColor(72, 147, 227);
+		this.game.stage.backgroundColor = Phaser.Color.getColor(80, 128, 255);
 
 		// マップ設定
 		// タイトルのマップはLevel1-1を使う
