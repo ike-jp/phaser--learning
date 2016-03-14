@@ -33,6 +33,7 @@ BasicGame.ScenePlay = function(game) {
 	this.player;
 	this.player_move_vx;
 	this.player_move_vy;
+	this.can_jump;
 	this.is_dashed;
 	this.is_failed;
 	this.cursors;
@@ -170,11 +171,20 @@ BasicGame.ScenePlay.prototype = {
 		this.player.body.velocity.x = this.player_move_vx;
 
 		// ジャンプ
+		if (this.player.body.onFloor()) {
+			this.can_jump = true;
+		}
+		// ジャンプ
 		if (this.cursors.up.isDown
 		||  this.input.keyboard.isDown(Phaser.Keyboard.Z)
 		||  this.input.keyboard.isDown(Phaser.Keyboard.SPACEBAR)) {
 			if (this.player.body.onFloor()) {
-				this.player.body.velocity.y = -350;
+				this.player.body.velocity.y = -270;
+			} else if (this.can_jump) {
+				this.player.body.velocity.y -= 17;
+				if (this.player.body.velocity.y < -400) {
+					this.can_jump = false;
+				}
 			}
 		}
 
