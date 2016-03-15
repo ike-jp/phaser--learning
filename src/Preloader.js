@@ -23,6 +23,7 @@ BasicGame.Preloader.prototype = {
 
 		// game
 		this.load.spritesheet('iltan', 'assets/iltan.png', 16, 16);
+		this.load.spritesheet('enemy', 'assets/enemy.png', 16, 16);
 		this.load.tilemap('map', 'assets/tilemaps/csv/level1.csv');
 		this.load.image('tiles', 'assets/tilemaps/tiles/terrain.png');
 	},

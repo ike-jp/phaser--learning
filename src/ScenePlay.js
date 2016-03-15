@@ -30,11 +30,17 @@ BasicGame.ScenePlay = function(game) {
 	//
 	this.map;
 	this.layer;
+
+	// プレイヤー
 	this.player;
 	this.player_move_vx;
 	this.player_move_vy;
 	this.player_can_jump;
 	this.player_is_dashed;
+
+	// 敵
+	this.enemy;
+
 	this.is_failed;
 	this.cursors;
 
@@ -84,6 +90,22 @@ BasicGame.ScenePlay.prototype = {
 		this.player.animations.add('failed', [6], 10, false);
 		this.player.play('stand');
 
+		// 敵
+		this.enemy = this.game.add.sprite(
+			16*12,
+			16*13,
+			'enemy'
+		);
+		this.enemy.anchor.setTo(0.5, 0.5); // for flip
+		this.enemy.smoothed = false;
+		this.game.physics.enable(this.enemy);
+		this.game.physics.arcade.gravity.y = 1500;
+		this.enemy.body.linearDamping = 1;
+		this.enemy.body.collideWorldBouns = true;
+
+		this.enemy.animations.add('walk', [0, 1], 6, true);
+		this.enemy.play('walk');
+
 		// ゲーム設定
 		this.game.camera.follow(this.player);
 		this.cursors = this.game.input.keyboard.createCursorKeys();
@@ -107,12 +129,21 @@ BasicGame.ScenePlay.prototype = {
 	},
 
 	update: function() {
+		this.game.physics.arcade.collide(this.enemy, this.layer);
+
 		if (this.is_failed) {
 			return;
 		}
 
 		this.game.physics.arcade.collide(this.player, this.layer);
+		this.game.physics.arcade.overlap(this.player, this.enemy, this.collideEnemy, null, this);
 		var is_pressed_dash_button = this.input.keyboard.isDown(Phaser.Keyboard.X);
+
+		// 判定の後に1度実行されてしまうので、
+		// failed時にリセットした速度が加算されてしまう
+		if (this.is_failed) {
+			return;
+		}
 
 		// ダッシュボタン押下状態とその反対では、
 		// 加速値に若干の差がある
@@ -228,6 +259,8 @@ BasicGame.ScenePlay.prototype = {
 
 	render: function() {
 		//this.game.debug.bodyInfo(this.player, 0, 0);
+		//this.game.debug.body(this.player);
+		//this.game.debug.body(this.enemy);
 	},
 
 	quitGame: function(pointer) {
@@ -241,8 +274,9 @@ BasicGame.ScenePlay.prototype = {
 	failedGame: function() {
 		this.is_failed = true;
 		this.player.body.velocity.x = 0;
-		this.player.body.velocity.y = -100;
+		this.player.body.velocity.y = -400;
 		this.player.play("failed");
+		console.log("called failedGame");
 
 		// 残機チェック
 		if (true) {
@@ -251,4 +285,13 @@ BasicGame.ScenePlay.prototype = {
 			this.quitGame();
 		}
 	},
+
+	collideEnemy: function(player, enemy) {
+		if (player.body.touching.down) {
+			player.body.velocity.y = -300;
+			enemy.kill();
+		} else {
+			this.failedGame();
+		}
+	}
 };
