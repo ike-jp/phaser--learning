@@ -25,12 +25,14 @@ BasicGame.Preloader.prototype = {
 		this.load.spritesheet('iltan', 'assets/iltan.png', 16, 16);
 		this.load.spritesheet('enemy', 'assets/enemy.png', 16, 16);
 		this.load.tilemap('map', 'assets/tilemaps/csv/level1.csv');
-		this.load.image('tiles', 'assets/tilemaps/tiles/terrain.png');
+		this.load.tilemap('map2', 'assets/tilemaps/json/level1.json', null, Phaser.Tilemap.TILED_JSON);
+		this.load.image('terrain', 'assets/tilemaps/tiles/terrain.png');
 	},
 
 	create: function()
 	{
 		this.preloadBar.cropEnabled = false;
-		this.state.start('SceneTitle');
+		//this.state.start('SceneTitle');
+		this.state.start('ScenePlay');
 	},
 };

@@ -8,6 +8,10 @@ BasicGame.SceneTitle.prototype = {
 	{
 		this.game.stage.backgroundColor = Phaser.Color.getColor(80, 128, 255);
 
+		// enemy group
+		enemies = this.game.add.group();
+		enemies.enableBody = true;
+
 		// マップ設定
 		// タイトルのマップはLevel1-1を使う
 		this.map = this.game.add.tilemap('map', 16, 16);

@@ -40,6 +40,7 @@ BasicGame.ScenePlay = function(game) {
 
 	// 敵
 	this.enemy;
+	this.enemies;
 
 	this.is_failed;
 	this.cursors;
@@ -56,19 +57,21 @@ BasicGame.ScenePlay.prototype = {
 
 	create: function()
 	{
-		this.game.physics.startSystem(Phaser.Physics.ARCADE);
 		this.game.stage.backgroundColor = Phaser.Color.getColor(80, 128, 255);
 
 		// マップ設定
-		this.map = this.game.add.tilemap('map', 16, 16);
-		this.map.addTilesetImage('tiles');
+		this.map = this.game.add.tilemap('map2');
+		this.map.addTilesetImage('terrain');
+
 		this.map.setCollision(1);
-		this.map.setCollisionBetween(2, 4);
+		this.map.setCollisionBetween(2, 5);
 		this.map.smoothed = false;
 
-		this.layer = this.map.createLayer(0); //('World1')
+		this.layer = this.map.createLayer('Tile Layer');
 		//this.layer.debug = true;
-		this.layer.resizeWorld();
+		this.layer.resizeWorld(0);
+
+		this.game.physics.startSystem(Phaser.Physics.ARCADE);
 
 		// プレイヤー設定
 		this.player = this.game.add.sprite(
@@ -108,6 +111,14 @@ BasicGame.ScenePlay.prototype = {
 		this.enemy.animations.add('walk', [0, 1], 6, true);
 		this.enemy.play('walk');
 
+		// enemy group
+		this.enemies = this.game.add.group();
+		this.enemies.enableBody = true;
+		this.map.createFromObjects('Enemies Layer', 41, 'enemy', 0, true, false, this.enemies);
+		this.enemies.callAll('animations.add', 'animations', 'walk', [0, 1], 6, true);
+		this.enemies.callAll('animations.play', 'animations', 'walk');
+		this.enemies.setAll('body.velocity.x', -20);
+
 		// ゲーム設定
 		this.game.camera.follow(this.player);
 		this.cursors = this.game.input.keyboard.createCursorKeys();
@@ -133,6 +144,7 @@ BasicGame.ScenePlay.prototype = {
 	update: function()
 	{
 		this.game.physics.arcade.collide(this.enemy, this.layer);
+		this.game.physics.arcade.collide(this.enemies, this.layer);
 
 		if (this.is_failed) {
 			return;
@@ -140,6 +152,7 @@ BasicGame.ScenePlay.prototype = {
 
 		this.game.physics.arcade.collide(this.player, this.layer);
 		this.game.physics.arcade.overlap(this.player, this.enemy, this.collideEnemy, null, this);
+		this.game.physics.arcade.overlap(this.player, this.enemies, this.collideEnemy, null, this);
 		var is_pressed_dash_button = this.input.keyboard.isDown(Phaser.Keyboard.X);
 
 		// 判定の後に1度実行されてしまうので、
@@ -264,7 +277,7 @@ BasicGame.ScenePlay.prototype = {
 	{
 		//this.game.debug.bodyInfo(this.player, 0, 0);
 		//this.game.debug.body(this.player);
-		//this.game.debug.body(this.enemy);
+		this.game.debug.body(this.enemies);
 	},
 
 	quitGame: function(pointer)
