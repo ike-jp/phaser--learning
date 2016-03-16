@@ -4,7 +4,8 @@ BasicGame.SceneTitle = function(game) {
 
 BasicGame.SceneTitle.prototype = {
 
-	create: function() {
+	create: function()
+	{
 		this.game.stage.backgroundColor = Phaser.Color.getColor(80, 128, 255);
 
 		// マップ設定
@@ -76,7 +77,8 @@ BasicGame.SceneTitle.prototype = {
 */
 	},
 
-	update: function() {
+	update: function()
+	{
 		this.game.physics.arcade.collide(this.player, this.layer);
 
 		if (this.game.input.keyboard.isDown(Phaser.Keyboard.SPACEBAR)) {

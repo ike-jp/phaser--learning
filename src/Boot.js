@@ -18,7 +18,8 @@ BasicGame.Boot = function(game) {
 
 BasicGame.Boot.prototype = {
 
-	init: function() {
+	init: function()
+	{
 		this.input.maxPointers = 1;
 		this.stage.disableVisibilityChange = true;
 		this.stage.backgroundColor = '#000000';
@@ -36,20 +37,24 @@ BasicGame.Boot.prototype = {
 		this.scale.refresh();
 	},
 
-	preload: function() {
+	preload: function()
+	{
 		this.load.image('preloader-bar', 'assets/ui/preloader-bar.png');
 	},
 
-	create: function() {
+	create: function()
+	{
 		this.state.start('Preloader');
 	},
 
-	enterIncorrectOrientation: function() {
+	enterIncorrectOrientation: function()
+	{
 		BasicGame.orientated = false;
 		document.getElementById('orientation').style.display = 'block';
 	},
 
-	leaveIncorrectOrientation: function() {
+	leaveIncorrectOrientation: function()
+	{
 		BasicGame.orientated = true;
 		document.getElementById('orientation').style.display = 'none';
 	}

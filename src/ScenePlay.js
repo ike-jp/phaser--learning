@@ -49,11 +49,13 @@ BasicGame.ScenePlay = function(game) {
 
 BasicGame.ScenePlay.prototype = {
 
-	preload: function () {
+	preload: function ()
+	{
 		console.log("game.preload");
 	},
 
-	create: function() {
+	create: function()
+	{
 		this.game.physics.startSystem(Phaser.Physics.ARCADE);
 		this.game.stage.backgroundColor = Phaser.Color.getColor(80, 128, 255);
 
@@ -128,7 +130,8 @@ BasicGame.ScenePlay.prototype = {
 */
 	},
 
-	update: function() {
+	update: function()
+	{
 		this.game.physics.arcade.collide(this.enemy, this.layer);
 
 		if (this.is_failed) {
@@ -257,21 +260,25 @@ BasicGame.ScenePlay.prototype = {
 		}
 	},
 
-	render: function() {
+	render: function()
+	{
 		//this.game.debug.bodyInfo(this.player, 0, 0);
 		//this.game.debug.body(this.player);
 		//this.game.debug.body(this.enemy);
 	},
 
-	quitGame: function(pointer) {
+	quitGame: function(pointer)
+	{
 		this.state.start('SceneTitle');
 	},
 
-	continueGame: function() {
+	continueGame: function()
+	{
 		this.state.start('SceneLoad');
 	},
 
-	failedGame: function() {
+	failedGame: function()
+	{
 		this.is_failed = true;
 		this.player.body.velocity.x = 0;
 		this.player.body.velocity.y = -400;
@@ -286,7 +293,8 @@ BasicGame.ScenePlay.prototype = {
 		}
 	},
 
-	collideEnemy: function(player, enemy) {
+	collideEnemy: function(player, enemy)
+	{
 		if (player.body.touching.down) {
 			player.body.velocity.y = -300;
 			enemy.kill();

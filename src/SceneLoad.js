@@ -5,11 +5,13 @@ BasicGame.SceneLoad = function(game) {
 
 BasicGame.SceneLoad.prototype = {
 
-	preload: function () {
+	preload: function()
+	{
 		this.game.stage.backgroundColor = Phaser.Color.getColor(0, 0, 0);
 	},
 
-	create: function() {
+	create: function()
+	{
 		this.game.time.events.add(
 			Phaser.Timer.SECOND * 1.5,
 			function() {

@@ -6,8 +6,8 @@ BasicGame.Preloader = function (game) {
 
 BasicGame.Preloader.prototype = {
 
-	preload: function () {
-
+	preload: function ()
+	{
 		// Create a progress bar based on cropping on image
 		this.preloadBar = this.add.sprite(
 			this.game.width/2,
@@ -28,7 +28,8 @@ BasicGame.Preloader.prototype = {
 		this.load.image('tiles', 'assets/tilemaps/tiles/terrain.png');
 	},
 
-	create: function() {
+	create: function()
+	{
 		this.preloadBar.cropEnabled = false;
 		this.state.start('SceneTitle');
 	},
