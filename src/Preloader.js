@@ -24,9 +24,10 @@ BasicGame.Preloader.prototype = {
 		// game
 		this.load.spritesheet('iltan', 'assets/iltan.png', 16, 16);
 		this.load.spritesheet('enemy', 'assets/enemy.png', 16, 16);
+		this.load.image('bg', 'assets/tilemaps/tiles/bg.png');
+		this.load.image('terrain', 'assets/tilemaps/tiles/terrain.png');
 		this.load.tilemap('map', 'assets/tilemaps/csv/level1.csv');
 		this.load.tilemap('map2', 'assets/tilemaps/json/level1.json', null, Phaser.Tilemap.TILED_JSON);
-		this.load.image('terrain', 'assets/tilemaps/tiles/terrain.png');
 	},
 
 	create: function()

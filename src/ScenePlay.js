@@ -61,15 +61,20 @@ BasicGame.ScenePlay.prototype = {
 
 		// マップ設定
 		this.map = this.game.add.tilemap('map2');
+		this.map.addTilesetImage('bg');
 		this.map.addTilesetImage('terrain');
 
-		this.map.setCollision(1);
-		this.map.setCollisionBetween(2, 5);
-		this.map.smoothed = false;
-
+		var bgLayer = this.map.createLayer('BG Layer');
+		bgLayer.resizeWorld();
 		this.layer = this.map.createLayer('Tile Layer');
+		this.layer.resizeWorld();
 		//this.layer.debug = true;
-		this.layer.resizeWorld(0);
+
+		this.map.setCollisionBetween(1, 5, true, 'Tile Layer');
+		//this.map.setCollision(1);
+		//this.map.setCollisionBetween(2, 5);
+		//this.map.setCollisionBetween(1, 99);
+		this.map.smoothed = false;
 
 		this.game.physics.startSystem(Phaser.Physics.ARCADE);
 
@@ -150,7 +155,7 @@ BasicGame.ScenePlay.prototype = {
 	update: function()
 	{
 		this.game.physics.arcade.collide(this.enemy, this.layer);
-//		this.game.physics.arcade.collide(this.enemies, this.layer);
+		this.game.physics.arcade.collide(this.enemies, this.layer);
 		this.game.physics.arcade.collide(this.enemies);
 
 		if (this.is_failed) {
@@ -325,9 +330,6 @@ BasicGame.ScenePlay.prototype = {
 
 	collideEnemyOwn: function(dst, src)
 	{
-		if (dst == src) return;
-		//console.log("a");
-		dst.body.velocity.x *= -1;
-		//src.body.velocity.x *= -1;
+		//dst.body.velocity.x *= -1;
 	}
 };
