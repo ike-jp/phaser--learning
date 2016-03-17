@@ -71,9 +71,6 @@ BasicGame.ScenePlay.prototype = {
 		//this.layer.debug = true;
 
 		this.map.setCollisionBetween(1, 5, true, 'Tile Layer');
-		//this.map.setCollision(1);
-		//this.map.setCollisionBetween(2, 5);
-		//this.map.setCollisionBetween(1, 99);
 		this.map.smoothed = false;
 
 		this.game.physics.startSystem(Phaser.Physics.ARCADE);
