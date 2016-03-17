@@ -115,9 +115,15 @@ BasicGame.ScenePlay.prototype = {
 		this.enemies = this.game.add.group();
 		this.enemies.enableBody = true;
 		this.map.createFromObjects('Enemies Layer', 41, 'enemy', 0, true, false, this.enemies);
+		this.enemies.setAll('smoothed', false);
 		this.enemies.callAll('animations.add', 'animations', 'walk', [0, 1], 6, true);
 		this.enemies.callAll('animations.play', 'animations', 'walk');
 		this.enemies.setAll('body.velocity.x', -20);
+
+		this.enemies.setAll('body.collideWorldBouns', true);
+		this.enemies.setAll('body.bounce.x', 1);
+		this.enemies.setAll('body.bounce.y', 0);
+		//this.enemies.setAll('body.checkCollision.up', false);
 
 		// ゲーム設定
 		this.game.camera.follow(this.player);
@@ -144,7 +150,8 @@ BasicGame.ScenePlay.prototype = {
 	update: function()
 	{
 		this.game.physics.arcade.collide(this.enemy, this.layer);
-		this.game.physics.arcade.collide(this.enemies, this.layer);
+//		this.game.physics.arcade.collide(this.enemies, this.layer);
+		this.game.physics.arcade.collide(this.enemies);
 
 		if (this.is_failed) {
 			return;
@@ -314,5 +321,13 @@ BasicGame.ScenePlay.prototype = {
 		} else {
 			this.failedGame();
 		}
+	},
+
+	collideEnemyOwn: function(dst, src)
+	{
+		if (dst == src) return;
+		//console.log("a");
+		dst.body.velocity.x *= -1;
+		//src.body.velocity.x *= -1;
 	}
 };
