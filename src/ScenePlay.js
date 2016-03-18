@@ -74,6 +74,8 @@ BasicGame.ScenePlay.prototype = {
 		this.map.smoothed = false;
 
 		this.game.physics.startSystem(Phaser.Physics.ARCADE);
+		this.game.physics.setBoundsToWorld();
+		this.game.physics.arcade.gravity.y = 1500;
 
 		// プレイヤー設定
 		this.player = this.game.add.sprite(
@@ -82,11 +84,16 @@ BasicGame.ScenePlay.prototype = {
 			'iltan'
 		);
 		this.player.anchor.setTo(0.5, 0.5); // for flip
-		this.player.smoothed = false;
 		this.game.physics.enable(this.player);
-		this.game.physics.arcade.gravity.y = 1500;
+//this.player.body.collideWorldBounds = true;
+//this.player.body.bounce.x = 0;
+//this.player.body.bounce.y = 0;
+this.player.checkWorldBounds = true;
+this.player.events.onOutOfBounds.add(this.playerOutOfBounds, this);
+//		this.player.body.checkWorldBounds = true;
+//		this.player.events.onOutOfBounds.add(function() {console.log('a')}, this);
 		this.player.body.linearDamping = 1;
-		this.player.body.collideWorldBouns = true;
+		this.player.smoothed = false;
 
 		// プレイヤーアニメーション設定
 		this.player.animations.add('stand', [0], 10, false);
@@ -96,7 +103,7 @@ BasicGame.ScenePlay.prototype = {
 		this.player.animations.add('jump', [5], 10, false);
 		this.player.animations.add('failed', [6], 10, false);
 		this.player.play('stand');
-
+/*
 		// 敵
 		this.enemy = this.game.add.sprite(
 			16*12,
@@ -112,19 +119,22 @@ BasicGame.ScenePlay.prototype = {
 
 		this.enemy.animations.add('walk', [0, 1], 6, true);
 		this.enemy.play('walk');
-
+*/
 		// enemy group
 		this.enemies = this.game.add.group();
 		this.enemies.enableBody = true;
+this.physicsBodyType = Phaser.Physics.ARCADE;
 		this.map.createFromObjects('Enemies Layer', 41, 'enemy', 0, true, false, this.enemies);
-		this.enemies.setAll('smoothed', false);
 		this.enemies.callAll('animations.add', 'animations', 'walk', [0, 1], 6, true);
 		this.enemies.callAll('animations.play', 'animations', 'walk');
 		this.enemies.setAll('body.velocity.x', -20);
+		this.enemies.setAll('smoothed', false);
 
-		this.enemies.setAll('body.collideWorldBouns', true);
-		this.enemies.setAll('body.bounce.x', 1);
-		this.enemies.setAll('body.bounce.y', 0);
+		this.enemies.setAll('checkWorldBounds', true);
+//		this.enemies.callAll('events.onOutOfBounds.add', function() {}, this);
+//		this.enemies.setAll('body.collideWorldBouns', true);
+//		this.enemies.setAll('body.bounce.x', 1);
+//		this.enemies.setAll('body.bounce.y', 0);
 		//this.enemies.setAll('body.checkCollision.up', false);
 
 		// ゲーム設定
@@ -151,7 +161,7 @@ BasicGame.ScenePlay.prototype = {
 
 	update: function()
 	{
-		this.game.physics.arcade.collide(this.enemy, this.layer);
+//		this.game.physics.arcade.collide(this.enemy, this.layer);
 		this.game.physics.arcade.collide(this.enemies, this.layer);
 		this.game.physics.arcade.collide(this.enemies);
 
@@ -160,7 +170,7 @@ BasicGame.ScenePlay.prototype = {
 		}
 
 		this.game.physics.arcade.collide(this.player, this.layer);
-		this.game.physics.arcade.overlap(this.player, this.enemy, this.collideEnemy, null, this);
+//		this.game.physics.arcade.overlap(this.player, this.enemy, this.collideEnemy, null, this);
 		this.game.physics.arcade.overlap(this.player, this.enemies, this.collideEnemy, null, this);
 		var is_pressed_dash_button = this.input.keyboard.isDown(Phaser.Keyboard.X);
 
@@ -328,5 +338,11 @@ BasicGame.ScenePlay.prototype = {
 	collideEnemyOwn: function(dst, src)
 	{
 		//dst.body.velocity.x *= -1;
+	},
+
+	playerOutOfBounds: function(player)
+	{
+		console.log(player.body.x);
+		this.failedGame();
 	}
 };
