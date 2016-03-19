@@ -29,8 +29,6 @@ BasicGame.Preloader.prototype = {
 		this.load.image('bg', 'assets/tilemaps/tiles/bg.png');
 		this.load.image('terrain', 'assets/tilemaps/tiles/terrain.png');
 		this.load.tilemap('map', 'assets/tilemaps/json/level1.json', null, Phaser.Tilemap.TILED_JSON);
-		this.load.bitmapFont('famania', 'assets/fonts/famania2.6-bmpfont.png', 'assets/fonts/famania2.6-bmpfont.fnt');
-
 		this.load.image('myfont', 'assets/fonts/myfont.png');
 	},
 

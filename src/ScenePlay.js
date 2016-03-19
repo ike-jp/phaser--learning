@@ -136,20 +136,26 @@ BasicGame.ScenePlay.prototype = {
 		this.goal_symbol.setAll('body.allowGravity', false);
 
 		// テキスト
-		this.text_level = this.game.add.retroFont('myfont', 8, 10, Phaser.RetroFont.TEXT_SET3 + 'x-', 10);
-		this.game.add.image(10, 6, this.text_level);
+		this.text_level = this.game.add.retroFont('myfont', 8, 10, Phaser.RetroFont.TEXT_SET3 + 'x-:', 10);
+		var t = this.game.add.image(0, 0, this.text_level);
+		t.smoothed = false;
+		t.fixedToCamera = true;
+		t.cameraOffset.setTo(10, 6);
 		this.text_level.text = "WORLD1-1";
-		this.text_level.smoothed = false;
 
-		this.text_time = this.game.add.retroFont('myfont', 8, 10, Phaser.RetroFont.TEXT_SET3, 10);
-		this.game.add.image(100, 6, this.text_time);
-		this.text_time.text = "TIME999";
-		this.text_time.smoothed = false;
+		this.text_time = this.game.add.retroFont('myfont', 8, 10, Phaser.RetroFont.TEXT_SET3 + 'x-:', 10);
+		t = this.game.add.image(90, 6, this.text_time);
+		t.smoothed = false;
+		t.fixedToCamera = true;
+		t.cameraOffset.setTo(90, 6)
+		this.text_time.text = "TIME:999";
 
-		this.text_score = this.game.add.retroFont('myfont', 8, 10, Phaser.RetroFont.TEXT_SET3, 10);
-		this.game.add.image(100, 6, this.text_score);
-		this.text_score.text = "TIME999";
-		this.text_score.smoothed = false;
+		this.text_score = this.game.add.retroFont('myfont', 8, 10, Phaser.RetroFont.TEXT_SET3 + 'x-:', 10);
+		t = this.game.add.image(190, 6, this.text_score);
+		t.smoothed = false;
+		t.fixedToCamera = true;
+		t.cameraOffset.setTo(180, 6)
+		this.text_score.text = "999999";
 
 		// ゲーム設定
 		this.game.camera.follow(this.player);
