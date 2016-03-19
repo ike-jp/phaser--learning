@@ -25,6 +25,7 @@ BasicGame.Preloader.prototype = {
 		this.load.spritesheet('player', 'assets/objects/player.png', 16, 16);
 		this.load.spritesheet('enemies1', 'assets/objects/enemies1.png', 16, 16);
 		this.load.spritesheet('enemies2', 'assets/objects/enemies2.png', 16, 16);
+		this.load.spritesheet('goal-symbol', 'assets/objects/goal-symbol.png', 32, 32);
 		this.load.image('bg', 'assets/tilemaps/tiles/bg.png');
 		this.load.image('terrain', 'assets/tilemaps/tiles/terrain.png');
 		this.load.tilemap('map', 'assets/tilemaps/json/level1.json', null, Phaser.Tilemap.TILED_JSON);

@@ -41,6 +41,9 @@ BasicGame.ScenePlay = function(game) {
 	// 敵
 	this.enemies;
 
+	// アイテム
+	this.goal_symbol;
+
 	this.is_failed;
 	this.cursors;
 
@@ -118,6 +121,15 @@ BasicGame.ScenePlay.prototype = {
 		this.enemies.setAll('body.bounce.x', 1);
 		this.enemies.setAll('body.bounce.y', 0);
 
+		// ゴールシンボル
+		// TODO: 本来アイテムと一緒にすべきだが、
+		// 16x16のタイルセットから32x32のオブジェクトを生成する方法が分からないので暫定対応
+		this.goal_symbol = this.game.add.group();
+		this.goal_symbol.enableBody = true;
+		this.map.createFromObjects('Items Layer', "goal-symbol", 'goal-symbol', 0, true, false, this.goal_symbol);
+		this.goal_symbol.setAll('smoothed', false);
+		this.goal_symbol.setAll('body.allowGravity', false);
+
 		// ゲーム設定
 		this.game.camera.follow(this.player);
 		this.game.camera.deadzone = new Phaser.Rectangle(16*6, 16*6, 16*2, 16*4);
@@ -152,6 +164,7 @@ BasicGame.ScenePlay.prototype = {
 		}
 
 		this.game.physics.arcade.collide(this.player, this.layer);
+		this.game.physics.arcade.overlap(this.player, this.goal_symbol, this.levelComplete, null, this);
 		this.game.physics.arcade.overlap(this.player, this.enemies, this.collideEnemy, null, this);
 		var is_pressed_dash_button = this.input.keyboard.isDown(Phaser.Keyboard.X);
 
@@ -300,6 +313,12 @@ BasicGame.ScenePlay.prototype = {
 		} else {
 			this.quitGame();
 		}
+	},
+
+	levelComplete: function(player, symbol)
+	{
+		console.log('LEVEL COMPLETE!');
+		symbol.kill();
 	},
 
 	collideEnemy: function(player, enemy)
