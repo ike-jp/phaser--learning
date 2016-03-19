@@ -22,12 +22,12 @@ BasicGame.Preloader.prototype = {
 		this.load.image('title', 'assets/title.png');
 
 		// game
-		this.load.spritesheet('iltan', 'assets/iltan.png', 16, 16);
-		this.load.spritesheet('enemy', 'assets/enemy.png', 16, 16);
+		this.load.spritesheet('player', 'assets/objects/player.png', 16, 16);
+		this.load.spritesheet('enemies1', 'assets/objects/enemies1.png', 16, 16);
+		this.load.spritesheet('enemies2', 'assets/objects/enemies2.png', 16, 16);
 		this.load.image('bg', 'assets/tilemaps/tiles/bg.png');
 		this.load.image('terrain', 'assets/tilemaps/tiles/terrain.png');
-		this.load.tilemap('map', 'assets/tilemaps/csv/level1.csv');
-		this.load.tilemap('map2', 'assets/tilemaps/json/level1.json', null, Phaser.Tilemap.TILED_JSON);
+		this.load.tilemap('map', 'assets/tilemaps/json/level1.json', null, Phaser.Tilemap.TILED_JSON);
 	},
 
 	create: function()

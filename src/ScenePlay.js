@@ -59,7 +59,7 @@ BasicGame.ScenePlay.prototype = {
 		this.game.stage.backgroundColor = Phaser.Color.getColor(80, 128, 255);
 
 		// マップ設定
-		this.map = this.game.add.tilemap('map2');
+		this.map = this.game.add.tilemap('map');
 		this.map.addTilesetImage('bg');
 		this.map.addTilesetImage('terrain');
 
@@ -82,7 +82,7 @@ BasicGame.ScenePlay.prototype = {
 		this.player = this.game.add.sprite(
 			16*5, // this.game.world.centerX,
 			16*13,// this.game.world.centerY,
-			'iltan'
+			'player'
 		);
 		this.player.anchor.setTo(0.5, 0.5); // for flip
 		this.game.physics.enable(this.player);
@@ -105,7 +105,8 @@ BasicGame.ScenePlay.prototype = {
 		this.enemies = this.game.add.group();
 		this.enemies.enableBody = true;
 		//this.physicsBodyType = Phaser.Physics.ARCADE;
-		this.map.createFromObjects('Enemies Layer', 41, 'enemy', 0, true, false, this.enemies);
+		this.map.createFromObjects('Enemies Layer', "yukibo-s", 'enemies1', 0, true, false, this.enemies);
+		this.map.createFromObjects('Enemies Layer', "yukibo-e", 'enemies2', 0, true, false, this.enemies);
 		this.enemies.callAll('animations.add', 'animations', 'walk', [0, 1], 6, true);
 		this.enemies.callAll('animations.play', 'animations', 'walk');
 		this.enemies.setAll('body.velocity.x', -20);
