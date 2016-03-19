@@ -75,6 +75,7 @@ BasicGame.ScenePlay.prototype = {
 
 		this.game.physics.startSystem(Phaser.Physics.ARCADE);
 		this.game.physics.setBoundsToWorld();
+		this.game.physics.arcade.checkCollision.down = false; // ワールドの下判定を行わない
 		this.game.physics.arcade.gravity.y = 1500;
 
 		// プレイヤー設定
@@ -85,13 +86,9 @@ BasicGame.ScenePlay.prototype = {
 		);
 		this.player.anchor.setTo(0.5, 0.5); // for flip
 		this.game.physics.enable(this.player);
-//this.player.body.collideWorldBounds = true;
-//this.player.body.bounce.x = 0;
-//this.player.body.bounce.y = 0;
-this.player.checkWorldBounds = true;
-this.player.events.onOutOfBounds.add(this.playerOutOfBounds, this);
-//		this.player.body.checkWorldBounds = true;
-//		this.player.events.onOutOfBounds.add(function() {console.log('a')}, this);
+		this.player.body.collideWorldBounds = true;
+		this.player.checkWorldBounds = true;
+		this.player.events.onOutOfBounds.add(this.playerOutOfBounds, this);
 		this.player.body.linearDamping = 1;
 		this.player.smoothed = false;
 
@@ -311,6 +308,9 @@ this.physicsBodyType = Phaser.Physics.ARCADE;
 
 	failedGame: function()
 	{
+		if (this.is_failed) {
+			return;
+		}
 		this.is_failed = true;
 		this.player.body.velocity.x = 0;
 		this.player.body.velocity.y = -400;
@@ -344,5 +344,5 @@ this.physicsBodyType = Phaser.Physics.ARCADE;
 	{
 		console.log(player.body.x);
 		this.failedGame();
-	}
+	},
 };
