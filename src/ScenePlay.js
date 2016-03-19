@@ -120,7 +120,7 @@ BasicGame.ScenePlay.prototype = {
 		// enemy group
 		this.enemies = this.game.add.group();
 		this.enemies.enableBody = true;
-this.physicsBodyType = Phaser.Physics.ARCADE;
+		//this.physicsBodyType = Phaser.Physics.ARCADE;
 		this.map.createFromObjects('Enemies Layer', 41, 'enemy', 0, true, false, this.enemies);
 		this.enemies.callAll('animations.add', 'animations', 'walk', [0, 1], 6, true);
 		this.enemies.callAll('animations.play', 'animations', 'walk');
@@ -129,10 +129,9 @@ this.physicsBodyType = Phaser.Physics.ARCADE;
 
 		this.enemies.setAll('checkWorldBounds', true);
 //		this.enemies.callAll('events.onOutOfBounds.add', function() {}, this);
-//		this.enemies.setAll('body.collideWorldBouns', true);
-//		this.enemies.setAll('body.bounce.x', 1);
-//		this.enemies.setAll('body.bounce.y', 0);
-		//this.enemies.setAll('body.checkCollision.up', false);
+		this.enemies.setAll('body.collideWorldBouns', true);
+		this.enemies.setAll('body.bounce.x', 1);
+		this.enemies.setAll('body.bounce.y', 0);
 
 		// ゲーム設定
 		this.game.camera.follow(this.player);
