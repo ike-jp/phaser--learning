@@ -32,6 +32,9 @@ BasicGame.ScenePlay = function(game) {
 	this.layer;
 
 	// ゲーム情報
+	this.time_limit;
+	this.time_counter;
+
 	this.text_level;
 	this.text_time;
 	this.text_score;
@@ -135,6 +138,11 @@ BasicGame.ScenePlay.prototype = {
 		this.goal_symbol.setAll('smoothed', false);
 		this.goal_symbol.setAll('body.allowGravity', false);
 
+		// タイマー
+		this.time_limit = 120;
+		this.time_counter = this.time_limit;
+		this.game.time.events.loop(Phaser.Timer.SECOND, this.updateTimeCounter, this);
+
 		// テキスト
 		this.text_level = this.game.add.retroFont('myfont', 8, 10, Phaser.RetroFont.TEXT_SET3 + 'x-:', 10);
 		var t = this.game.add.image(0, 0, this.text_level);
@@ -148,7 +156,7 @@ BasicGame.ScenePlay.prototype = {
 		t.smoothed = false;
 		t.fixedToCamera = true;
 		t.cameraOffset.setTo(90, 6)
-		this.text_time.text = "TIME:999";
+		this.text_time.text = 'TIME:' + ('00'+this.time_counter).slice(-3);
 
 		this.text_score = this.game.add.retroFont('myfont', 8, 10, Phaser.RetroFont.TEXT_SET3 + 'x-:', 10);
 		t = this.game.add.image(190, 6, this.text_score);
@@ -321,6 +329,16 @@ BasicGame.ScenePlay.prototype = {
 	continueGame: function()
 	{
 		this.state.start('SceneLoad');
+	},
+
+	updateTimeCounter: function()
+	{
+		this.time_counter -= 1;
+		if (this.time_counter >= 0) {
+			this.text_time.text = 'TIME:' + ('00'+this.time_counter).slice(-3);
+		} else if (this.time_counter == -1) {
+			this.failedGame();
+		}
 	},
 
 	failedGame: function()
