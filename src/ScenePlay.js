@@ -39,7 +39,6 @@ BasicGame.ScenePlay = function(game) {
 	this.player_is_dashed;
 
 	// 敵
-	this.enemy;
 	this.enemies;
 
 	this.is_failed;
@@ -100,23 +99,7 @@ BasicGame.ScenePlay.prototype = {
 		this.player.animations.add('jump', [5], 10, false);
 		this.player.animations.add('failed', [6], 10, false);
 		this.player.play('stand');
-/*
-		// 敵
-		this.enemy = this.game.add.sprite(
-			16*12,
-			16*13,
-			'enemy'
-		);
-		this.enemy.anchor.setTo(0.5, 0.5); // for flip
-		this.enemy.smoothed = false;
-		this.game.physics.enable(this.enemy);
-		this.game.physics.arcade.gravity.y = 1500;
-		this.enemy.body.linearDamping = 1;
-		this.enemy.body.collideWorldBouns = true;
 
-		this.enemy.animations.add('walk', [0, 1], 6, true);
-		this.enemy.play('walk');
-*/
 		// enemy group
 		this.enemies = this.game.add.group();
 		this.enemies.enableBody = true;
@@ -157,7 +140,6 @@ BasicGame.ScenePlay.prototype = {
 
 	update: function()
 	{
-//		this.game.physics.arcade.collide(this.enemy, this.layer);
 		this.game.physics.arcade.collide(this.enemies, this.layer);
 		this.game.physics.arcade.collide(this.enemies);
 
@@ -166,7 +148,6 @@ BasicGame.ScenePlay.prototype = {
 		}
 
 		this.game.physics.arcade.collide(this.player, this.layer);
-//		this.game.physics.arcade.overlap(this.player, this.enemy, this.collideEnemy, null, this);
 		this.game.physics.arcade.overlap(this.player, this.enemies, this.collideEnemy, null, this);
 		var is_pressed_dash_button = this.input.keyboard.isDown(Phaser.Keyboard.X);
 
