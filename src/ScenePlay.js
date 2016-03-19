@@ -118,6 +118,8 @@ BasicGame.ScenePlay.prototype = {
 
 		// ゲーム設定
 		this.game.camera.follow(this.player);
+		this.game.camera.deadzone = new Phaser.Rectangle(16*6, 16*6, 16*2, 16*4);
+
 		this.cursors = this.game.input.keyboard.createCursorKeys();
 		this.player.revive();
 		this.player_move_vx = 0;
@@ -269,13 +271,6 @@ BasicGame.ScenePlay.prototype = {
 		}
 	},
 
-	render: function()
-	{
-		//this.game.debug.bodyInfo(this.player, 0, 0);
-		//this.game.debug.body(this.player);
-		this.game.debug.body(this.enemies);
-	},
-
 	quitGame: function(pointer)
 	{
 		this.state.start('SceneTitle');
@@ -324,5 +319,19 @@ BasicGame.ScenePlay.prototype = {
 	{
 		console.log(player.body.x);
 		this.failedGame();
+	},
+
+	render: function()
+	{
+		//this.game.debug.bodyInfo(this.player, 0, 0);
+		//this.game.debug.body(this.player);
+		this.game.debug.body(this.enemies);
+
+		// これを表示するにはindex.htmlのPhaser.gameをnewしているところで、
+		// Phaser.AUTOが指定されている部分をPhaser.CANVASに変更する必要がある。
+		// WebGLではgame.contextが使えないらしい
+		//var zone = this.game.camera.deadzone;
+		//this.game.context.fillStyle = 'rgba(255,0,0,0.6)';
+		//this.game.context.fillRect(zone.x, zone.y, zone.width, zone.height);
 	},
 };
