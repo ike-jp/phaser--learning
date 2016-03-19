@@ -31,6 +31,11 @@ BasicGame.ScenePlay = function(game) {
 	this.map;
 	this.layer;
 
+	// ゲーム情報
+	this.text_level;
+	this.text_time;
+	this.text_score;
+
 	// プレイヤー
 	this.player;
 	this.player_move_vx;
@@ -129,6 +134,22 @@ BasicGame.ScenePlay.prototype = {
 		this.map.createFromObjects('Items Layer', "goal-symbol", 'goal-symbol', 0, true, false, this.goal_symbol);
 		this.goal_symbol.setAll('smoothed', false);
 		this.goal_symbol.setAll('body.allowGravity', false);
+
+		// テキスト
+		this.text_level = this.game.add.retroFont('myfont', 8, 10, Phaser.RetroFont.TEXT_SET3 + 'x-', 10);
+		this.game.add.image(10, 6, this.text_level);
+		this.text_level.text = "WORLD1-1";
+		this.text_level.smoothed = false;
+
+		this.text_time = this.game.add.retroFont('myfont', 8, 10, Phaser.RetroFont.TEXT_SET3, 10);
+		this.game.add.image(100, 6, this.text_time);
+		this.text_time.text = "TIME999";
+		this.text_time.smoothed = false;
+
+		this.text_score = this.game.add.retroFont('myfont', 8, 10, Phaser.RetroFont.TEXT_SET3, 10);
+		this.game.add.image(100, 6, this.text_score);
+		this.text_score.text = "TIME999";
+		this.text_score.smoothed = false;
 
 		// ゲーム設定
 		this.game.camera.follow(this.player);
