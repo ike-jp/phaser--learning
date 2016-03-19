@@ -74,6 +74,7 @@ BasicGame.ScenePlay.prototype = {
 
 		this.game.physics.startSystem(Phaser.Physics.ARCADE);
 		this.game.physics.setBoundsToWorld();
+		this.game.physics.arcade.checkCollision.up = false; // ワールドの上判定を行わない
 		this.game.physics.arcade.checkCollision.down = false; // ワールドの下判定を行わない
 		this.game.physics.arcade.gravity.y = 1500;
 
@@ -317,8 +318,11 @@ BasicGame.ScenePlay.prototype = {
 
 	playerOutOfBounds: function(player)
 	{
-		console.log(player.body.x);
-		this.failedGame();
+		console.log(player.position.y);
+		console.log(this.game.physics.arcade.bounds.bottom);
+		if (player.position.y > this.game.physics.arcade.bounds.bottom) {
+			this.failedGame();
+		}
 	},
 
 	render: function()
