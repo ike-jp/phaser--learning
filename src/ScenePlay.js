@@ -364,6 +364,11 @@ BasicGame.ScenePlay.prototype = {
 	{
 		console.log('LEVEL COMPLETE!');
 		symbol.kill();
+
+		player.body.velocity.x = 0;
+		var t = this.game.add.tween(player.scale);
+		t.to({x:2, y:2}, 1000, Phaser.Easing.Linear.None);
+		t.start();
 	},
 
 	collideEnemy: function(player, enemy)
