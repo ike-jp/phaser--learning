@@ -1,3 +1,7 @@
+/**
+ * @author ike-jp <ikejpcw@gmail.com>
+ * @license Refer to the LICENSE file.
+ */
 
 Application.namespace('App.Scene');
 
@@ -354,66 +358,6 @@ App.Scene.PlayScene.prototype.render = function()
 };
 
 /**
- * このゲームを終了してタイトルに戻る
- *
- * @private
- */
-App.Scene.PlayScene.prototype.quitGameToTitle_ = function(pointer)
-{
-	this.state.start('SceneTitle');
-};
-
-/**
- * このゲームをやり直す
- *
- * @private
- */
-App.Scene.PlayScene.prototype.retryGame_ = function()
-{
-	this.state.start('SceneLoad');
-};
-
-/**
- * ゲーム失敗処理
- *
- * @private
- */
-App.Scene.PlayScene.prototype.failedGame_ = function()
-{
-	if (this.is_failed) {
-		return;
-	}
-	this.is_failed = true;
-	this.player.body.velocity.x = 0;
-	this.player.body.velocity.y = -400;
-	this.player.play("failed");
-	console.log("called failedGame");
-
-	// 残機チェック
-	if (true) {
-		this.game.time.events.add(Phaser.Timer.SECOND * 3, this.retryGame_, this);
-	} else {
-		this.quitGameToTitle_();
-	}
-};
-
-/**
- * ゲームクリア処理
- *
- * @private
- */
-App.Scene.PlayScene.prototype.levelComplete_ = function(player, symbol)
-{
-	console.log('LEVEL COMPLETE!');
-	symbol.kill();
-
-	player.body.velocity.x = 0;
-	var t = this.game.add.tween(player.scale);
-	t.to({x:2, y:2}, 1000, Phaser.Easing.Linear.None);
-	t.start();
-};
-
-/**
  * ゲームタイマー更新
  *
  * @private
@@ -444,6 +388,66 @@ App.Scene.PlayScene.prototype.levelComplete_ = function(player, symbol)
 	var t = this.game.add.tween(player.scale);
 	t.to({x:2, y:2}, 1000, Phaser.Easing.Linear.None);
 	t.start();
+};
+
+/**
+ * ゲーム失敗処理
+ *
+ * @private
+ */
+App.Scene.PlayScene.prototype.failedGame_ = function()
+{
+	if (this.is_failed) {
+		return;
+	}
+	this.is_failed = true;
+	this.player.body.velocity.x = 0;
+	this.player.body.velocity.y = -400;
+	this.player.play("failed");
+	console.log("called failedGame");
+
+	// 残機チェック
+	if (true) {
+		this.game.time.events.add(Phaser.Timer.SECOND * 3, this.retry_, this);
+	} else {
+		this.quit_();
+	}
+};
+
+/**
+ * ゲームクリア処理
+ *
+ * @private
+ */
+App.Scene.PlayScene.prototype.levelComplete_ = function(player, symbol)
+{
+	console.log('LEVEL COMPLETE!');
+	symbol.kill();
+
+	player.body.velocity.x = 0;
+	var t = this.game.add.tween(player.scale);
+	t.to({x:2, y:2}, 1000, Phaser.Easing.Linear.None);
+	t.start();
+};
+
+/**
+ * このゲームを終了してタイトルに戻る
+ *
+ * @private
+ */
+App.Scene.PlayScene.prototype.quit_ = function(pointer)
+{
+	this.state.start('SceneTitle');
+};
+
+/**
+ * このゲームをやり直す
+ *
+ * @private
+ */
+App.Scene.PlayScene.prototype.retry_ = function()
+{
+	this.state.start('SceneLoad');
 };
 
 /**

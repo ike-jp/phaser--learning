@@ -1,3 +1,7 @@
+/**
+ * @author ike-jp <ikejpcw@gmail.com>
+ * @license Refer to the LICENSE file.
+ */
 
 BasicGame = {
 	/* Check BasicGame.orientated in internal loops to know if the

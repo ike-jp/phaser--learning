@@ -1,3 +1,7 @@
+/**
+ * @author ike-jp <ikejpcw@gmail.com>
+ * @license Refer to the LICENSE file.
+ */
 
 Application.namespace('App.Model');
 

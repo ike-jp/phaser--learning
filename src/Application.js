@@ -1,3 +1,7 @@
+/**
+ * @author ike-jp <ikejpcw@gmail.com>
+ * @license Refer to the LICENSE file.
+ */
 
 /**
  * アプリケーション用の名前空間を表すグローバルオブジェクト
