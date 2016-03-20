@@ -6,8 +6,8 @@
  * @constructor
  * @extends {Scene}
  */
-BasicGame.ScenePlay = function(game) {
-
+BasicGame.ScenePlay = function(game)
+{
 	// When a State is added to Phaser it automatically has the
 	// following properties set on it, even if they already exist:
 	//
@@ -68,7 +68,7 @@ BasicGame.ScenePlay = function(game) {
 /**
  * {@inheritdoc}
  */
-BasicGame.ScenePlay.prototype.preload = function ()
+BasicGame.ScenePlay.prototype.preload = function()
 {
 	console.log("game.preload");
 };
