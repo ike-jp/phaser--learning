@@ -67,7 +67,6 @@ App.Scene.PlayScene = function(game)
 	// アイテム
 	this.goal_symbol;
 
-	this.is_failed;
 	this.cursors;
 
 	this.ready = false;
@@ -130,6 +129,10 @@ App.Scene.PlayScene.prototype.create = function()
 	this.player.events.onOutOfBounds.add(this.playerOutOfBounds_, this);
 	this.player.body.linearDamping = 1;
 	this.player.smoothed = false;
+
+	this.player.maxHealth = 1;
+	this.player.health = this.player.maxHealth;
+	this.player.events.onKilled.add(this.killedPlayer_, this);
 
 	// プレイヤーアニメーション設定
 	this.player.animations.add('stand', [0], 10, false);
@@ -202,7 +205,6 @@ App.Scene.PlayScene.prototype.create = function()
 	this.player_move_vx = 0;
 	this.player_move_vy = 0;
 	this.player_is_dashed = false;
-	this.is_failed = false;
 };
 
 /**
@@ -210,23 +212,7 @@ App.Scene.PlayScene.prototype.create = function()
  */
 App.Scene.PlayScene.prototype.update = function()
 {
-	this.game.physics.arcade.collide(this.enemies, this.layer);
-	this.game.physics.arcade.collide(this.enemies);
-
-	if (this.is_failed) {
-		return;
-	}
-
-	this.game.physics.arcade.collide(this.player, this.layer);
-	this.game.physics.arcade.overlap(this.player, this.goal_symbol, this.levelComplete_, null, this);
-	this.game.physics.arcade.overlap(this.player, this.enemies, this.collideEnemy_, null, this);
 	var is_pressed_dash_button = this.input.keyboard.isDown(Phaser.Keyboard.X);
-
-	// 判定の後に1度実行されてしまうので、
-	// failed時にリセットした速度が加算されてしまう
-	if (this.is_failed) {
-		return;
-	}
 
 	// ダッシュボタン押下状態とその反対では、
 	// 加速値に若干の差がある
@@ -269,6 +255,18 @@ App.Scene.PlayScene.prototype.update = function()
 			}
 		}
 	}
+
+	this.game.physics.arcade.collide(this.enemies, this.layer);
+	this.game.physics.arcade.collide(this.enemies);
+
+	// プレイヤーが死んでるなら更新しない
+	if (!this.player.alive) {
+		return;
+	}
+
+	this.game.physics.arcade.collide(this.player, this.layer);
+	this.game.physics.arcade.overlap(this.player, this.goal_symbol, this.levelComplete_, null, this);
+	this.game.physics.arcade.overlap(this.player, this.enemies, this.collideEnemy_, null, this);
 
 	// すべり処理
 	if (this.player_move_vx < 0) {
@@ -391,19 +389,17 @@ App.Scene.PlayScene.prototype.levelComplete_ = function(player, symbol)
 };
 
 /**
- * ゲーム失敗処理
+ * プレイヤーがやられた
  *
  * @private
  */
-App.Scene.PlayScene.prototype.failedGame_ = function()
+App.Scene.PlayScene.prototype.killedPlayer_ = function()
 {
-	if (this.is_failed) {
-		return;
-	}
-	this.is_failed = true;
+	/*
 	this.player.body.velocity.x = 0;
 	this.player.body.velocity.y = -400;
 	this.player.play("failed");
+	*/
 	console.log("called failedGame");
 
 	// 残機チェック
@@ -463,7 +459,7 @@ App.Scene.PlayScene.prototype.collideEnemy_ = function(player, enemy)
 		player.body.velocity.y = -300;
 		enemy.kill();
 	} else {
-		this.failedGame_();
+		player.damage(1);
 	}
 };
 
@@ -478,6 +474,6 @@ App.Scene.PlayScene.prototype.playerOutOfBounds_ = function(player)
 	console.log(player.position.y);
 	console.log(this.game.physics.arcade.bounds.bottom);
 	if (player.position.y > this.game.physics.arcade.bounds.bottom) {
-		this.failedGame_();
+		player.damage(1);
 	}
 };
