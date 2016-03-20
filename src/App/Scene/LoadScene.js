@@ -1,4 +1,6 @@
 
+Application.namespace('App.Scene');
+
 /**
  * ゲーム前のロード画面クラス
  *

@@ -43,7 +43,7 @@
   <script src="src/Application.js"></script>
   <script src="src/App/Scene/AbstractScene.js"></script>
   <script src="src/Boot.js"></script>
-  <script src="src/Preloader.js"></script>
+  <script src="src/App/Scene/PreloadScene.js"></script>
   <script src="src/App/Scene/TitleScene.js"></script>
   <script src="src/App/Scene/LoadScene.js"></script>
   <script src="src/App/Scene/PlayScene.js"></script>
@@ -65,7 +65,7 @@
 
 	// Add the game States; could be done in Boot but just as easy here
 	game.state.add('Boot', BasicGame.Boot);
-	game.state.add('Preloader', BasicGame.Preloader);
+	game.state.add('ScenePreload', App.Scene.PreloadScene);
 	game.state.add('SceneTitle', App.Scene.TitleScene);
 	game.state.add('SceneLoad', App.Scene.LoadScene);
 	game.state.add('ScenePlay', App.Scene.PlayScene);

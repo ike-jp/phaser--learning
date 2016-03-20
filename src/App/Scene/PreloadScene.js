@@ -1,22 +1,23 @@
 
+Application.namespace('App.Scene');
+
 /**
- * プリロードクラス
+ * プリロード画面クラス
  *
  * @param {Phaser.Game} game
  * @constructor
- * @extends {Scene}
  */
-BasicGame.Preloader = function(game)
+App.Scene.PreloadScene = function(game)
 {
 	App.Scene.AbstractScene.call(this, game);
 	this.preloadBar = null;
 };
-Application.inherits(BasicGame.Preloader, App.Scene.AbstractScene);
+Application.inherits(App.Scene.PreloadScene, App.Scene.AbstractScene);
 
 /**
  * {@inheritdoc}
  */
-BasicGame.Preloader.prototype.preload = function()
+App.Scene.PreloadScene.prototype.preload = function()
 {
 	// Create a progress bar based on cropping on image
 	this.preloadBar = this.add.sprite(
@@ -45,7 +46,7 @@ BasicGame.Preloader.prototype.preload = function()
 /**
  * {@inheritdoc}
  */
-BasicGame.Preloader.prototype.create = function()
+App.Scene.PreloadScene.prototype.create = function()
 {
 	this.preloadBar.cropEnabled = false;
 	//this.state.start('SceneTitle');

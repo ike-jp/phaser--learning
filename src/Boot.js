@@ -17,6 +17,8 @@ BasicGame.toggleFullscreen = function() {
 /**
  * 起動クラス
  *
+ * TODO: この辺はまだ仕組みがよく分かっていないので後で整理する
+ *
  * @param {Phaser.Game} game
  * @constructor
  */
@@ -60,7 +62,7 @@ BasicGame.Boot.prototype.preload = function()
  */
 BasicGame.Boot.prototype.create = function()
 {
-	this.state.start('Preloader');
+	this.state.start('ScenePreload');
 };
 
 /**
