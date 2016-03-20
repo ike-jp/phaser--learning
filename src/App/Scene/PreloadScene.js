@@ -15,7 +15,7 @@ App.Scene.PreloadScene = function(game)
 Application.inherits(App.Scene.PreloadScene, App.Scene.AbstractScene);
 
 /**
- * {@inheritdoc}
+ * @override
  */
 App.Scene.PreloadScene.prototype.preload = function()
 {
@@ -44,7 +44,7 @@ App.Scene.PreloadScene.prototype.preload = function()
 };
 
 /**
- * {@inheritdoc}
+ * @override
  */
 App.Scene.PreloadScene.prototype.create = function()
 {

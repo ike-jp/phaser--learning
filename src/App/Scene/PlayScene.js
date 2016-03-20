@@ -71,7 +71,7 @@ App.Scene.PlayScene = function(game)
 Application.inherits(App.Scene.PlayScene, App.Scene.AbstractScene);
 
 /**
- * {@inheritdoc}
+ * @override
  */
 App.Scene.PlayScene.prototype.preload = function()
 {
@@ -79,7 +79,7 @@ App.Scene.PlayScene.prototype.preload = function()
 };
 
 /**
- * {@inheritdoc}
+ * @override
  */
 App.Scene.PlayScene.prototype.create = function()
 {
@@ -194,7 +194,7 @@ App.Scene.PlayScene.prototype.create = function()
 };
 
 /**
- * {@inheritdoc}
+ * @override
  */
 App.Scene.PlayScene.prototype.update = function()
 {
@@ -329,7 +329,7 @@ App.Scene.PlayScene.prototype.update = function()
 };
 
 /**
- * {@inheritdoc}
+ * @override
  */
 App.Scene.PlayScene.prototype.render = function()
 {

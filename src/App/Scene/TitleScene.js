@@ -15,7 +15,7 @@ App.Scene.TitleScene = function(game)
 Application.inherits(App.Scene.TitleScene, App.Scene.AbstractScene);
 
 /**
- * {@inheritdoc}
+ * @override
  */
 App.Scene.TitleScene.prototype.create = function()
 {
@@ -44,7 +44,7 @@ App.Scene.TitleScene.prototype.create = function()
 };
 
 /**
- * {@inheritdoc}
+ * @override
  */
 App.Scene.TitleScene.prototype.update = function()
 {
