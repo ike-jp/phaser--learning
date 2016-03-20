@@ -60,11 +60,17 @@ BasicGame.ScenePlay = function(game) {
 
 BasicGame.ScenePlay.prototype = {
 
+	/**
+	 * {@inheritdoc}
+	 */
 	preload: function ()
 	{
 		console.log("game.preload");
 	},
 
+	/**
+	 * {@inheritdoc}
+	 */
 	create: function()
 	{
 		this.game.stage.backgroundColor = Phaser.Color.getColor(80, 128, 255);
@@ -175,20 +181,11 @@ BasicGame.ScenePlay.prototype = {
 		this.player_move_vy = 0;
 		this.player_is_dashed = false;
 		this.is_failed = false;
-/*
-		var fullscreen = this.add.button(
-			this.game.width-8,
-			this.game.height-8,
-			'fullscreen',
-			BasicGame.toggleFullscreen,
-			this,
-			'over', 'up', 'down'
-		);
-		fullscreen.pivot.x = fullscreen.width;
-		fullscreen.pivot.y = fullscreen.height;
-*/
 	},
 
+	/**
+	 * {@inheritdoc}
+	 */
 	update: function()
 	{
 		this.game.physics.arcade.collide(this.enemies, this.layer);
@@ -321,24 +318,37 @@ BasicGame.ScenePlay.prototype = {
 		}
 	},
 
-	quitGame: function(pointer)
+	/**
+	 * {@inheritdoc}
+	 */
+	render: function()
+	{
+		//this.game.debug.bodyInfo(this.player, 0, 0);
+		//this.game.debug.body(this.player);
+		this.game.debug.body(this.enemies);
+
+		// これを表示するにはindex.htmlのPhaser.gameをnewしているところで、
+		// Phaser.AUTOが指定されている部分をPhaser.CANVASに変更する必要がある。
+		// WebGLではgame.contextが使えないらしい
+		//var zone = this.game.camera.deadzone;
+		//this.game.context.fillStyle = 'rgba(255,0,0,0.6)';
+		//this.game.context.fillRect(zone.x, zone.y, zone.width, zone.height);
+	},
+
+	/**
+	 * このゲームを終了してタイトルに戻る
+	 */
+	quitGameToTitle: function(pointer)
 	{
 		this.state.start('SceneTitle');
 	},
 
-	continueGame: function()
+	/**
+	 * このゲームをやり直す
+	 */
+	retryGame: function()
 	{
 		this.state.start('SceneLoad');
-	},
-
-	updateTimeCounter: function()
-	{
-		this.time_counter -= 1;
-		if (this.time_counter >= 0) {
-			this.text_time.text = 'TIME:' + ('00'+this.time_counter).slice(-3);
-		} else if (this.time_counter == -1) {
-			this.failedGame();
-		}
 	},
 
 	failedGame: function()
@@ -354,9 +364,19 @@ BasicGame.ScenePlay.prototype = {
 
 		// 残機チェック
 		if (true) {
-			this.game.time.events.add(Phaser.Timer.SECOND * 3, this.continueGame, this);
+			this.game.time.events.add(Phaser.Timer.SECOND * 3, this.retryGame, this);
 		} else {
-			this.quitGame();
+			this.quitGameToTitle();
+		}
+	},
+
+	updateTimeCounter: function()
+	{
+		this.time_counter -= 1;
+		if (this.time_counter >= 0) {
+			this.text_time.text = 'TIME:' + ('00'+this.time_counter).slice(-3);
+		} else if (this.time_counter == -1) {
+			this.failedGame();
 		}
 	},
 
@@ -393,19 +413,5 @@ BasicGame.ScenePlay.prototype = {
 		if (player.position.y > this.game.physics.arcade.bounds.bottom) {
 			this.failedGame();
 		}
-	},
-
-	render: function()
-	{
-		//this.game.debug.bodyInfo(this.player, 0, 0);
-		//this.game.debug.body(this.player);
-		this.game.debug.body(this.enemies);
-
-		// これを表示するにはindex.htmlのPhaser.gameをnewしているところで、
-		// Phaser.AUTOが指定されている部分をPhaser.CANVASに変更する必要がある。
-		// WebGLではgame.contextが使えないらしい
-		//var zone = this.game.camera.deadzone;
-		//this.game.context.fillStyle = 'rgba(255,0,0,0.6)';
-		//this.game.context.fillRect(zone.x, zone.y, zone.width, zone.height);
 	},
 };
