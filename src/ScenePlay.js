@@ -1,6 +1,7 @@
 
 /**
  * プレイ画面クラス
+ *
  * @param {Phaser.Game} game
  * @constructor
  * @extends {Scene}
