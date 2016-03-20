@@ -13,6 +13,6 @@ Application.namespace('App.Model');
 App.Model.Level = function(game)
 {
 	this.world_num;
-	this.stage_num;
+	this.level_num;
 	this.time_limit;
 }
