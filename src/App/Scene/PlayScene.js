@@ -83,6 +83,14 @@ App.Scene.PlayScene.prototype.preload = function()
  */
 App.Scene.PlayScene.prototype.create = function()
 {
+	// 開始前の残機数表示
+	// ゲームの開始呼び出し
+	// ポーズ、レジューム対応
+	// ゲーム終了の受け取り
+	// クリア後の結果表示
+	// クリア後、ミス後の遷移制御
+	//   のみを行うようにする
+
 	this.game.stage.backgroundColor = Phaser.Color.getColor(80, 128, 255);
 
 	// マップ設定
