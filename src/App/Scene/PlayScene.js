@@ -322,7 +322,7 @@ App.Scene.PlayScene.prototype.updateTimeCounter_ = function()
 	if (this.time_counter >= 0) {
 		this.text_time.text = 'TIME:' + ('00'+this.time_counter).slice(-3);
 	} else if (this.time_counter == -1) {
-		this.failedGame_();
+		this.player.kill();
 	}
 };
 
