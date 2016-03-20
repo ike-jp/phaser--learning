@@ -213,7 +213,6 @@ App.Scene.PlayScene.prototype.update = function()
 	this.game.physics.arcade.collide(this.enemies, this.layer);
 	this.game.physics.arcade.collide(this.enemies);
 
-	// プレイヤーが死んでるなら更新しない
 	if (!this.player.alive) {
 		return;
 	}
@@ -231,9 +230,17 @@ App.Scene.PlayScene.prototype.update = function()
 	}
 	this.player.body.acceleration.x = 0;
 	if (this.cursors.left.isDown) {
-		this.player.body.acceleration.x -= 100;
+		if (this.player.body.velocity.x > 0) {
+			this.player.body.acceleration.x -= 200;
+		} else {
+			this.player.body.acceleration.x -= 100;
+		}
 	} else if (this.cursors.right.isDown) {
-		this.player.body.acceleration.x += 100;
+		if (this.player.body.velocity.x < 0) {
+			this.player.body.acceleration.x += 200;
+		} else {
+			this.player.body.acceleration.x += 100;
+		}
 	}
 
 	// ジャンプ
