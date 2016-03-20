@@ -56,7 +56,6 @@ App.Scene.PlayScene = function(game)
 
 	// プレイヤー
 	this.player;
-	this.player_move_vx;
 	this.player_move_vy;
 	this.player_can_jump;
 	this.player_is_dashed;
@@ -202,7 +201,6 @@ App.Scene.PlayScene.prototype.create = function()
 
 	this.cursors = this.game.input.keyboard.createCursorKeys();
 	this.player.revive();
-	this.player_move_vx = 0;
 	this.player_move_vy = 0;
 	this.player_is_dashed = false;
 };
@@ -214,46 +212,18 @@ App.Scene.PlayScene.prototype.update = function()
 {
 	var is_pressed_dash_button = this.input.keyboard.isDown(Phaser.Keyboard.X);
 
-	// ダッシュボタン押下状態とその反対では、
-	// 加速値に若干の差がある
+	if (!is_pressed_dash_button) {
+		this.player.body.maxVelocity.x = 60;
+		this.player.body.drag.x = 200;
+	} else {
+		this.player.body.maxVelocity.x = 120;
+		this.player.body.drag.x = 200;
+	}
+	this.player.body.acceleration.x = 0;
 	if (this.cursors.left.isDown) {
-		if (is_pressed_dash_button) {
-			this.player_move_vx -= 6;
-			// ダッシュ中にダッシュボタンを放した際に、
-			// 歩き速度用のクランプをされる問題を回避するためのフラグ
-			if (!this.player_is_dashed && this.player_move_vx < -80) {
-				this.player_is_dashed = true;
-			}
-			if (this.player_move_vx <= -140) {
-				this.player_move_vx = -140;
-			}
-		} else {
-			if (!this.player_is_dashed) {
-				this.player_move_vx -= 5;
-				if (this.player_move_vx <= -80) {
-					this.player_move_vx = -80;
-				}
-			}
-		}
+		this.player.body.acceleration.x -= 100;
 	} else if (this.cursors.right.isDown) {
-		if (is_pressed_dash_button) {
-			// ダッシュ中にダッシュボタンを放した際に、
-			// 歩き速度用のクランプをされる問題を回避するためのフラグ
-			if (!this.player_is_dashed && this.player_move_vx > 80) {
-				this.player_is_dashed = true;
-			}
-			this.player_move_vx += 6;
-			if (this.player_move_vx >= 140) {
-				this.player_move_vx = 140;
-			}
-		} else {
-			if (!this.player_is_dashed) {
-				this.player_move_vx += 5;
-				if (this.player_move_vx >= 80) {
-					this.player_move_vx = 80;
-				}
-			}
-		}
+		this.player.body.acceleration.x += 100;
 	}
 
 	this.game.physics.arcade.collide(this.enemies, this.layer);
@@ -267,20 +237,6 @@ App.Scene.PlayScene.prototype.update = function()
 	this.game.physics.arcade.collide(this.player, this.layer);
 	this.game.physics.arcade.overlap(this.player, this.goal_symbol, this.levelComplete_, null, this);
 	this.game.physics.arcade.overlap(this.player, this.enemies, this.collideEnemy_, null, this);
-
-	// すべり処理
-	if (this.player_move_vx < 0) {
-		this.player_move_vx = Phaser.Math.maxAdd(this.player_move_vx, 2, 0);
-		if (this.player_is_dashed && !is_pressed_dash_button && this.player_move_vx >= -80) {
-			this.player_is_dashed = false;
-		}
-	} else if (this.player_move_vx > 0) {
-		this.player_move_vx = Phaser.Math.minSub(this.player_move_vx, 2, 0);
-		if (this.player_is_dashed && !is_pressed_dash_button && this.player_move_vx <= 80) {
-			this.player_is_dashed = false;
-		}
-	}
-	this.player.body.velocity.x = this.player_move_vx;
 
 	// ジャンプ
 	if (this.player.body.onFloor()) {
@@ -302,7 +258,7 @@ App.Scene.PlayScene.prototype.update = function()
 
 	// テスト用
 	if (this.game.input.keyboard.isDown(Phaser.Keyboard.Q)) {
-		this.failedGame_();
+		this.player.kill();
 		return;
 	}
 
