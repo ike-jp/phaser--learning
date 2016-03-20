@@ -8,10 +8,10 @@
  */
 BasicGame.Preloader = function(game)
 {
-	AbstractScene.call(this, game);
+	App.Scene.AbstractScene.call(this, game);
 	this.preloadBar = null;
 };
-inherits(BasicGame.Preloader, AbstractScene);
+Application.inherits(BasicGame.Preloader, App.Scene.AbstractScene);
 
 /**
  * {@inheritdoc}

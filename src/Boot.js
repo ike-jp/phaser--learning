@@ -19,7 +19,6 @@ BasicGame.toggleFullscreen = function() {
  *
  * @param {Phaser.Game} game
  * @constructor
- * @extends {Scene}
  */
 BasicGame.Boot = function(game)
 {

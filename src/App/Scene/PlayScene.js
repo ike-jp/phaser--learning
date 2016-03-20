@@ -1,4 +1,6 @@
 
+Application.namespace('App.Scene');
+
 /**
  * プレイ画面クラス
  *
@@ -6,9 +8,9 @@
  * @constructor
  * @extends {AbstractScene}
  */
-BasicGame.ScenePlay = function(game)
+App.Scene.PlayScene = function(game)
 {
-	AbstractScene.call(this, game);
+	App.Scene.AbstractScene.call(this, game);
 
 	// When a State is added to Phaser it automatically has the
 	// following properties set on it, even if they already exist:
@@ -66,12 +68,12 @@ BasicGame.ScenePlay = function(game)
 
 	this.ready = false;
 };
-inherits(BasicGame.ScenePlay, AbstractScene);
+Application.inherits(App.Scene.PlayScene, App.Scene.AbstractScene);
 
 /**
  * {@inheritdoc}
  */
-BasicGame.ScenePlay.prototype.preload = function()
+App.Scene.PlayScene.prototype.preload = function()
 {
 	console.log("game.preload");
 };
@@ -79,7 +81,7 @@ BasicGame.ScenePlay.prototype.preload = function()
 /**
  * {@inheritdoc}
  */
-BasicGame.ScenePlay.prototype.create = function()
+App.Scene.PlayScene.prototype.create = function()
 {
 	this.game.stage.backgroundColor = Phaser.Color.getColor(80, 128, 255);
 
@@ -194,7 +196,7 @@ BasicGame.ScenePlay.prototype.create = function()
 /**
  * {@inheritdoc}
  */
-BasicGame.ScenePlay.prototype.update = function()
+App.Scene.PlayScene.prototype.update = function()
 {
 	this.game.physics.arcade.collide(this.enemies, this.layer);
 	this.game.physics.arcade.collide(this.enemies);
@@ -329,7 +331,7 @@ BasicGame.ScenePlay.prototype.update = function()
 /**
  * {@inheritdoc}
  */
-BasicGame.ScenePlay.prototype.render = function()
+App.Scene.PlayScene.prototype.render = function()
 {
 	//this.game.debug.bodyInfo(this.player, 0, 0);
 	//this.game.debug.body(this.player);
@@ -348,7 +350,7 @@ BasicGame.ScenePlay.prototype.render = function()
  *
  * @private
  */
-BasicGame.ScenePlay.prototype.quitGameToTitle_ = function(pointer)
+App.Scene.PlayScene.prototype.quitGameToTitle_ = function(pointer)
 {
 	this.state.start('SceneTitle');
 };
@@ -358,7 +360,7 @@ BasicGame.ScenePlay.prototype.quitGameToTitle_ = function(pointer)
  *
  * @private
  */
-BasicGame.ScenePlay.prototype.retryGame_ = function()
+App.Scene.PlayScene.prototype.retryGame_ = function()
 {
 	this.state.start('SceneLoad');
 };
@@ -368,7 +370,7 @@ BasicGame.ScenePlay.prototype.retryGame_ = function()
  *
  * @private
  */
-BasicGame.ScenePlay.prototype.failedGame_ = function()
+App.Scene.PlayScene.prototype.failedGame_ = function()
 {
 	if (this.is_failed) {
 		return;
@@ -392,7 +394,7 @@ BasicGame.ScenePlay.prototype.failedGame_ = function()
  *
  * @private
  */
-BasicGame.ScenePlay.prototype.levelComplete_ = function(player, symbol)
+App.Scene.PlayScene.prototype.levelComplete_ = function(player, symbol)
 {
 	console.log('LEVEL COMPLETE!');
 	symbol.kill();
@@ -408,7 +410,7 @@ BasicGame.ScenePlay.prototype.levelComplete_ = function(player, symbol)
  *
  * @private
  */
-BasicGame.ScenePlay.prototype.updateTimeCounter_ = function()
+App.Scene.PlayScene.prototype.updateTimeCounter_ = function()
 {
 	this.time_counter -= 1;
 	if (this.time_counter >= 0) {
@@ -425,7 +427,7 @@ BasicGame.ScenePlay.prototype.updateTimeCounter_ = function()
  * @param {Phaser.Sprite} player
  * @param {Phaser.Sprite} symbol
  */
-BasicGame.ScenePlay.prototype.levelComplete_ = function(player, symbol)
+App.Scene.PlayScene.prototype.levelComplete_ = function(player, symbol)
 {
 	console.log('LEVEL COMPLETE!');
 	symbol.kill();
@@ -443,7 +445,7 @@ BasicGame.ScenePlay.prototype.levelComplete_ = function(player, symbol)
  * @param {Phaser.Sprite} player
  * @param {Phaser.Sprite} symbol
  */
-BasicGame.ScenePlay.prototype.collideEnemy_ = function(player, enemy)
+App.Scene.PlayScene.prototype.collideEnemy_ = function(player, enemy)
 {
 	if (player.body.touching.down) {
 		player.body.velocity.y = -300;
@@ -459,7 +461,7 @@ BasicGame.ScenePlay.prototype.collideEnemy_ = function(player, enemy)
  * @private
  * @param {Phaser.Sprite} player
  */
-BasicGame.ScenePlay.prototype.playerOutOfBounds_ = function(player)
+App.Scene.PlayScene.prototype.playerOutOfBounds_ = function(player)
 {
 	console.log(player.position.y);
 	console.log(this.game.physics.arcade.bounds.bottom);
