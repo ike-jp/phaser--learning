@@ -8,8 +8,9 @@
  */
 BasicGame.SceneTitle = function(game)
 {
-	// have nothing to do
+	AbstractScene.call(this, game);
 };
+inherits(BasicGame.SceneTitle, AbstractScene);
 
 /**
  * {@inheritdoc}

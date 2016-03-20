@@ -8,8 +8,9 @@
  */
 BasicGame.SceneLoad = function(game)
 {
-	// have nothing to do
+	AbstractScene.call(this, game);
 };
+inherits(BasicGame.SceneLoad, AbstractScene);
 
 /**
  * {@inheritdoc}

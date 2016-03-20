@@ -4,10 +4,12 @@
  *
  * @param {Phaser.Game} game
  * @constructor
- * @extends {Scene}
+ * @extends {AbstractScene}
  */
 BasicGame.ScenePlay = function(game)
 {
+	AbstractScene.call(this, game);
+
 	// When a State is added to Phaser it automatically has the
 	// following properties set on it, even if they already exist:
 	//
@@ -64,6 +66,7 @@ BasicGame.ScenePlay = function(game)
 
 	this.ready = false;
 };
+inherits(BasicGame.ScenePlay, AbstractScene);
 
 /**
  * {@inheritdoc}

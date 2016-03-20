@@ -12,7 +12,7 @@ BasicGame.toggleFullscreen = function() {
 	} else {
 		this.scale.startFullScreen(false);
 	}
-}
+};
 
 /**
  * 起動クラス
