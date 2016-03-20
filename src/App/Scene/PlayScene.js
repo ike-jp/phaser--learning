@@ -210,8 +210,18 @@ App.Scene.PlayScene.prototype.create = function()
  */
 App.Scene.PlayScene.prototype.update = function()
 {
-	var is_pressed_dash_button = this.input.keyboard.isDown(Phaser.Keyboard.X);
+	this.game.physics.arcade.collide(this.enemies, this.layer);
+	this.game.physics.arcade.collide(this.enemies);
 
+	// プレイヤーが死んでるなら更新しない
+	if (!this.player.alive) {
+		return;
+	}
+	this.game.physics.arcade.collide(this.player, this.layer);
+	this.game.physics.arcade.overlap(this.player, this.goal_symbol, this.levelComplete_, null, this);
+	this.game.physics.arcade.overlap(this.player, this.enemies, this.collideEnemy_, null, this);
+
+	var is_pressed_dash_button = this.input.keyboard.isDown(Phaser.Keyboard.X);
 	if (!is_pressed_dash_button) {
 		this.player.body.maxVelocity.x = 60;
 		this.player.body.drag.x = 200;
@@ -225,18 +235,6 @@ App.Scene.PlayScene.prototype.update = function()
 	} else if (this.cursors.right.isDown) {
 		this.player.body.acceleration.x += 100;
 	}
-
-	this.game.physics.arcade.collide(this.enemies, this.layer);
-	this.game.physics.arcade.collide(this.enemies);
-
-	// プレイヤーが死んでるなら更新しない
-	if (!this.player.alive) {
-		return;
-	}
-
-	this.game.physics.arcade.collide(this.player, this.layer);
-	this.game.physics.arcade.overlap(this.player, this.goal_symbol, this.levelComplete_, null, this);
-	this.game.physics.arcade.overlap(this.player, this.enemies, this.collideEnemy_, null, this);
 
 	// ジャンプ
 	if (this.player.body.onFloor()) {
