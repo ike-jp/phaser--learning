@@ -445,7 +445,7 @@ App.Scene.PlayScene.prototype.levelComplete_ = function(player, symbol)
 	t.anchor.setTo(0.5, 0.5);
 	t.smoothed = false;
 	t.fixedToCamera = true;
-	t.cameraOffset.setTo(this.game.width/2, this.game.height*2/8);
+	t.cameraOffset.setTo(this.game.halfWidth, this.game.height*2/8);
 
 	this.text_level_msg = this.game.add.retroFont('myfont', 8, 10, this.TEXT_SET, 10);
 	this.text_level_msg.text = "YOU MADE IT ON TIME TO WORK";
@@ -453,7 +453,7 @@ App.Scene.PlayScene.prototype.levelComplete_ = function(player, symbol)
 	t.anchor.setTo(0.5, 0.5);
 	t.smoothed = false;
 	t.fixedToCamera = true;
-	t.cameraOffset.setTo(this.game.width/2, this.game.height*3/8);
+	t.cameraOffset.setTo(this.game.halfWidth, this.game.height*3/8);
 
 	// 操作を無効にする
 	// クリア後アニメーション
