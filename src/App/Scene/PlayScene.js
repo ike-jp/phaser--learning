@@ -50,10 +50,12 @@ App.Scene.PlayScene = function(game)
 	this.time_limit;
 	this.time_counter;
 	this.MAX_VELOCITY_Y = 250;
+	this.TEXT_SET = Phaser.RetroFont.TEXT_SET3 + 'x-:!'
 
 	this.text_level;
 	this.text_time;
 	this.text_score;
+	this.text_level_complete;
 
 	// プレイヤー
 	this.player;
@@ -188,21 +190,21 @@ App.Scene.PlayScene.prototype.create = function()
 	this.game.time.events.loop(Phaser.Timer.SECOND, this.updateTimeCounter_, this);
 
 	// テキスト
-	this.text_level = this.game.add.retroFont('myfont', 8, 10, Phaser.RetroFont.TEXT_SET3 + 'x-:', 10);
+	this.text_level = this.game.add.retroFont('myfont', 8, 10, this.TEXT_SET, 10);
 	var t = this.game.add.image(0, 0, this.text_level);
 	t.smoothed = false;
 	t.fixedToCamera = true;
 	t.cameraOffset.setTo(10, 6);
 	this.text_level.text = "WORLD1-1";
 
-	this.text_time = this.game.add.retroFont('myfont', 8, 10, Phaser.RetroFont.TEXT_SET3 + 'x-:', 10);
+	this.text_time = this.game.add.retroFont('myfont', 8, 10, this.TEXT_SET, 10);
 	t = this.game.add.image(90, 6, this.text_time);
 	t.smoothed = false;
 	t.fixedToCamera = true;
 	t.cameraOffset.setTo(90, 6)
 	this.text_time.text = 'TIME:' + ('00'+this.time_counter).slice(-3);
 
-	this.text_score = this.game.add.retroFont('myfont', 8, 10, Phaser.RetroFont.TEXT_SET3 + 'x-:', 10);
+	this.text_score = this.game.add.retroFont('myfont', 8, 10, this.TEXT_SET, 10);
 	t = this.game.add.image(190, 6, this.text_score);
 	t.smoothed = false;
 	t.fixedToCamera = true;
@@ -436,11 +438,28 @@ App.Scene.PlayScene.prototype.levelComplete_ = function(player, symbol)
 	t.to({x:2, y:2}, 1000, Phaser.Easing.Linear.None);
 	t.start();
 
+	// コースクリアメッセージ
+	this.text_level_complete = this.game.add.retroFont('myfont', 8, 10, this.TEXT_SET, 10);
+	this.text_level_complete.text = "LEVEL COMPLETE !";
+	var t = this.game.add.image(0, 0, this.text_level_complete);
+	t.anchor.setTo(0.5, 0.5);
+	t.smoothed = false;
+	t.fixedToCamera = true;
+	t.cameraOffset.setTo(this.game.width/2, this.game.height*2/8);
+
+	this.text_level_msg = this.game.add.retroFont('myfont', 8, 10, this.TEXT_SET, 10);
+	this.text_level_msg.text = "YOU MADE IT ON TIME TO WORK";
+	var t = this.game.add.image(0, 0, this.text_level_msg);
+	t.anchor.setTo(0.5, 0.5);
+	t.smoothed = false;
+	t.fixedToCamera = true;
+	t.cameraOffset.setTo(this.game.width/2, this.game.height*3/8);
+
 	// 操作を無効にする
 	// クリア後アニメーション
 	// LEVEL COMPLETE文字とか表示するやつ実行
 	// toNextLevel_を呼び出す
-	this.game.time.events.add(Phaser.Timer.SECOND * 3, this.toNextLevel_, this);
+	this.game.time.events.add(Phaser.Timer.SECOND * 6, this.toNextLevel_, this);
 };
 
 /**
