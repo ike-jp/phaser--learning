@@ -64,6 +64,7 @@ App.Scene.PlayScene = function(game)
 	this.enemies;
 
 	// アイテム
+	this.items;
 	this.goal_symbol;
 
 	this.cursors;
@@ -115,6 +116,41 @@ App.Scene.PlayScene.prototype.create = function()
 	this.game.physics.arcade.checkCollision.down = false; // ワールドの下判定を行わない
 	this.game.physics.arcade.gravity.y = 1500;
 
+	// item group
+	this.items = this.game.add.group();
+	this.items.enableBody = true;
+	this.map.createFromObjects('Items Layer', "yuni-", 'items', 0, true, false, this.items);
+	this.items.callAll('animations.add', 'animations', 'idle', [0, 0, 1, 2, 1], 4, true);
+	this.items.callAll('animations.play', 'animations', 'idle');
+	this.items.setAll('body.allowGravity', false);
+	this.items.setAll('smoothed', false);
+
+	// enemy group
+	this.enemies = this.game.add.group();
+	this.enemies.enableBody = true;
+	//this.physicsBodyType = Phaser.Physics.ARCADE;
+	this.map.createFromObjects('Enemies Layer', "yukibo-s", 'enemies1', 0, true, false, this.enemies);
+	this.map.createFromObjects('Enemies Layer', "yukibo-e", 'enemies2', 0, true, false, this.enemies);
+	this.enemies.callAll('animations.add', 'animations', 'walk', [0, 1], 6, true);
+	this.enemies.callAll('animations.play', 'animations', 'walk');
+	this.enemies.setAll('body.velocity.x', -20);
+	this.enemies.setAll('smoothed', false);
+
+	this.enemies.setAll('checkWorldBounds', true);
+//		this.enemies.callAll('events.onOutOfBounds.add', function() {}, this);
+	this.enemies.setAll('body.collideWorldBouns', true);
+	this.enemies.setAll('body.bounce.x', 1);
+	this.enemies.setAll('body.bounce.y', 0);
+
+	// ゴールシンボル
+	// TODO: 本来アイテムと一緒にすべきだが、
+	// 16x16のタイルセットから32x32のオブジェクトを生成する方法が分からないので暫定対応
+	this.goal_symbol = this.game.add.group();
+	this.goal_symbol.enableBody = true;
+	this.map.createFromObjects('Items Layer', "goal-symbol", 'goal-symbol', 0, true, false, this.goal_symbol);
+	this.goal_symbol.setAll('body.allowGravity', false);
+	this.goal_symbol.setAll('smoothed', false);
+
 	// プレイヤー設定
 	this.player = this.game.add.sprite(
 		16*5, // this.game.world.centerX,
@@ -141,32 +177,6 @@ App.Scene.PlayScene.prototype.create = function()
 	this.player.animations.add('jump', [5], 10, false);
 	this.player.animations.add('failed', [6], 10, false);
 	this.player.play('stand');
-
-	// enemy group
-	this.enemies = this.game.add.group();
-	this.enemies.enableBody = true;
-	//this.physicsBodyType = Phaser.Physics.ARCADE;
-	this.map.createFromObjects('Enemies Layer', "yukibo-s", 'enemies1', 0, true, false, this.enemies);
-	this.map.createFromObjects('Enemies Layer', "yukibo-e", 'enemies2', 0, true, false, this.enemies);
-	this.enemies.callAll('animations.add', 'animations', 'walk', [0, 1], 6, true);
-	this.enemies.callAll('animations.play', 'animations', 'walk');
-	this.enemies.setAll('body.velocity.x', -20);
-	this.enemies.setAll('smoothed', false);
-
-	this.enemies.setAll('checkWorldBounds', true);
-//		this.enemies.callAll('events.onOutOfBounds.add', function() {}, this);
-	this.enemies.setAll('body.collideWorldBouns', true);
-	this.enemies.setAll('body.bounce.x', 1);
-	this.enemies.setAll('body.bounce.y', 0);
-
-	// ゴールシンボル
-	// TODO: 本来アイテムと一緒にすべきだが、
-	// 16x16のタイルセットから32x32のオブジェクトを生成する方法が分からないので暫定対応
-	this.goal_symbol = this.game.add.group();
-	this.goal_symbol.enableBody = true;
-	this.map.createFromObjects('Items Layer', "goal-symbol", 'goal-symbol', 0, true, false, this.goal_symbol);
-	this.goal_symbol.setAll('smoothed', false);
-	this.goal_symbol.setAll('body.allowGravity', false);
 
 	// タイマー
 	this.time_limit = 120;
@@ -219,6 +229,7 @@ App.Scene.PlayScene.prototype.update = function()
 	this.game.physics.arcade.collide(this.player, this.layer);
 	this.game.physics.arcade.overlap(this.player, this.goal_symbol, this.levelComplete_, null, this);
 	this.game.physics.arcade.overlap(this.player, this.enemies, this.collideEnemy_, null, this);
+	this.game.physics.arcade.overlap(this.player, this.items, this.collideItem_, null, this);
 
 	var is_pressed_dash_button = this.input.keyboard.isDown(Phaser.Keyboard.X);
 	if (!is_pressed_dash_button) {
@@ -447,7 +458,7 @@ App.Scene.PlayScene.prototype.toNextLevel_ = function()
  *
  * @private
  * @param {Phaser.Sprite} player
- * @param {Phaser.Sprite} symbol
+ * @param {Phaser.Sprite} enemy
  */
 App.Scene.PlayScene.prototype.collideEnemy_ = function(player, enemy)
 {
@@ -457,6 +468,19 @@ App.Scene.PlayScene.prototype.collideEnemy_ = function(player, enemy)
 	} else {
 		player.damage(1);
 	}
+};
+
+/**
+ * プレイヤーxアイテム衝突コールバック
+ *
+ * @private
+ * @param {Phaser.Sprite} player
+ * @param {Phaser.Sprite} item
+ */
+App.Scene.PlayScene.prototype.collideItem_ = function(player, item)
+{
+	item.kill();
+	// スコア加算
 };
 
 /**

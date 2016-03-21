@@ -40,6 +40,7 @@ App.Scene.PreloadScene.prototype.preload = function()
 	this.load.spritesheet('player', 'assets/objects/player.png', 16, 16);
 	this.load.spritesheet('enemies1', 'assets/objects/enemies1.png', 16, 16);
 	this.load.spritesheet('enemies2', 'assets/objects/enemies2.png', 16, 16);
+	this.load.spritesheet('items', 'assets/objects/items.png', 16, 16);
 	this.load.spritesheet('goal-symbol', 'assets/objects/goal-symbol.png', 32, 32);
 	this.load.image('bg', 'assets/tilemaps/tiles/bg.png');
 	this.load.image('terrain', 'assets/tilemaps/tiles/terrain.png');
