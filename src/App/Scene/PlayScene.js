@@ -241,7 +241,7 @@ App.Scene.PlayScene.prototype.update = function()
 		this.player.body.drag.x = 200;
 	} else {
 		this.player.body.maxVelocity.x = 140;
-		this.player.body.drag.x = 220;
+		this.player.body.drag.x = 240;
 	}
 	this.player.body.acceleration.x = 0;
 	if (this.cursors.left.isDown) {
