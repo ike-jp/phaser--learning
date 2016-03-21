@@ -88,6 +88,7 @@ App.Util.Input.Keyboard.prototype.isOn = function(key_code)
 /**
  * キーコードで指定されたキーが押されているかををチェックする
  *
+ * @private
  * @param {Phaser.KeyCode} key_code
  */
 App.Util.Input.Keyboard.prototype.ensurePresenceOfKey_ = function(key_code)
