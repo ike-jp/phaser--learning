@@ -37,7 +37,7 @@ Application.namespace = function(ns_string)
 
 	for (i = 0; i < parts.length; i += 1) {
 		// プロパティが存在しなければ作成する
-		if ( typeof parent[parts[i]] === "undefined") {
+		if (typeof parent[parts[i]] === "undefined") {
 			parent[parts[i]] = {}; // モジュールのオブジェクト生成
 		}
 		parent = parent[parts[i]];
