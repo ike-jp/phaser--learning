@@ -458,6 +458,7 @@ App.Scene.PlayScene.prototype.levelComplete_ = function(player, symbol)
 	// 操作を無効にする
 	// クリア後アニメーション
 	// LEVEL COMPLETE文字とか表示するやつ実行
+	// クリアスコア加算
 	// toNextLevel_を呼び出す
 	this.game.time.events.add(Phaser.Timer.SECOND * 6, this.toNextLevel_, this);
 };
