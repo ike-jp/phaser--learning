@@ -49,6 +49,7 @@ App.Scene.PlayScene = function(game)
 	// ゲーム情報
 	this.time_limit;
 	this.time_counter;
+	this.MAX_VELOCITY_Y = 300;
 
 	this.text_level;
 	this.text_time;
@@ -123,6 +124,7 @@ App.Scene.PlayScene.prototype.create = function()
 	this.items.callAll('animations.add', 'animations', 'idle', [0, 0, 1, 2, 1], 4, true);
 	this.items.callAll('animations.play', 'animations', 'idle');
 	this.items.setAll('body.allowGravity', false);
+	this.items.setAll('body.maxVelocity.y', this.MAX_VELOCITY_Y);
 	this.items.setAll('smoothed', false);
 
 	// enemy group
@@ -134,6 +136,7 @@ App.Scene.PlayScene.prototype.create = function()
 	this.enemies.callAll('animations.add', 'animations', 'walk', [0, 1], 6, true);
 	this.enemies.callAll('animations.play', 'animations', 'walk');
 	this.enemies.setAll('body.velocity.x', -20);
+	this.enemies.setAll('body.maxVelocity.y', this.MAX_VELOCITY_Y);
 	this.enemies.setAll('smoothed', false);
 
 	this.enemies.setAll('checkWorldBounds', true);
@@ -162,6 +165,7 @@ App.Scene.PlayScene.prototype.create = function()
 	this.player.body.collideWorldBounds = true;
 	this.player.checkWorldBounds = true;
 	this.player.events.onOutOfBounds.add(this.playerOutOfBounds_, this);
+	this.player.body.maxVelocity.y = this.MAX_VELOCITY_Y;
 	this.player.body.linearDamping = 1;
 	this.player.smoothed = false;
 
