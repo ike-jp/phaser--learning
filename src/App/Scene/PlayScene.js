@@ -332,28 +332,10 @@ App.Scene.PlayScene.prototype.updateTimeCounter_ = function()
 };
 
 /**
- * ゴールシンボル取得
- *
- * @private
- * @param {Phaser.Sprite} player
- * @param {Phaser.Sprite} symbol
- */
-App.Scene.PlayScene.prototype.levelComplete_ = function(player, symbol)
-{
-	console.log('LEVEL COMPLETE!');
-	symbol.kill();
-
-	player.body.velocity.x = 0;
-	var t = this.game.add.tween(player.scale);
-	t.to({x:2, y:2}, 1000, Phaser.Easing.Linear.None);
-	t.start();
-};
-
-/**
  * プレイヤーがやられた
- * @param {Phaser.Sprite} player
  *
  * @private
+ * @param {Phaser.Sprite} player
  */
 App.Scene.PlayScene.prototype.killedPlayer_ = function(player)
 {
@@ -394,7 +376,7 @@ App.Scene.PlayScene.prototype.killedPlayer_ = function(player)
  *
  * @private
  */
-App.Scene.PlayScene.prototype.failed_ = function(pointer)
+App.Scene.PlayScene.prototype.failed_ = function()
 {
 	// 残機チェック
 	if (true) {
@@ -409,7 +391,7 @@ App.Scene.PlayScene.prototype.failed_ = function(pointer)
  *
  * @private
  */
-App.Scene.PlayScene.prototype.quit_ = function(pointer)
+App.Scene.PlayScene.prototype.quit_ = function()
 {
 	this.state.start('SceneTitle');
 };
@@ -438,7 +420,27 @@ App.Scene.PlayScene.prototype.levelComplete_ = function(player, symbol)
 	var t = this.game.add.tween(player.scale);
 	t.to({x:2, y:2}, 1000, Phaser.Easing.Linear.None);
 	t.start();
+
+	// 操作を無効にする
+	// クリア後アニメーション
+	// LEVEL COMPLETE文字とか表示するやつ実行
+	// toNextLevel_を呼び出す
+	this.game.time.events.add(Phaser.Timer.SECOND * 3, this.toNextLevel_, this);
 };
+
+/**
+ * このゲームを終了して次のレベルへ遷移する
+ *
+ * @private
+ */
+App.Scene.PlayScene.prototype.toNextLevel_ = function()
+{
+	console.log('NEXT LEVEL!');
+	// レベル番号加算
+	// ワールド番号加算
+
+	this.state.start('SceneLoad');
+}
 
 /**
  * プレイヤーx敵衝突コールバック
