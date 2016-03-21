@@ -131,7 +131,7 @@ App.Scene.PlayScene.prototype.create = function()
 
 	this.player.maxHealth = 1;
 	this.player.health = this.player.maxHealth;
-	this.player.events.onKilled.add(this.killedPlayer_, this);
+	this.player.events.onKilled.add(this.killedPlayer_, this, this.player);
 
 	// プレイヤーアニメーション設定
 	this.player.animations.add('stand', [0], 10, false);
@@ -351,15 +351,18 @@ App.Scene.PlayScene.prototype.levelComplete_ = function(player, symbol)
 
 /**
  * プレイヤーがやられた
+ * @param {Phaser.Sprite} player
  *
  * @private
  */
-App.Scene.PlayScene.prototype.killedPlayer_ = function()
+App.Scene.PlayScene.prototype.killedPlayer_ = function(player)
 {
-	console.log("called failedGame");
-	var player_x = this.player.body.position.x;
-	var player_y = this.player.body.position.y;
-	var dying_player = this.game.add.sprite(player_x, player_y, 'player');
+	console.log("called killedPlayser_");
+	var dying_player = this.game.add.sprite(
+		player.body.position.x,
+		player.body.position.y,
+		'player'
+	);
 	dying_player.animations.add('failed', [6], 10, false);
 	dying_player.play('failed');
 
