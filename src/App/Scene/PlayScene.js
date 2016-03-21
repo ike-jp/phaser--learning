@@ -294,6 +294,10 @@ App.Scene.PlayScene.prototype.update = function()
 		return;
 	}
 
+	if (this.keyboard.isTriggered(Phaser.Keyboard.E)) {
+		this.addEffectOfScore(100, 100, 50);
+	}
+
 	// アニメーション制御
 	if (this.player.body.velocity.y != 0) {
 		this.player.play('jump');
@@ -499,9 +503,34 @@ App.Scene.PlayScene.prototype.collideEnemy_ = function(player, enemy)
 	if (player.body.touching.down) {
 		player.body.velocity.y = -300;
 		enemy.kill();
+		var score = 100;
+		this.addEffectOfScore(enemy.position.x, enemy.position.y, score);
 	} else {
 		player.damage(1);
 	}
+}
+
+/**
+ * スコアエフェクト
+ *
+ * @private
+ * @param {integer} x
+ * @param {integer} y
+ * @param {integer} value
+ */
+App.Scene.PlayScene.prototype.addEffectOfScore = function(x, y, value)
+{
+	var font = this.game.add.retroFont('myfont-num-s', 4, 5, '0123456789', 10);
+	var image = this.game.add.image(x, y, font);
+	image.smoothed = false;
+	image.anchor.setTo(0.5, 0.5);
+	font.text = '' + value;
+	var tween = this.game.add.tween(image);
+	tween.to({ y: y -10 }, 500, Phaser.Easing.Linear.None, true);
+	// TODO: もっと良い削除方法あるかも
+	tween.onComplete.add(function() {
+		image.kill();
+	}, this);
 }
 
 /**

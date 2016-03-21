@@ -46,6 +46,7 @@ App.Scene.PreloadScene.prototype.preload = function()
 	this.load.image('terrain', 'assets/tilemaps/tiles/terrain.png');
 	this.load.tilemap('map', 'assets/tilemaps/json/level1.json', null, Phaser.Tilemap.TILED_JSON);
 	this.load.image('myfont', 'assets/fonts/myfont.png');
+	this.load.image('myfont-num-s', 'assets/fonts/myfont-num-s.png');
 }
 
 /**
