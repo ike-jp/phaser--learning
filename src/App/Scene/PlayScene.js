@@ -137,6 +137,8 @@ App.Scene.PlayScene.prototype.create = function()
 	//this.physicsBodyType = Phaser.Physics.ARCADE;
 	this.map.createFromObjects('Enemies Layer', "yukibo-s", 'enemies1', 0, true, false, this.enemies);
 	this.map.createFromObjects('Enemies Layer', "yukibo-e", 'enemies2', 0, true, false, this.enemies);
+	this.enemies.setAll('anchor.x', 0.5);
+	this.enemies.setAll('anchor.y', 0.5);
 	this.enemies.callAll('animations.add', 'animations', 'walk', [0, 1], 6, true);
 	this.enemies.callAll('animations.play', 'animations', 'walk');
 	this.enemies.setAll('body.velocity.x', -20);
