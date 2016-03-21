@@ -49,7 +49,7 @@ App.Scene.PlayScene = function(game)
 	// ゲーム情報
 	this.time_limit;
 	this.time_counter;
-	this.MAX_VELOCITY_Y = 300;
+	this.MAX_VELOCITY_Y = 250;
 
 	this.text_level;
 	this.text_time;
