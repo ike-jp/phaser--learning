@@ -4,6 +4,7 @@
  */
 
 Application.namespace('App.Scene');
+Application.namespace('App.Util.Input.Keyboard');
 
 /**
  * プレイ画面クラス
@@ -70,9 +71,10 @@ App.Scene.PlayScene = function(game)
 	this.items;
 	this.goal_symbol;
 
-	this.cursors;
-
 	this.ready = false;
+
+	// テスト
+	this.keyboard;
 };
 Application.inherits(App.Scene.PlayScene, App.Scene.AbstractScene);
 
@@ -215,10 +217,12 @@ App.Scene.PlayScene.prototype.create = function()
 	this.game.camera.follow(this.player);
 	this.game.camera.deadzone = new Phaser.Rectangle(16*6, 16*6, 16*2, 16*4);
 
-	this.cursors = this.game.input.keyboard.createCursorKeys();
 	this.player.revive();
 	this.player_move_vy = 0;
 	this.player_is_dashed = false;
+
+	// テスト
+	this.keyboard = new App.Util.Input.Keyboard(this.game.input.keyboard);
 };
 
 /**
@@ -226,6 +230,7 @@ App.Scene.PlayScene.prototype.create = function()
  */
 App.Scene.PlayScene.prototype.update = function()
 {
+	this.keyboard.update();
 	this.game.physics.arcade.collide(this.enemies, this.layer);
 	this.game.physics.arcade.collide(this.enemies);
 
@@ -237,7 +242,7 @@ App.Scene.PlayScene.prototype.update = function()
 	this.game.physics.arcade.overlap(this.player, this.enemies, this.collideEnemy_, null, this);
 	this.game.physics.arcade.overlap(this.player, this.items, this.collideItem_, null, this);
 
-	var is_pressed_dash_button = this.input.keyboard.isDown(Phaser.Keyboard.X);
+	var is_pressed_dash_button = this.keyboard.isOn(Phaser.Keyboard.X);
 	if (!is_pressed_dash_button) {
 		this.player.body.maxVelocity.x = 60;
 		this.player.body.drag.x = 200;
@@ -246,13 +251,13 @@ App.Scene.PlayScene.prototype.update = function()
 		this.player.body.drag.x = 240;
 	}
 	this.player.body.acceleration.x = 0;
-	if (this.cursors.left.isDown) {
+	if (this.keyboard.isOn(Phaser.Keyboard.LEFT)) {
 		if (this.player.body.velocity.x > 0) {
 			this.player.body.acceleration.x -= 200;
 		} else {
 			this.player.body.acceleration.x -= 100;
 		}
-	} else if (this.cursors.right.isDown) {
+	} else if (this.keyboard.isOn(Phaser.Keyboard.RIGHT)) {
 		if (this.player.body.velocity.x < 0) {
 			this.player.body.acceleration.x += 200;
 		} else {
@@ -265,12 +270,17 @@ App.Scene.PlayScene.prototype.update = function()
 		this.player_can_jump = true;
 	}
 	// ジャンプ
-	if (this.cursors.up.isDown
-	||  this.input.keyboard.isDown(Phaser.Keyboard.Z)
-	||  this.input.keyboard.isDown(Phaser.Keyboard.SPACEBAR)) {
+	if (this.keyboard.isTriggered(Phaser.Keyboard.UP)
+	||  this.keyboard.isTriggered(Phaser.Keyboard.Z)
+	||  this.keyboard.isTriggered(Phaser.Keyboard.SPACEBAR)) {
 		if (this.player.body.onFloor()) {
 			this.player.body.velocity.y = -270;
-		} else if (this.player_can_jump) {
+		}
+	}
+	if (this.keyboard.isPressed(Phaser.Keyboard.UP)
+	||  this.keyboard.isPressed(Phaser.Keyboard.Z)
+	||  this.keyboard.isPressed(Phaser.Keyboard.SPACEBAR)) {
+		if (this.player_can_jump) {
 			this.player.body.velocity.y -= 17;
 			if (this.player.body.velocity.y < -400) {
 				this.player_can_jump = false;
@@ -279,7 +289,7 @@ App.Scene.PlayScene.prototype.update = function()
 	}
 
 	// テスト用
-	if (this.game.input.keyboard.isDown(Phaser.Keyboard.Q)) {
+	if (this.keyboard.isTriggered(Phaser.Keyboard.Q)) {
 		this.player.kill();
 		return;
 	}
@@ -288,7 +298,7 @@ App.Scene.PlayScene.prototype.update = function()
 	if (this.player.body.velocity.y != 0) {
 		this.player.play('jump');
 	} else if (this.player.body.velocity.x < 0) {
-		if (this.cursors.right.isDown) {
+		if (this.keyboard.isOn(Phaser.Keyboard.RIGHT)) {
 			this.player.scale.x = 1;
 			this.player.play('quickturn');
 		} else {
@@ -300,7 +310,7 @@ App.Scene.PlayScene.prototype.update = function()
 			}
 		}
 	} else if (this.player.body.velocity.x > 0) {
-		if (this.cursors.left.isDown) {
+		if (this.keyboard.isOn(Phaser.Keyboard.LEFT)) {
 			this.player.scale.x = -1;
 			this.player.play('quickturn');
 		} else {
