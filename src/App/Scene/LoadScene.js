@@ -15,7 +15,7 @@ Application.namespace('App.Scene');
 App.Scene.LoadScene = function(game)
 {
 	App.Scene.AbstractScene.call(this, game);
-};
+}
 Application.inherits(App.Scene.LoadScene, App.Scene.AbstractScene);
 
 /**
@@ -24,7 +24,7 @@ Application.inherits(App.Scene.LoadScene, App.Scene.AbstractScene);
 App.Scene.LoadScene.prototype.preload = function()
 {
 	this.game.stage.backgroundColor = Phaser.Color.getColor(0, 0, 0);
-};
+}
 
 /**
  * @override
@@ -38,4 +38,4 @@ App.Scene.LoadScene.prototype.create = function()
 		},
 		this
 	);
-};
+}

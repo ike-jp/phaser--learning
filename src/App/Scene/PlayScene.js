@@ -75,7 +75,7 @@ App.Scene.PlayScene = function(game)
 
 	// テスト
 	this.keyboard;
-};
+}
 Application.inherits(App.Scene.PlayScene, App.Scene.AbstractScene);
 
 /**
@@ -84,7 +84,7 @@ Application.inherits(App.Scene.PlayScene, App.Scene.AbstractScene);
 App.Scene.PlayScene.prototype.preload = function()
 {
 	console.log("game.preload");
-};
+}
 
 /**
  * @override
@@ -223,7 +223,7 @@ App.Scene.PlayScene.prototype.create = function()
 
 	// テスト
 	this.keyboard = new App.Util.Input.Keyboard(this.game.input.keyboard);
-};
+}
 
 /**
  * @override
@@ -324,7 +324,7 @@ App.Scene.PlayScene.prototype.update = function()
 	} else {
 		this.player.play('stand');
 	}
-};
+}
 
 /**
  * @override
@@ -341,7 +341,7 @@ App.Scene.PlayScene.prototype.render = function()
 	//var zone = this.game.camera.deadzone;
 	//this.game.context.fillStyle = 'rgba(255,0,0,0.6)';
 	//this.game.context.fillRect(zone.x, zone.y, zone.width, zone.height);
-};
+}
 
 /**
  * ゲームタイマー更新
@@ -356,7 +356,7 @@ App.Scene.PlayScene.prototype.updateTimeCounter_ = function()
 	} else if (this.time_counter == -1) {
 		this.player.kill();
 	}
-};
+}
 
 /**
  * プレイヤーがやられた
@@ -396,7 +396,7 @@ App.Scene.PlayScene.prototype.killedPlayer_ = function(player)
 		},
 		this
 	);
-};
+}
 
 /**
  * ゲーム失敗後の処理
@@ -421,7 +421,7 @@ App.Scene.PlayScene.prototype.failed_ = function()
 App.Scene.PlayScene.prototype.quit_ = function()
 {
 	this.state.start('SceneTitle');
-};
+}
 
 /**
  * このゲームをやり直す
@@ -431,7 +431,7 @@ App.Scene.PlayScene.prototype.quit_ = function()
 App.Scene.PlayScene.prototype.retry_ = function()
 {
 	this.state.start('SceneLoad');
-};
+}
 
 /**
  * ゲームクリア処理
@@ -471,7 +471,7 @@ App.Scene.PlayScene.prototype.levelComplete_ = function(player, symbol)
 	// クリアスコア加算
 	// toNextLevel_を呼び出す
 	this.game.time.events.add(Phaser.Timer.SECOND * 6, this.toNextLevel_, this);
-};
+}
 
 /**
  * このゲームを終了して次のレベルへ遷移する
@@ -502,7 +502,7 @@ App.Scene.PlayScene.prototype.collideEnemy_ = function(player, enemy)
 	} else {
 		player.damage(1);
 	}
-};
+}
 
 /**
  * プレイヤーxアイテム衝突コールバック
@@ -515,7 +515,7 @@ App.Scene.PlayScene.prototype.collideItem_ = function(player, item)
 {
 	item.kill();
 	// スコア加算
-};
+}
 
 /**
  * プレイヤーが画面外に出た場合の処理
@@ -530,4 +530,4 @@ App.Scene.PlayScene.prototype.playerOutOfBounds_ = function(player)
 	if (player.position.y > this.game.physics.arcade.bounds.bottom) {
 		player.damage(1);
 	}
-};
+}

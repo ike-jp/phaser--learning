@@ -15,7 +15,7 @@ Application.namespace('App.Scene');
 App.Scene.TitleScene = function(game)
 {
 	App.Scene.AbstractScene.call(this, game);
-};
+}
 Application.inherits(App.Scene.TitleScene, App.Scene.AbstractScene);
 
 /**
@@ -45,7 +45,7 @@ App.Scene.TitleScene.prototype.create = function()
 	);
 	textPlayGame.anchor.set(0.5);
 	textPlayGame.smoothed = false;
-};
+}
 
 /**
  * @override
@@ -57,4 +57,4 @@ App.Scene.TitleScene.prototype.update = function()
 	if (this.game.input.keyboard.isDown(Phaser.Keyboard.SPACEBAR)) {
 		this.state.start('SceneLoad');
 	}
-};
+}

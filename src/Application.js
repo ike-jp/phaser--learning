@@ -42,7 +42,7 @@ Application.namespace = function(ns_string)
 		}
 		parent = parent[parts[i]];
 	}
-};
+}
 
 /**
  * クラス継承

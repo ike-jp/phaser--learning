@@ -16,7 +16,7 @@ BasicGame.toggleFullscreen = function() {
 	} else {
 		this.scale.startFullScreen(false);
 	}
-};
+}
 
 /**
  * 起動クラス
@@ -29,7 +29,7 @@ BasicGame.toggleFullscreen = function() {
 BasicGame.Boot = function(game)
 {
 	// have nothing to do
-};
+}
 
 /**
  * {@inheritdoc}
@@ -51,7 +51,7 @@ BasicGame.Boot.prototype.init = function()
 		this.scale.leaveIncorrectOrientation.add(this.leaveIncorrectOrientation, this);
 	}
 	this.scale.refresh();
-};
+}
 
 /**
  * {@inheritdoc}
@@ -59,7 +59,7 @@ BasicGame.Boot.prototype.init = function()
 BasicGame.Boot.prototype.preload = function()
 {
 	this.load.image('preloader-bar', 'assets/ui/preloader-bar.png');
-};
+}
 
 /**
  * {@inheritdoc}
@@ -67,7 +67,7 @@ BasicGame.Boot.prototype.preload = function()
 BasicGame.Boot.prototype.create = function()
 {
 	this.state.start('ScenePreload');
-};
+}
 
 /**
  * 未調査
@@ -76,7 +76,7 @@ BasicGame.Boot.prototype.enterIncorrectOrientation = function()
 {
 	BasicGame.orientated = false;
 	document.getElementById('orientation').style.display = 'block';
-};
+}
 
 /**
  * 未調査
@@ -85,4 +85,4 @@ BasicGame.Boot.prototype.leaveIncorrectOrientation = function()
 {
 	BasicGame.orientated = true;
 	document.getElementById('orientation').style.display = 'none';
-};
+}

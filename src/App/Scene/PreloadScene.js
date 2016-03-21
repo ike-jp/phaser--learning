@@ -15,7 +15,7 @@ App.Scene.PreloadScene = function(game)
 {
 	App.Scene.AbstractScene.call(this, game);
 	this.preloadBar = null;
-};
+}
 Application.inherits(App.Scene.PreloadScene, App.Scene.AbstractScene);
 
 /**
@@ -46,7 +46,7 @@ App.Scene.PreloadScene.prototype.preload = function()
 	this.load.image('terrain', 'assets/tilemaps/tiles/terrain.png');
 	this.load.tilemap('map', 'assets/tilemaps/json/level1.json', null, Phaser.Tilemap.TILED_JSON);
 	this.load.image('myfont', 'assets/fonts/myfont.png');
-};
+}
 
 /**
  * @override
@@ -56,4 +56,4 @@ App.Scene.PreloadScene.prototype.create = function()
 	this.preloadBar.cropEnabled = false;
 	//this.state.start('SceneTitle');
 	this.state.start('ScenePlay');
-};
+}
