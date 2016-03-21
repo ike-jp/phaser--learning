@@ -225,8 +225,8 @@ App.Scene.PlayScene.prototype.update = function()
 		this.player.body.maxVelocity.x = 60;
 		this.player.body.drag.x = 200;
 	} else {
-		this.player.body.maxVelocity.x = 120;
-		this.player.body.drag.x = 200;
+		this.player.body.maxVelocity.x = 140;
+		this.player.body.drag.x = 220;
 	}
 	this.player.body.acceleration.x = 0;
 	if (this.cursors.left.isDown) {
@@ -356,36 +356,50 @@ App.Scene.PlayScene.prototype.levelComplete_ = function(player, symbol)
  */
 App.Scene.PlayScene.prototype.killedPlayer_ = function()
 {
-	/*
-	this.player.body.velocity.x = 0;
-	this.player.body.velocity.y = -400;
-	this.player.play("failed");
-	*/
 	console.log("called failedGame");
+	var player_x = this.player.body.position.x;
+	var player_y = this.player.body.position.y;
+	var dying_player = this.game.add.sprite(player_x, player_y, 'player');
+	dying_player.animations.add('failed', [6], 10, false);
+	dying_player.play('failed');
 
-	// 残機チェック
-	if (true) {
-		this.game.time.events.add(Phaser.Timer.SECOND * 3, this.retry_, this);
-	} else {
-		this.quit_();
-	}
+	var duration = 500;
+	var ease = Phaser.Easing.Back.In;
+	var auto_start = true;
+	var delay = 400;
+	var repeat = 0;
+	var yoyo = false;
+
+	// Easingは良さそうなのが無いのでeseInBackを指定。
+	// TODO: 自身で定義することもできるが、重要ではないので後にする
+	// easeに指定されたメソッドには、durationの現在の割合が0.0~1.0で渡されてくる
+	// 詳しくはPhaser.Easingとhttp://easings.net/ja#を見る
+	var tween = this.game.add.tween(dying_player);
+	tween.to(
+		{y: this.game.physics.arcade.bounds.bottom },
+		duration, ease, auto_start, delay, repeat, yoyo
+	);
+	tween.onComplete.add(function() {
+			this.game.time.events.add(Phaser.Timer.SECOND * 3, this.failed_, this);
+		},
+		this
+	);
 };
 
 /**
- * ゲームクリア処理
+ * ゲーム失敗後の処理
  *
  * @private
  */
-App.Scene.PlayScene.prototype.levelComplete_ = function(player, symbol)
+App.Scene.PlayScene.prototype.failed_ = function(pointer)
 {
-	console.log('LEVEL COMPLETE!');
-	symbol.kill();
-
-	player.body.velocity.x = 0;
-	var t = this.game.add.tween(player.scale);
-	t.to({x:2, y:2}, 1000, Phaser.Easing.Linear.None);
-	t.start();
-};
+	// 残機チェック
+	if (true) {
+		this.retry_();
+	} else {
+		this.quit_();
+	}
+}
 
 /**
  * このゲームを終了してタイトルに戻る
@@ -405,6 +419,22 @@ App.Scene.PlayScene.prototype.quit_ = function(pointer)
 App.Scene.PlayScene.prototype.retry_ = function()
 {
 	this.state.start('SceneLoad');
+};
+
+/**
+ * ゲームクリア処理
+ *
+ * @private
+ */
+App.Scene.PlayScene.prototype.levelComplete_ = function(player, symbol)
+{
+	console.log('LEVEL COMPLETE!');
+	symbol.kill();
+
+	player.body.velocity.x = 0;
+	var t = this.game.add.tween(player.scale);
+	t.to({x:2, y:2}, 1000, Phaser.Easing.Linear.None);
+	t.start();
 };
 
 /**
