@@ -4,7 +4,6 @@
  */
 
 Application.namespace('SuperILtan.AbstractState');
-Application.namespace('App.Scene');
 Application.namespace('App.Util.Input.Keyboard');
 
 /**
@@ -14,7 +13,7 @@ Application.namespace('App.Util.Input.Keyboard');
  * @constructor
  * @extends {AbstractState}
  */
-App.Scene.PlayScene = function()
+SuperILtan.GameState = function()
 {
 	SuperILtan.AbstractState.call(this);
 
@@ -77,12 +76,12 @@ App.Scene.PlayScene = function()
 	// テスト
 	this.keyboard;
 }
-Application.inherits(App.Scene.PlayScene, SuperILtan.AbstractState);
+Application.inherits(SuperILtan.GameState, SuperILtan.AbstractState);
 
 /**
  * @override
  */
-App.Scene.PlayScene.prototype.init = function()
+SuperILtan.GameState.prototype.init = function()
 {
 	// 非アクティブモードでも更新する
 	this.stage.disableVisibilityChange = true;
@@ -97,7 +96,7 @@ App.Scene.PlayScene.prototype.init = function()
 /**
  * @override
  */
-App.Scene.PlayScene.prototype.preload = function()
+SuperILtan.GameState.prototype.preload = function()
 {
 	console.log("game.preload");
 }
@@ -105,7 +104,7 @@ App.Scene.PlayScene.prototype.preload = function()
 /**
  * @override
  */
-App.Scene.PlayScene.prototype.create = function()
+SuperILtan.GameState.prototype.create = function()
 {
 	// 開始前の残機数表示
 	// ゲームの開始呼び出し
@@ -246,7 +245,7 @@ App.Scene.PlayScene.prototype.create = function()
 /**
  * @override
  */
-App.Scene.PlayScene.prototype.update = function()
+SuperILtan.GameState.prototype.update = function()
 {
 	this.keyboard.update();
 	this.game.physics.arcade.collide(this.enemies, this.layer);
@@ -351,7 +350,7 @@ App.Scene.PlayScene.prototype.update = function()
 /**
  * @override
  */
-App.Scene.PlayScene.prototype.render = function()
+SuperILtan.GameState.prototype.render = function()
 {
 	//this.game.debug.bodyInfo(this.player, 0, 0);
 	//this.game.debug.body(this.player);
@@ -370,7 +369,7 @@ App.Scene.PlayScene.prototype.render = function()
  *
  * @private
  */
-App.Scene.PlayScene.prototype.updateTimeCounter_ = function()
+SuperILtan.GameState.prototype.updateTimeCounter_ = function()
 {
 	this.time_counter -= 1;
 	if (this.time_counter >= 0) {
@@ -386,7 +385,7 @@ App.Scene.PlayScene.prototype.updateTimeCounter_ = function()
  * @private
  * @param {Phaser.Sprite} player
  */
-App.Scene.PlayScene.prototype.killedPlayer_ = function(player)
+SuperILtan.GameState.prototype.killedPlayer_ = function(player)
 {
 	console.log("called killedPlayser_");
 	var dying_player = this.game.add.sprite(
@@ -425,7 +424,7 @@ App.Scene.PlayScene.prototype.killedPlayer_ = function(player)
  *
  * @private
  */
-App.Scene.PlayScene.prototype.failed_ = function()
+SuperILtan.GameState.prototype.failed_ = function()
 {
 	// 残機チェック
 	if (true) {
@@ -440,7 +439,7 @@ App.Scene.PlayScene.prototype.failed_ = function()
  *
  * @private
  */
-App.Scene.PlayScene.prototype.quit_ = function()
+SuperILtan.GameState.prototype.quit_ = function()
 {
 	this.state.start('SceneTitle');
 }
@@ -450,7 +449,7 @@ App.Scene.PlayScene.prototype.quit_ = function()
  *
  * @private
  */
-App.Scene.PlayScene.prototype.retry_ = function()
+SuperILtan.GameState.prototype.retry_ = function()
 {
 	this.state.start('SceneLoad');
 }
@@ -460,7 +459,7 @@ App.Scene.PlayScene.prototype.retry_ = function()
  *
  * @private
  */
-App.Scene.PlayScene.prototype.levelComplete_ = function(player, symbol)
+SuperILtan.GameState.prototype.levelComplete_ = function(player, symbol)
 {
 	console.log('LEVEL COMPLETE!');
 	symbol.kill();
@@ -500,7 +499,7 @@ App.Scene.PlayScene.prototype.levelComplete_ = function(player, symbol)
  *
  * @private
  */
-App.Scene.PlayScene.prototype.toNextLevel_ = function()
+SuperILtan.GameState.prototype.toNextLevel_ = function()
 {
 	console.log('NEXT LEVEL!');
 	// レベル番号加算
@@ -516,7 +515,7 @@ App.Scene.PlayScene.prototype.toNextLevel_ = function()
  * @param {Phaser.Sprite} player
  * @param {Phaser.Sprite} enemy
  */
-App.Scene.PlayScene.prototype.collideEnemy_ = function(player, enemy)
+SuperILtan.GameState.prototype.collideEnemy_ = function(player, enemy)
 {
 	if (player.body.touching.down) {
 		player.body.velocity.y = -300;
@@ -536,7 +535,7 @@ App.Scene.PlayScene.prototype.collideEnemy_ = function(player, enemy)
  * @param {integer} y
  * @param {integer} value
  */
-App.Scene.PlayScene.prototype.addEffectOfScore = function(x, y, value)
+SuperILtan.GameState.prototype.addEffectOfScore = function(x, y, value)
 {
 	var font = this.game.add.retroFont('myfont-num-s', 4, 5, '0123456789', 10);
 	var image = this.game.add.image(x, y, font);
@@ -558,7 +557,7 @@ App.Scene.PlayScene.prototype.addEffectOfScore = function(x, y, value)
  * @param {Phaser.Sprite} player
  * @param {Phaser.Sprite} item
  */
-App.Scene.PlayScene.prototype.collideItem_ = function(player, item)
+SuperILtan.GameState.prototype.collideItem_ = function(player, item)
 {
 	item.kill();
 	// スコア加算
@@ -570,7 +569,7 @@ App.Scene.PlayScene.prototype.collideItem_ = function(player, item)
  * @private
  * @param {Phaser.Sprite} player
  */
-App.Scene.PlayScene.prototype.playerOutOfBounds_ = function(player)
+SuperILtan.GameState.prototype.playerOutOfBounds_ = function(player)
 {
 	console.log(player.position.y);
 	console.log(this.game.physics.arcade.bounds.bottom);

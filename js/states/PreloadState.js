@@ -4,7 +4,6 @@
  */
 
 Application.namespace('SuperILtan.AbstractState');
-Application.namespace('App.Scene');
 
 /**
  * プリロード画面クラス
@@ -12,16 +11,16 @@ Application.namespace('App.Scene');
  * @param {Phaser.Game} game
  * @constructor
  */
-App.Scene.PreloadScene = function()
+SuperILtan.PreloadState = function()
 {
 	SuperILtan.AbstractState.call(this);
 }
-Application.inherits(App.Scene.PreloadScene, SuperILtan.AbstractState);
+Application.inherits(SuperILtan.PreloadState, SuperILtan.AbstractState);
 
 /**
  * @override
  */
-App.Scene.PreloadScene.prototype.preload = function()
+SuperILtan.PreloadState.prototype.preload = function()
 {
 	// title
 	this.load.image('title', 'assets/title.png');
@@ -42,7 +41,7 @@ App.Scene.PreloadScene.prototype.preload = function()
 /**
  * @override
  */
-App.Scene.PreloadScene.prototype.create = function()
+SuperILtan.PreloadState.prototype.create = function()
 {
 	//this.state.start('SceneTitle');
 	this.state.start('ScenePlay');

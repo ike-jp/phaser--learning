@@ -3,9 +3,9 @@ Application.namespace('SuperILtan');
 var game = new Phaser.Game(256, 240, Phaser.AUTO, 'game');
 //var game = new Phaser.Game(256, 240, Phaser.CANVAS, 'game');
 game.state.add('Boot', SuperILtan.BootState);
-game.state.add('ScenePreload', App.Scene.PreloadScene);
-game.state.add('SceneTitle', App.Scene.TitleScene);
-game.state.add('SceneLoad', App.Scene.LoadScene);
-game.state.add('ScenePlay', App.Scene.PlayScene);
+game.state.add('ScenePreload', SuperILtan.PreloadState);
+game.state.add('SceneTitle', SuperILtan.TitleState);
+game.state.add('SceneLoad', SuperILtan.LoadingState);
+game.state.add('ScenePlay', SuperILtan.GameState);
 
 game.state.start('Boot');

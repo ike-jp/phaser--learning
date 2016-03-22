@@ -4,7 +4,6 @@
  */
 
 Application.namespace('SuperILtan.AbstractState');
-Application.namespace('App.Scene');
 
 /**
  * ゲームタイトル画面クラス
@@ -13,16 +12,16 @@ Application.namespace('App.Scene');
  * @constructor
  * @extends {Scene}
  */
-App.Scene.TitleScene = function()
+SuperILtan.TitleState = function()
 {
 	SuperILtan.AbstractState.call(this);
 }
-Application.inherits(App.Scene.TitleScene, SuperILtan.AbstractState);
+Application.inherits(SuperILtan.TitleState, SuperILtan.AbstractState);
 
 /**
  * @override
  */
-App.Scene.TitleScene.prototype.create = function()
+SuperILtan.TitleState.prototype.create = function()
 {
 	this.game.stage.backgroundColor = Phaser.Color.getColor(80, 128, 255);
 
@@ -51,7 +50,7 @@ App.Scene.TitleScene.prototype.create = function()
 /**
  * @override
  */
-App.Scene.TitleScene.prototype.update = function()
+SuperILtan.TitleState.prototype.update = function()
 {
 	this.game.physics.arcade.collide(this.player, this.layer);
 
