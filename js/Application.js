@@ -7,6 +7,7 @@
  * アプリケーション用の名前空間を表すグローバルオブジェクト
  * @type {Object}
  */
+var SuperILtan = SuperILtan || {};
 var Application = Application || {};
 
 /**
@@ -24,8 +25,8 @@ var App = App || {};
  * @param {string} ns_string 名前空間を表すドット区切りの文字列
  * @see http://qiita.com/KENJU/items/0d8f85df205ea4978508
  */
-Application.namespace = function(ns_string)
-{
+Application.namespace = function(ns_string) {
+	'use strict';
 	var parts = ns_string.split('.'), // . で区切った配列
 		parent = App, // グローバルオブジェクトのアプリ名
 		i;
@@ -54,7 +55,7 @@ Application.namespace = function(ns_string)
  * @param {ClassName} parentCtor 親となるクラス
  * @see http://www.yunabe.jp/docs/javascript_class_in_google.html
  */
-Application.inherits = function(childCtor, parentCtor)
-{
+Application.inherits = function(childCtor, parentCtor) {
+	'use strict';
 	Object.setPrototypeOf(childCtor.prototype, parentCtor.prototype);
 }

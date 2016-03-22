@@ -16,6 +16,7 @@ Application.namespace('App.Util.Input.Keyboard');
 App.Scene.PlayScene = function(game)
 {
 	App.Scene.AbstractScene.call(this, game);
+	Phaser.State.call(this);
 
 	// When a State is added to Phaser it automatically has the
 	// following properties set on it, even if they already exist:
@@ -77,6 +78,21 @@ App.Scene.PlayScene = function(game)
 	this.keyboard;
 }
 Application.inherits(App.Scene.PlayScene, App.Scene.AbstractScene);
+
+/**
+ * @override
+ */
+App.Scene.PlayScene.prototype.init = function()
+{
+	// 非アクティブモードでも更新する
+	this.stage.disableVisibilityChange = true;
+
+	// 画面全体に表示する
+	this.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL;
+	// 余白のアライン
+	this.scale.pageAlignHorizontally = true;
+	this.scale.pageAlignVertically = true;
+}
 
 /**
  * @override
