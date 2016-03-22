@@ -3,48 +3,48 @@
  * @license Refer to the LICENSE file.
  */
 
-Application.namespace('App.Scene');
+Application.namespace('SuperILtan');
 
 /**
  * シーンの抽象クラス
  *
- * @param {Phaser.Game} game
  * @constructor
  */
-App.Scene.AbstractScene = function(game)
-{
-	// have nothing to do
+SuperILtan.AbstractState = function() {
+	'use strict';
+	Phaser.State.call(this);
 }
+Application.inherits(SuperILtan.AbstractState, Phaser.State);
 
 /**
  * このシーン開始前に必要なリソースをロードする処理
  */
-App.Scene.AbstractScene.prototype.preload = function()
-{
+SuperILtan.AbstractState.prototype.preload = function() {
+	'use strict';
 	// have nothing to do
 }
 
 /**
  * このシーンの初期化処理
  */
-App.Scene.AbstractScene.prototype.create = function()
-{
+SuperILtan.AbstractState.prototype.create = function() {
+	'use strict';
 	// have nothing to do
 }
 
 /**
  * このシーンの更新処理
  */
-App.Scene.AbstractScene.prototype.update = function()
-{
+SuperILtan.AbstractState.prototype.update = function() {
+	'use strict';
 	// have nothing to do
 }
 
 /**
  * このシーンの描画処理
  */
-App.Scene.AbstractScene.prototype.render = function()
-{
+SuperILtan.AbstractState.prototype.render = function() {
+	'use strict';
 	// have nothing to do
 }
 

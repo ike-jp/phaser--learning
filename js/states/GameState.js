@@ -3,6 +3,7 @@
  * @license Refer to the LICENSE file.
  */
 
+Application.namespace('SuperILtan.AbstractState');
 Application.namespace('App.Scene');
 Application.namespace('App.Util.Input.Keyboard');
 
@@ -11,12 +12,11 @@ Application.namespace('App.Util.Input.Keyboard');
  *
  * @param {Phaser.Game} game
  * @constructor
- * @extends {AbstractScene}
+ * @extends {AbstractState}
  */
-App.Scene.PlayScene = function(game)
+App.Scene.PlayScene = function()
 {
-	App.Scene.AbstractScene.call(this, game);
-	Phaser.State.call(this);
+	SuperILtan.AbstractState.call(this);
 
 	// When a State is added to Phaser it automatically has the
 	// following properties set on it, even if they already exist:
@@ -77,7 +77,7 @@ App.Scene.PlayScene = function(game)
 	// テスト
 	this.keyboard;
 }
-Application.inherits(App.Scene.PlayScene, App.Scene.AbstractScene);
+Application.inherits(App.Scene.PlayScene, SuperILtan.AbstractState);
 
 /**
  * @override

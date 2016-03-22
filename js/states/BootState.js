@@ -2,18 +2,18 @@
  * @author ike-jp <ikejpcw@gmail.com>
  * @license Refer to the LICENSE file.
  */
-Application.namespace('SuperILtan');
+Application.namespace('SuperILtan.AbstractState');
 
 /**
  * 起動クラス
  *
- * @param {Phaser.Game} game
  * @constructor
  */
 SuperILtan.BootState = function() {
 	'use strict';
-	// have nothing to do
+	SuperILtan.AbstractState.call(this);
 }
+Application.inherits(SuperILtan.BootState, SuperILtan.AbstractState);
 
 /**
  * {@inheritdoc}

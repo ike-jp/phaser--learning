@@ -3,6 +3,7 @@
  * @license Refer to the LICENSE file.
  */
 
+Application.namespace('SuperILtan.AbstractState');
 Application.namespace('App.Scene');
 
 /**
@@ -11,12 +12,11 @@ Application.namespace('App.Scene');
  * @param {Phaser.Game} game
  * @constructor
  */
-App.Scene.PreloadScene = function(game)
+App.Scene.PreloadScene = function()
 {
-	App.Scene.AbstractScene.call(this, game);
-	this.preloadBar = null;
+	SuperILtan.AbstractState.call(this);
 }
-Application.inherits(App.Scene.PreloadScene, App.Scene.AbstractScene);
+Application.inherits(App.Scene.PreloadScene, SuperILtan.AbstractState);
 
 /**
  * @override

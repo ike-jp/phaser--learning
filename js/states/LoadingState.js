@@ -3,6 +3,7 @@
  * @license Refer to the LICENSE file.
  */
 
+Application.namespace('SuperILtan.AbstractState');
 Application.namespace('App.Scene');
 
 /**
@@ -12,11 +13,11 @@ Application.namespace('App.Scene');
  * @constructor
  * @extends {Scene}
  */
-App.Scene.LoadScene = function(game)
+App.Scene.LoadScene = function()
 {
-	App.Scene.AbstractScene.call(this, game);
+	SuperILtan.AbstractState.call(this);
 }
-Application.inherits(App.Scene.LoadScene, App.Scene.AbstractScene);
+Application.inherits(App.Scene.LoadScene, SuperILtan.AbstractState);
 
 /**
  * @override
