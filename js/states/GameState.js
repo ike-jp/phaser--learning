@@ -13,39 +13,9 @@ Application.namespace('App.Util.Input.Keyboard');
  * @constructor
  * @extends {AbstractState}
  */
-SuperILtan.GameState = function()
-{
+SuperILtan.GameState = function() {
+	'use strict';
 	SuperILtan.AbstractState.call(this);
-
-	// When a State is added to Phaser it automatically has the
-	// following properties set on it, even if they already exist:
-	//
-	this.game;		//  a reference to the currently running game
-	this.add;		//  used to add this.playerites, text, groups, etc
-	this.camera;	//  a reference to the game camera
-	this.cache;		//  the game cache
-	this.input;		//  the global input manager (you can access
-					//  this.input.keyboard, this.input.mouse, as well
-					//  from it)
-	this.load;		//  for preloading assets
-	this.math;		//  lots of useful common math operations
-	this.sound;		//  the sound manager - add a sound, play one,
-					//  set-up markers, etc
-	this.stage;		//  the game stage
-	this.time;		//  the clock
-	this.tweens;	//  the tween manager
-	this.world;		//  the game world
-	this.particles;	//  the particle manager
-	this.physics;	//  the physics manager
-	this.rnd;		//  the repeatable random number generator
-
-	//  You can use any of these from any function within this State.
-	//  But do consider them as being 'reserved words', i.e. don't create
-	//  a property for your own game called "world" or you'll over-write
-	//  the world reference.
-	//
-	this.map;
-	this.layer;
 
 	// ゲーム情報
 	this.time_limit;
@@ -81,8 +51,8 @@ Application.inherits(SuperILtan.GameState, SuperILtan.AbstractState);
 /**
  * @override
  */
-SuperILtan.GameState.prototype.init = function()
-{
+SuperILtan.GameState.prototype.init = function() {
+	'use strict';
 	// 非アクティブモードでも更新する
 	this.stage.disableVisibilityChange = true;
 
@@ -96,16 +66,16 @@ SuperILtan.GameState.prototype.init = function()
 /**
  * @override
  */
-SuperILtan.GameState.prototype.preload = function()
-{
+SuperILtan.GameState.prototype.preload = function() {
+	'use strict';
 	console.log("game.preload");
 }
 
 /**
  * @override
  */
-SuperILtan.GameState.prototype.create = function()
-{
+SuperILtan.GameState.prototype.create = function() {
+	'use strict';
 	// 開始前の残機数表示
 	// ゲームの開始呼び出し
 	// ポーズ、レジューム対応
@@ -245,8 +215,8 @@ SuperILtan.GameState.prototype.create = function()
 /**
  * @override
  */
-SuperILtan.GameState.prototype.update = function()
-{
+SuperILtan.GameState.prototype.update = function() {
+	'use strict';
 	this.keyboard.update();
 	this.game.physics.arcade.collide(this.enemies, this.layer);
 	this.game.physics.arcade.collide(this.enemies);
@@ -350,8 +320,8 @@ SuperILtan.GameState.prototype.update = function()
 /**
  * @override
  */
-SuperILtan.GameState.prototype.render = function()
-{
+SuperILtan.GameState.prototype.render = function() {
+	'use strict';
 	//this.game.debug.bodyInfo(this.player, 0, 0);
 	//this.game.debug.body(this.player);
 	this.game.debug.body(this.enemies);
@@ -369,8 +339,8 @@ SuperILtan.GameState.prototype.render = function()
  *
  * @private
  */
-SuperILtan.GameState.prototype.updateTimeCounter_ = function()
-{
+SuperILtan.GameState.prototype.updateTimeCounter_ = function() {
+	'use strict';
 	this.time_counter -= 1;
 	if (this.time_counter >= 0) {
 		this.text_time.text = 'TIME:' + ('00'+this.time_counter).slice(-3);
@@ -385,8 +355,8 @@ SuperILtan.GameState.prototype.updateTimeCounter_ = function()
  * @private
  * @param {Phaser.Sprite} player
  */
-SuperILtan.GameState.prototype.killedPlayer_ = function(player)
-{
+SuperILtan.GameState.prototype.killedPlayer_ = function(player) {
+	'use strict';
 	console.log("called killedPlayser_");
 	var dying_player = this.game.add.sprite(
 		player.body.position.x,
@@ -424,8 +394,8 @@ SuperILtan.GameState.prototype.killedPlayer_ = function(player)
  *
  * @private
  */
-SuperILtan.GameState.prototype.failed_ = function()
-{
+SuperILtan.GameState.prototype.failed_ = function() {
+	'use strict';
 	// 残機チェック
 	if (true) {
 		this.retry_();
@@ -439,8 +409,8 @@ SuperILtan.GameState.prototype.failed_ = function()
  *
  * @private
  */
-SuperILtan.GameState.prototype.quit_ = function()
-{
+SuperILtan.GameState.prototype.quit_ = function() {
+	'use strict';
 	this.state.start('SceneTitle');
 }
 
