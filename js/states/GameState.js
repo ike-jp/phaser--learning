@@ -61,14 +61,13 @@ SuperILtan.GameState.prototype.init = function() {
 	// 余白のアライン
 	this.scale.pageAlignHorizontally = true;
 	this.scale.pageAlignVertically = true;
-}
 
-/**
- * @override
- */
-SuperILtan.GameState.prototype.preload = function() {
-	'use strict';
-	console.log("game.preload");
+	// start physics system
+	this.game.physics.startSystem(Phaser.Physics.ARCADE);
+	this.game.physics.arcade.gravity.y = 1500;
+	this.game.physics.setBoundsToWorld();
+	this.game.physics.arcade.checkCollision.up = false; // ワールドの上判定を行わない
+	this.game.physics.arcade.checkCollision.down = false; // ワールドの下判定を行わない
 }
 
 /**
@@ -76,14 +75,6 @@ SuperILtan.GameState.prototype.preload = function() {
  */
 SuperILtan.GameState.prototype.create = function() {
 	'use strict';
-	// 開始前の残機数表示
-	// ゲームの開始呼び出し
-	// ポーズ、レジューム対応
-	// ゲーム終了の受け取り
-	// クリア後の結果表示
-	// クリア後、ミス後の遷移制御
-	//   のみを行うようにする
-
 	this.game.stage.backgroundColor = Phaser.Color.getColor(80, 128, 255);
 
 	// マップ設定
@@ -99,12 +90,6 @@ SuperILtan.GameState.prototype.create = function() {
 
 	this.map.setCollisionBetween(1, 5, true, 'Tile Layer');
 	this.map.smoothed = false;
-
-	this.game.physics.startSystem(Phaser.Physics.ARCADE);
-	this.game.physics.setBoundsToWorld();
-	this.game.physics.arcade.checkCollision.up = false; // ワールドの上判定を行わない
-	this.game.physics.arcade.checkCollision.down = false; // ワールドの下判定を行わない
-	this.game.physics.arcade.gravity.y = 1500;
 
 	// item group
 	this.items = this.game.add.group();
