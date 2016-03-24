@@ -10,12 +10,17 @@ Application.namespace('SuperILtan');
  *
  * @constructor
  */
-SuperILtan.Player = function(
-	gameState,
-	position,
-	tiledMapObject) {
+SuperILtan.Player = function(gameState, position, tiledMapObject) {
 	'use strict';
 	Phaser.AbstractPrehab.call(this, gameState, position, tiledMapObject);
+	/*
+	var game = this.gameState.game;
+	game.physics.arcade.enable(this);
+	this.body.collideWorldBounds = true;
+	this.direction = 'RIGHT';
+	this.anchor.setTo(0.5);
+	this.cursorKeys = game.input.keyboard.createCursorKeys();
+	*/
 }
 Application.inherits(
 	SuperILtan.Player,
@@ -34,12 +39,12 @@ SuperILtan.Player.prototype.update = function() {
 	game.physics.arcade.collide(this, layer);
 	game.physics.arcade.override(this, enemies, this.onHitEnemy, null, this);
 
-	var cursorKey = this.cursors;
-	if (cursorKey.right.isDown) {
+	var cursorKeys = this.cursorKeys;
+	if (cursorKeys.right.isDown) {
 		this.direction = 'RIGHT';
 		this.animations.play('walk');
 		this.scale.setTo(-1, 1);
-	} else if (cursorKey.left.isDown) {
+	} else if (cursorKeys.left.isDown) {
 		this.direction = 'LEFT';
 		this.animations.play('walk');
 		this.scale.setTo(1, 1);
