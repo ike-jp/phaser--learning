@@ -27,4 +27,8 @@ SuperILtan.AbstractPrehab = function(gameState, position, tiledMapObject) {
 }
 Application.inherits(SuperILtan.AbstractPrehab, Phaser.Sprite);
 
-
+/**
+ * このプレハブを更新する
+ */
+SuperILtan.AbstractPrehab.prototype.update = function() {
+}
