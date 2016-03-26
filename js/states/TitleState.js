@@ -11,17 +11,20 @@ Application.namespace('SuperILtan.AbstractState');
  * @constructor
  * @extends {AbstractState}
  */
-SuperILtan.TitleState = function()
-{
+SuperILtan.TitleState = function() {
+	'use strict';
 	SuperILtan.AbstractState.call(this);
 }
-Application.inherits(SuperILtan.TitleState, SuperILtan.AbstractState);
+Application.inherits(
+	SuperILtan.TitleState,
+	SuperILtan.AbstractState
+);
 
 /**
  * @override
  */
-SuperILtan.TitleState.prototype.create = function()
-{
+SuperILtan.TitleState.prototype.create = function() {
+	'use strict';
 	this.game.stage.backgroundColor = Phaser.Color.getColor(80, 128, 255);
 
 	var title = this.add.sprite(this.world.centerX, this.world.centerY, 'title');
@@ -49,8 +52,8 @@ SuperILtan.TitleState.prototype.create = function()
 /**
  * @override
  */
-SuperILtan.TitleState.prototype.update = function()
-{
+SuperILtan.TitleState.prototype.update = function() {
+	'use strict';
 	this.game.physics.arcade.collide(this.player, this.layer);
 
 	if (this.game.input.keyboard.isDown(Phaser.Keyboard.SPACEBAR)) {

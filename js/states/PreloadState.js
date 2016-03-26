@@ -11,8 +11,8 @@ Application.namespace('SuperILtan.AbstractState');
  * @constructor
  * @extends {AbstractState}
  */
-SuperILtan.PreloadState = function()
-{
+SuperILtan.PreloadState = function() {
+	'use strict';
 	SuperILtan.AbstractState.call(this);
 }
 Application.inherits(SuperILtan.PreloadState, SuperILtan.AbstractState);
@@ -20,8 +20,8 @@ Application.inherits(SuperILtan.PreloadState, SuperILtan.AbstractState);
 /**
  * @override
  */
-SuperILtan.PreloadState.prototype.preload = function()
-{
+SuperILtan.PreloadState.prototype.preload = function() {
+	'use strict';
 	// title
 	this.load.image('title', 'assets/title.png');
 
@@ -32,8 +32,8 @@ SuperILtan.PreloadState.prototype.preload = function()
 /**
  * @override
  */
-SuperILtan.PreloadState.prototype.create = function()
-{
+SuperILtan.PreloadState.prototype.create = function() {
+	'use strict';
 	//this.state.start('SceneTitle');
 	this.state.start('SceneLoad');
 }
