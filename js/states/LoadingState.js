@@ -27,12 +27,13 @@ Application.inherits(
 SuperILtan.LoadingState.prototype.preload = function() {
 	'use strict';
 	this.game.stage.backgroundColor = Phaser.Color.getColor(0, 0, 0);
-	this.load.tilemap('map', 'assets/tilemaps/json/level1_map.json', null, Phaser.Tilemap.TILED_JSON);
-
+	this.load.tilemap('level_map', 'assets/tilemaps/json/level1_map.json', null, Phaser.Tilemap.TILED_JSON);
+/*
 	this.load.text('level', 'assets/tilemaps/json/level.json');
 	var levelText = this.game.cache.getText('level');
 console.log(levelData);
 	var levelData = JSON.parse(levelText);
+*/
 /*
 	var assets = levelData.assets;
 	for (asset_key in assets) {
@@ -66,13 +67,13 @@ console.log(levelData);
 	}
 */
 	// game
-	this.load.spritesheet('player', 'assets/objects/player.png', 16, 16);
-	this.load.spritesheet('enemies1', 'assets/objects/enemies1.png', 16, 16);
-	this.load.spritesheet('enemies2', 'assets/objects/enemies2.png', 16, 16);
-	this.load.spritesheet('items', 'assets/objects/items.png', 16, 16);
-	this.load.spritesheet('goal-symbol', 'assets/objects/goal-symbol.png', 32, 32);
-	this.load.image('bg', 'assets/tilemaps/tiles/bg.png');
-	this.load.image('terrain', 'assets/tilemaps/tiles/terrain.png');
+	this.load.spritesheet('player_spritesheet', 'assets/images/player_spritesheet.png', 16, 16);
+	this.load.spritesheet('enemies_spritesheet', 'assets/images/enemies_spritesheet.png', 16, 16);
+	this.load.spritesheet('items_spritesheet', 'assets/images/items_spritesheet.png', 16, 16);
+	this.load.image('bg_spritesheet', 'assets/images/bg_spritesheet.png');
+	this.load.image('terrain_spritesheet', 'assets/images/terrain_spritesheet.png');
+	this.load.spritesheet('goalsymbol_image', 'assets/images/goalsymbol_image.png', 32, 32);
+	this.load.spritesheet('enemies2', 'assets/images/enemies2.png', 16, 16);
 }
 
 /**

@@ -78,9 +78,9 @@ SuperILtan.GameState.prototype.create = function() {
 	this.game.stage.backgroundColor = Phaser.Color.getColor(80, 128, 255);
 
 	// マップ設定
-	this.map = this.game.add.tilemap('map');
-	this.map.addTilesetImage('bg');
-	this.map.addTilesetImage('terrain');
+	this.map = this.game.add.tilemap('level_map');
+	this.map.addTilesetImage('bg_spritesheet');
+	this.map.addTilesetImage('terrain_spritesheet');
 
 	var bgLayer = this.map.createLayer('BG Layer');
 	bgLayer.resizeWorld();
@@ -94,7 +94,7 @@ SuperILtan.GameState.prototype.create = function() {
 	// item group
 	this.items = this.game.add.group();
 	this.items.enableBody = true;
-	this.map.createFromObjects('Items Layer', "yuni-", 'items', 0, true, false, this.items);
+	this.map.createFromObjects('Items Layer', "yuni-", 'items_spritesheet', 0, true, false, this.items);
 	this.items.callAll('animations.add', 'animations', 'idle', [0, 0, 1, 2, 1], 4, true);
 	this.items.callAll('animations.play', 'animations', 'idle');
 	this.items.setAll('body.allowGravity', false);
@@ -105,7 +105,7 @@ SuperILtan.GameState.prototype.create = function() {
 	this.enemies = this.game.add.group();
 	this.enemies.enableBody = true;
 	//this.physicsBodyType = Phaser.Physics.ARCADE;
-	this.map.createFromObjects('Enemies Layer', "yukibo-s", 'enemies1', 0, true, false, this.enemies);
+	this.map.createFromObjects('Enemies Layer', "yukibo-s", 'enemies_spritesheet', 0, true, false, this.enemies);
 	this.map.createFromObjects('Enemies Layer', "yukibo-e", 'enemies2', 0, true, false, this.enemies);
 	this.enemies.setAll('anchor.x', 0.5);
 	this.enemies.setAll('anchor.y', 0.5);
@@ -126,7 +126,7 @@ SuperILtan.GameState.prototype.create = function() {
 	// 16x16のタイルセットから32x32のオブジェクトを生成する方法が分からないので暫定対応
 	this.goal_symbol = this.game.add.group();
 	this.goal_symbol.enableBody = true;
-	this.map.createFromObjects('Items Layer', "goal-symbol", 'goal-symbol', 0, true, false, this.goal_symbol);
+	this.map.createFromObjects('Items Layer', "goal-symbol", 'goalsymbol_image', 0, true, false, this.goal_symbol);
 	this.goal_symbol.setAll('body.allowGravity', false);
 	this.goal_symbol.setAll('smoothed', false);
 
@@ -134,7 +134,7 @@ SuperILtan.GameState.prototype.create = function() {
 	this.player = this.game.add.sprite(
 		16*5, // this.game.world.centerX,
 		16*13,// this.game.world.centerY,
-		'player'
+		'player_spritesheet'
 	);
 	this.player.anchor.setTo(0.5, 0.5); // for flip
 	this.game.physics.enable(this.player);
@@ -346,7 +346,7 @@ SuperILtan.GameState.prototype.killedPlayer_ = function(player) {
 	var dying_player = this.game.add.sprite(
 		player.body.position.x,
 		player.body.position.y,
-		'player'
+		'player_spritesheet'
 	);
 	dying_player.animations.add('failed', [6], 10, false);
 	dying_player.play('failed');
