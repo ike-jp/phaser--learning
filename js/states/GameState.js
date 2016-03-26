@@ -46,7 +46,10 @@ SuperILtan.GameState = function() {
 	// テスト
 	this.keyboard;
 }
-Application.inherits(SuperILtan.GameState, SuperILtan.AbstractState);
+Application.inherits(
+	SuperILtan.GameState,
+	SuperILtan.AbstractState
+);
 
 /**
  * @override
@@ -71,58 +74,28 @@ SuperILtan.GameState.prototype.init = function() {
 }
 
 /**
- * レベル内リソースの読み込みを行う
- *
- * ブロック読み込みの方法が分からないので一時対応。
- * レベルマップのJSONファイルはLoadingStateで事前に読み込みを行う。
- * ※preloadの中でlevel.jsonが必要なので、preloadに入る時点で読み込んでいる必要がある。
- *
- * @override
- */
-SuperILtan.GameState.prototype.preload = function() {
-	'use strict';
-	var levelText = this.game.cache.getText('level');
-	var levelData = JSON.parse(levelText);
-
-	var assets = levelData.assets;
-	for (var asset_key in assets) {
-		if (assets.hasOwnProperty(asset_key)) {
-			var asset = assets[asset_key];
-			switch (asset.type) {
-				case 'image':
-					this.load.image(asset_key, asset.source);
-					break;
-				case 'spritesheet':
-					this.load.spritesheet(
-						asset_key,
-						asset.source,
-						asset.frame_width,
-						asset.frame_height,
-						asset.frames,
-						asset.margin,
-						asset.spacing
-					);
-					break;
-				case 'tilemap':
-					this.load.tilemap(
-						asset_key,
-						asset.source,
-						null,
-						Phaser.Tilemap.TILED_JSON
-					);
-					break;
-			}
-		}
-	}
-}
-
-/**
  * @override
  */
 SuperILtan.GameState.prototype.create = function() {
 	'use strict';
 	this.game.stage.backgroundColor = Phaser.Color.getColor(80, 128, 255);
+/*
+	// create map and set tileset
+	this.map = this.game.add.tilemap(level_data.map.key);
+	tilesetIndex = 0;
+	this.map.tileset_images.forEach(function (tileset) {
+		this.map.addTilesetImage(tileset.name, levelData.map.tilesets[tilesetIndex]);
+		tilesetIndex += 1;
+	}, this);
 
+	// create map layers
+	this.layers = {};
+	this.map.layers.forEach(function (layer) {
+		this.layers[layer.name] = this.map.createLayer(layer.name);
+
+	}, this);
+console-log(this.layers);
+*/
 	// マップ設定
 	this.map = this.game.add.tilemap('level_map');
 	this.map.addTilesetImage('bg_spritesheet');
