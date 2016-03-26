@@ -9,7 +9,6 @@ Application.namespace('App.Util.Input.Keyboard');
 /**
  * プレイ画面クラス
  *
- * @param {Phaser.Game} game
  * @constructor
  * @extends {AbstractState}
  */

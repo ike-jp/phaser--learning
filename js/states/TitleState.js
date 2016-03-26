@@ -8,9 +8,8 @@ Application.namespace('SuperILtan.AbstractState');
 /**
  * ゲームタイトル画面クラス
  *
- * @param {Phaser.Game} game
  * @constructor
- * @extends {Scene}
+ * @extends {AbstractState}
  */
 SuperILtan.TitleState = function()
 {

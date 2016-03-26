@@ -10,9 +10,8 @@ Application.namespace('SuperILtan.AbstractState');
  *
  * レベルデータを読み込む
  *
- * @param {Phaser.Game} game
  * @constructor
- * @extends {Scene}
+ * @extends {AbstractState}
  */
 SuperILtan.LoadingState = function() {
 	'use strict';
