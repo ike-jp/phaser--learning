@@ -78,32 +78,30 @@ SuperILtan.GameState.prototype.init = function() {
 SuperILtan.GameState.prototype.create = function() {
 	'use strict';
 	this.game.stage.backgroundColor = Phaser.Color.getColor(80, 128, 255);
-/*
+
 	// create map and set tileset
-	this.map = this.game.add.tilemap(level_data.map.key);
-	tilesetIndex = 0;
-	this.map.tileset_images.forEach(function (tileset) {
-		this.map.addTilesetImage(tileset.name, levelData.map.tilesets[tilesetIndex]);
-		tilesetIndex += 1;
+	var levelData = this.game.cache.getJSON('level');
+	this.map = this.game.add.tilemap(levelData.map.KEY);
+	levelData.map.tilesetImages.forEach(function(image) {
+		this.map.addTilesetImage(image);
 	}, this);
 
 	// create map layers
 	this.layers = {};
 	this.map.layers.forEach(function (layer) {
 		this.layers[layer.name] = this.map.createLayer(layer.name);
-
 	}, this);
-console-log(this.layers);
-*/
+
 	// マップ設定
-	this.map = this.game.add.tilemap('level_map');
-	this.map.addTilesetImage('bg_spritesheet');
-	this.map.addTilesetImage('terrain_spritesheet');
+//	this.map = this.game.add.tilemap('level_map');
+//	this.map.addTilesetImage('bg_spritesheet');
+//	this.map.addTilesetImage('terrain_spritesheet');
 
 	var bgLayer = this.map.createLayer('BG Layer');
 	bgLayer.resizeWorld();
 	this.layer = this.map.createLayer('Tile Layer');
 	this.layer.resizeWorld();
+
 	//this.layer.debug = true;
 
 	this.map.setCollisionBetween(1, 5, true, 'Tile Layer');
