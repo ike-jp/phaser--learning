@@ -74,7 +74,7 @@ SuperILtan.GameState.prototype.init = function() {
  * レベル内リソースの読み込みを行う
  *
  * ブロック読み込みの方法が分からないので一時対応。
- * レベルマップのJSONファイルはPreloadStateで事前に読み込みを行う。
+ * レベルマップのJSONファイルはLoadingStateで事前に読み込みを行う。
  * ※preloadの中でlevel.jsonが必要なので、preloadに入る時点で読み込んでいる必要がある。
  *
  * @override
