@@ -124,11 +124,8 @@ SuperILtan.LoadingState.prototype.onFileCompleteCallback_ = function(
 	'use strict';
 	console.log(
 		'File complite: '
-		+ progress
-		+ '% - '
-		+ totalLoaded
-		+ ' out of '
-		+ totalFiles
+		+ progress + '% - '
+		+ totalLoaded + ' out of ' + totalFiles
 	);
 }
 

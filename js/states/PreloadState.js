@@ -27,8 +27,6 @@ SuperILtan.PreloadState.prototype.preload = function()
 
 	this.load.image('myfont', 'assets/fonts/myfont.png');
 	this.load.image('myfont-num-s', 'assets/fonts/myfont-num-s.png');
-
-//	this.load.text('level', 'assets/tilemaps/json/level1.json');
 }
 
 /**
