@@ -71,6 +71,52 @@ SuperILtan.GameState.prototype.init = function() {
 }
 
 /**
+ * レベル内リソースの読み込みを行う
+ *
+ * ブロック読み込みの方法が分からないので一時対応。
+ * レベルマップのJSONファイルはPreloadStateで事前に読み込みを行う。
+ * ※preloadの中でlevel.jsonが必要なので、preloadに入る時点で読み込んでいる必要がある。
+ *
+ * @override
+ */
+SuperILtan.GameState.prototype.preload = function() {
+	'use strict';
+	var levelText = this.game.cache.getText('level');
+	var levelData = JSON.parse(levelText);
+
+	var assets = levelData.assets;
+	for (var asset_key in assets) {
+		if (assets.hasOwnProperty(asset_key)) {
+			var asset = assets[asset_key];
+			switch (asset.type) {
+				case 'image':
+					this.load.image(asset_key, asset.source);
+					break;
+				case 'spritesheet':
+					this.load.spritesheet(
+						asset_key,
+						asset.source,
+						asset.frame_width,
+						asset.frame_height,
+						asset.frames,
+						asset.margin,
+						asset.spacing
+					);
+					break;
+				case 'tilemap':
+					this.load.tilemap(
+						asset_key,
+						asset.source,
+						null,
+						Phaser.Tilemap.TILED_JSON
+					);
+					break;
+			}
+		}
+	}
+}
+
+/**
  * @override
  */
 SuperILtan.GameState.prototype.create = function() {
