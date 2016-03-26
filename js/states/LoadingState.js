@@ -28,23 +28,20 @@ SuperILtan.LoadingState.prototype.preload = function() {
 	'use strict';
 	this.game.stage.backgroundColor = Phaser.Color.getColor(0, 0, 0);
 	this.load.tilemap('level_map', 'assets/tilemaps/json/level1_map.json', null, Phaser.Tilemap.TILED_JSON);
-/*
-	this.load.text('level', 'assets/tilemaps/json/level.json');
+
 	var levelText = this.game.cache.getText('level');
-console.log(levelData);
 	var levelData = JSON.parse(levelText);
-*/
-/*
+
 	var assets = levelData.assets;
-	for (asset_key in assets) {
-		if (assets.hasOwnProperty(asset_kye)) {
-			asset = assets[asset_key];
+	for (var asset_key in assets) {
+		if (assets.hasOwnProperty(asset_key)) {
+			var asset = assets[asset_key];
 			switch (asset.type) {
 				case 'image':
 					this.load.image(asset_key, asset.source);
 					break;
 				case 'spritesheet':
-					this.load.image(
+					this.load.spritesheet(
 						asset_key,
 						asset.source,
 						asset.frame_width,
@@ -65,9 +62,9 @@ console.log(levelData);
 			}
 		}
 	}
-*/
+
 	// game
-	this.load.spritesheet('player_spritesheet', 'assets/images/player_spritesheet.png', 16, 16);
+//	this.load.spritesheet('player_spritesheet', 'assets/images/player_spritesheet.png', 16, 16);
 	this.load.spritesheet('enemies_spritesheet', 'assets/images/enemies_spritesheet.png', 16, 16);
 	this.load.spritesheet('items_spritesheet', 'assets/images/items_spritesheet.png', 16, 16);
 	this.load.image('bg_spritesheet', 'assets/images/bg_spritesheet.png');
