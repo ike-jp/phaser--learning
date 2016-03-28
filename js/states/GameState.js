@@ -79,26 +79,42 @@ SuperILtan.GameState.prototype.create = function() {
 	'use strict';
 	this.game.stage.backgroundColor = Phaser.Color.getColor(80, 128, 255);
 
-	// create map and set tileset
+	// マップデータの生成と、タイルセットの登録
 	var levelData = this.game.cache.getJSON('level');
 	this.map = this.game.add.tilemap(levelData.map.KEY);
 	levelData.map.tilesetImages.forEach(function(image) {
 		this.map.addTilesetImage(image);
 	}, this);
 
-	// create map layers
+	// マップデータからマップレイヤーを生成し、
+	// 1以上のインデックスを持つタイルを探して当たり判定を設定する
 	this.layers = {};
+
 	this.map.layers.forEach(function (layer) {
 		this.layers[layer.name] = this.map.createLayer(layer.name);
+		// 当たり判定が必要なレイヤにはカスタムプロパティ(collision)を設定しておく
+		if (layer.properties.collision) {
+			var collision_tiles = [];
+			// マップのdataはタイル100個ずつのデータ配列になっているので取り出す
+			layer.data.forEach(function (data_row) {
+				data_row.forEach(function (tile) {
+					// タイルのインデックスが０より大きく、
+					// まだ抽出していないインデックスならcollision_tilesに入れる
+					if (tile.index > 0 && collision_tiles.indexOf(tile.index) === -1) {
+						collision_tiles.push(tile.index);
+					}
+				}, this);
+			}, this);
+			// 抽出した1以上のインデックスをまとめてcollision設定
+			this.map.setCollision(collision_tiles, true, layer.name);
+		}
 	}, this);
+	// 現在のレイヤーにワールドのサイズを合わせる
+	// 大きさは全部同じなのでどれか１つに合わせれば良い
+	this.layers[this.map.layer.name].resizeWorld();
 
-	// マップ設定
-//	this.map = this.game.add.tilemap('level_map');
-//	this.map.addTilesetImage('bg_spritesheet');
-//	this.map.addTilesetImage('terrain_spritesheet');
-
+	// プレイヤーや敵の判定はまだthis.layerなので、これを消すと乗らなくなる
 	var bgLayer = this.map.createLayer('BG Layer');
-	bgLayer.resizeWorld();
 	this.layer = this.map.createLayer('Tile Layer');
 	this.layer.resizeWorld();
 
