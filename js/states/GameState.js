@@ -114,6 +114,27 @@ SuperILtan.GameState.prototype.create = function() {
 	//this.layer.debug = true;
 	//this.map.smoothed = false;
 
+	// オブジェクト生成処理の一般化
+	this.createObjects_();
+	this.createObjectsTemp_();
+}
+
+/**
+ * オブジェクトを生成する
+ *
+ * @private
+ */
+SuperILtan.GameState.prototype.createObjects_ = function() {
+	'use strict';
+}
+
+/**
+ * オブジェクトを生成する(仮)
+ *
+ * @private
+ */
+SuperILtan.GameState.prototype.createObjectsTemp_ = function() {
+	'use strict';
 	// item group
 	this.items = this.game.add.group();
 	this.items.enableBody = true;
