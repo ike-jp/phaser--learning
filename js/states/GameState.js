@@ -112,9 +112,7 @@ SuperILtan.GameState.prototype.create = function() {
 	// 大きさは全部同じなのでどれか１つに合わせれば良い
 	this.layers[this.map.layer.name].resizeWorld();
 	//this.layer.debug = true;
-
-	this.map.setCollisionBetween(1, 5, true, 'Tile Layer');
-	this.map.smoothed = false;
+	//this.map.smoothed = false;
 
 	// item group
 	this.items = this.game.add.group();
