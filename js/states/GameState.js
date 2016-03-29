@@ -89,7 +89,6 @@ SuperILtan.GameState.prototype.create = function() {
 	// マップデータからマップレイヤーを生成し、
 	// 1以上のインデックスを持つタイルを探して当たり判定を設定する
 	this.layers = {};
-
 	this.map.layers.forEach(function (layer) {
 		this.layers[layer.name] = this.map.createLayer(layer.name);
 		// 当たり判定が必要なレイヤにはカスタムプロパティ(collision)を設定しておく
@@ -112,12 +111,6 @@ SuperILtan.GameState.prototype.create = function() {
 	// 現在のレイヤーにワールドのサイズを合わせる
 	// 大きさは全部同じなのでどれか１つに合わせれば良い
 	this.layers[this.map.layer.name].resizeWorld();
-
-	// プレイヤーや敵の判定はまだthis.layerなので、これを消すと乗らなくなる
-	var bgLayer = this.map.createLayer('BG Layer');
-	this.layer = this.map.createLayer('Tile Layer');
-	this.layer.resizeWorld();
-
 	//this.layer.debug = true;
 
 	this.map.setCollisionBetween(1, 5, true, 'Tile Layer');
@@ -235,13 +228,13 @@ SuperILtan.GameState.prototype.create = function() {
 SuperILtan.GameState.prototype.update = function() {
 	'use strict';
 	this.keyboard.update();
-	this.game.physics.arcade.collide(this.enemies, this.layer);
+	this.game.physics.arcade.collide(this.enemies, this.layers['Tile Layer']);
 	this.game.physics.arcade.collide(this.enemies);
 
 	if (!this.player.alive) {
 		return;
 	}
-	this.game.physics.arcade.collide(this.player, this.layer);
+	this.game.physics.arcade.collide(this.player, this.layers['Tile Layer']);
 	this.game.physics.arcade.overlap(this.player, this.goal_symbol, this.levelComplete_, null, this);
 	this.game.physics.arcade.overlap(this.player, this.enemies, this.collideEnemy_, null, this);
 	this.game.physics.arcade.overlap(this.player, this.items, this.collideItem_, null, this);
