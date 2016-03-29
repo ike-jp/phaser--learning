@@ -59,7 +59,7 @@ SuperILtan.Player.prototype.update = function() {
  *
  * @private
  */
-SuperILtan.Player.prototype.onHitEnemy = function(player, enemy) {
+SuperILtan.Player.prototype.onHitEnemyCallback_ = function(player, enemy) {
 	'use strict';
 }
 
@@ -68,7 +68,7 @@ SuperILtan.Player.prototype.onHitEnemy = function(player, enemy) {
  *
  * @private
  */
-SuperILtan.Player.prototype.die = function() {
+SuperILtan.Player.prototype.onDieCallback_ = function() {
 	'use strict';
 	/*
 	var gameState = this.gameState;
