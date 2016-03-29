@@ -126,6 +126,45 @@ SuperILtan.GameState.prototype.create = function() {
  */
 SuperILtan.GameState.prototype.createObjects_ = function() {
 	'use strict';
+	// レベルデータに書かれたgroupを元にグループ生成
+	this.groups = {};
+	var levelData = this.game.cache.getJSON('level');
+	levelData.groups.forEach(function (groupName) {
+		this.groups[groupName] = this.game.add.group();
+	}, this);
+
+	this.prefabs = {};
+	for (var objectLayer in this.map.objects) {
+		if (this.map.objects.hasOwnProperty(objectLayer)) {
+			// オブジェクト生成
+			this.map.objects[objectLayer].forEach(function (object) {
+				console.log(object);
+				// Tiledは左下座標が基準となっているので
+				// 中心に直してアンカーを中心にする
+				this.game.add.sprite(
+					object.x + (this.map.tileHeight /2),
+					object.y - (this.map.tileHeight /2),
+					'player_spritesheet'
+				).anchor.setTo(0.5, 0.5);
+			}, this);
+		}
+	}
+}
+
+/**
+ * オブジェクトを生成時に呼ばれるコールバック
+ *
+ * @private
+ * @param {Object} TiledObject
+ */
+SuperILtan.GameState.prototype.onCreateObjectCallback_ = function(object) {
+	var object_y;
+	if (object.gid) {
+		object_y = object.y - (this.map.tileHeight /2);
+	} else {
+		object_y = object.y + (object.height /2);
+	}
+	//var position = ['x': object.x + (this.map.tileHeight /2), 'y': object_y];
 }
 
 /**
