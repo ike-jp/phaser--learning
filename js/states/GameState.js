@@ -134,16 +134,20 @@ SuperILtan.GameState.prototype.createObjects_ = function() {
 	}, this);
 
 	this.prefabs = {};
+	var classMap = SuperILtan.PrefabsClassMap;
 	for (var objectLayer in this.map.objects) {
 		if (this.map.objects.hasOwnProperty(objectLayer)) {
 			// オブジェクト生成
-			this.map.objects[objectLayer].forEach(function (object) {
-				console.log(object);
+			this.map.objects[objectLayer].forEach(function (tiledObject) {
+				if (classMap.hasOwnProperty(tiledObject.type)) {
+					console.log(classMap[tiledObject.type]);
+					// new classMap[object.type](this, position, tiledObject);
+				}
 				// Tiledは左下座標が基準となっているので
 				// 中心に直してアンカーを中心にする
 				this.game.add.sprite(
-					object.x + (this.map.tileHeight /2),
-					object.y - (this.map.tileHeight /2),
+					tiledObject.x + (this.map.tileHeight /2),
+					tiledObject.y - (this.map.tileHeight /2),
 					'player_spritesheet'
 				).anchor.setTo(0.5, 0.5);
 			}, this);

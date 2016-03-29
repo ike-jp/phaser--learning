@@ -31,4 +31,5 @@ Application.inherits(SuperILtan.AbstractPrehab, Phaser.Sprite);
  * このプレハブを更新する
  */
 SuperILtan.AbstractPrehab.prototype.update = function() {
+	'use strict';
 }
