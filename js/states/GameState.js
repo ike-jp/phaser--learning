@@ -4,7 +4,7 @@
  */
 
 Application.namespace('SuperILtan.AbstractState');
-Application.namespace('App.Util.Input.Keyboard');
+Application.namespace('util.Keyboard');
 
 /**
  * プレイ画面クラス
@@ -238,7 +238,7 @@ SuperILtan.GameState.prototype.createObjectsTemp_ = function() {
 	this.player_is_dashed = false;
 
 	// テスト
-	this.keyboard = new App.Util.Input.Keyboard(this.game.input.keyboard);
+	this.keyboard = new util.Keyboard(this.game.input.keyboard);
 }
 
 /**

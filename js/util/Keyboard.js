@@ -3,7 +3,7 @@
  * @license Refer to the LICENSE file.
  */
 
-Application.namespace('App.Util.Input');
+Application.namespace('util');
 
 /**
  * キーボードユーティリティクラス
@@ -12,8 +12,8 @@ Application.namespace('App.Util.Input');
  * @constructor
  * @extends {AbstractScene}
  */
-App.Util.Input.Keyboard = function(keyboard)
-{
+util.Keyboard = function(keyboard) {
+	'use strict';
 	this.keyboard_ = keyboard;
 	this.state_ = [];
 	this.dobule_buffer_idx_ = 0;
@@ -22,8 +22,8 @@ App.Util.Input.Keyboard = function(keyboard)
 /**
  * このキーボードの状態を更新する
  */
-App.Util.Input.Keyboard.prototype.update = function()
-{
+util.Keyboard.prototype.update = function() {
+	'use strict';
 	this.dobule_buffer_idx_ ^= 1;
 	this.state_.forEach(function(val, key_code) {
 		val[this.dobule_buffer_idx_] = this.keyboard_.isDown(key_code);
@@ -36,8 +36,8 @@ App.Util.Input.Keyboard.prototype.update = function()
  * @param {Phaser.KeyCode} key_code
  * @param {bool} キーが押され始めたフレームのみtrueを返す
  */
-App.Util.Input.Keyboard.prototype.isTriggered = function(key_code)
-{
+util.Keyboard.prototype.isTriggered = function(key_code) {
+	'use strict';
 	this.ensurePresenceOfKey_(key_code);
 	var idx = this.dobule_buffer_idx_;
 	return this.state_[key_code][idx]
@@ -50,8 +50,8 @@ App.Util.Input.Keyboard.prototype.isTriggered = function(key_code)
  * @param {Phaser.KeyCode} key_code
  * @param {bool} キーが離されたフレームのみtrueを返す
  */
-App.Util.Input.Keyboard.prototype.isReleased = function(key_code)
-{
+util.Keyboard.prototype.isReleased = function(key_code) {
+	'use strict';
 	this.ensurePresenceOfKey_(key_code);
 	var idx = this.dobule_buffer_idx_;
 	return !this.state_[key_code][idx]
@@ -64,8 +64,8 @@ App.Util.Input.Keyboard.prototype.isReleased = function(key_code)
  * @param {Phaser.KeyCode} key_code
  * @param {bool} 押された次のフレームから放される直前のフレームまでtrueを返す
  */
-App.Util.Input.Keyboard.prototype.isPressed = function(key_code)
-{
+util.Keyboard.prototype.isPressed = function(key_code) {
+	'use strict';
 	this.ensurePresenceOfKey_(key_code);
 	var idx = this.dobule_buffer_idx_;
 	return this.state_[key_code][idx]
@@ -78,8 +78,8 @@ App.Util.Input.Keyboard.prototype.isPressed = function(key_code)
  * @param {Phaser.KeyCode} key_code
  * @return {bool} 押されたフレームから放される直前のフレームまでtrueが返る
  */
-App.Util.Input.Keyboard.prototype.isOn = function(key_code)
-{
+util.Keyboard.prototype.isOn = function(key_code) {
+	'use strict';
 	this.ensurePresenceOfKey_(key_code);
 	var idx = this.dobule_buffer_idx_;
 	return this.state_[key_code][idx];
@@ -91,8 +91,8 @@ App.Util.Input.Keyboard.prototype.isOn = function(key_code)
  * @private
  * @param {Phaser.KeyCode} key_code
  */
-App.Util.Input.Keyboard.prototype.ensurePresenceOfKey_ = function(key_code)
-{
+util.Keyboard.prototype.ensurePresenceOfKey_ = function(key_code) {
+	'use strict';
 	if (typeof this.state_[key_code] === "undefined") {
 		this.state_[key_code] = [false, false];
 	}

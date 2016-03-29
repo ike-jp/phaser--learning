@@ -11,10 +11,10 @@ var SuperILtan = SuperILtan || {};
 var Application = Application || {};
 
 /**
- * Appディレクトリ以下の名前空間を表すグローバルオブジェクト
+ * utilディレクトリ以下の名前空間を表すグローバルオブジェクト
  * @type {Object}
  */
-var App = App || {};
+var util = util || {};
 
 /**
  * 名前空間定義
@@ -28,11 +28,11 @@ var App = App || {};
 Application.namespace = function(ns_string) {
 	'use strict';
 	var parts = ns_string.split('.'), // . で区切った配列
-		parent = App, // グローバルオブジェクトのアプリ名
+		parent = SuperILtan, // グローバルオブジェクトのアプリ名
 		i;
 
 	// 先頭のグローバルを取り除く
-	if (parts[0] === "App") {
+	if (parts[0] === "SuperILtan") {
 		parts = parts.slice(1); // 先頭を削除
 	}
 
