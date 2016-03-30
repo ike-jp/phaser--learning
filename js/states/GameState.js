@@ -140,8 +140,12 @@ SuperILtan.GameState.prototype.createObjects_ = function() {
 			// オブジェクト生成
 			this.map.objects[objectLayer].forEach(function (tiledObject) {
 				if (classMap.hasOwnProperty(tiledObject.type)) {
-					console.log(classMap[tiledObject.type]);
-					// new classMap[object.type](this, position, tiledObject);
+					this.prefabs[objectLayer] = new classMap[tiledObject.type](
+						this,
+						tiledObject.x + (this.map.tileHeight /2),
+						tiledObject.y - (this.map.tileHeight /2),
+						tiledObject
+					);
 				}
 				// Tiledは左下座標が基準となっているので
 				// 中心に直してアンカーを中心にする

@@ -10,20 +10,16 @@ Application.namespace('SuperILtan');
  *
  * @constructor
  */
-SuperILtan.AbstractPrehab = function(gameState, position, tiledMapObject) {
+SuperILtan.AbstractPrehab = function(gameState, x, y, tiledMapObject) {
 	'use strict';
-	var textureName = tiledMapObject.properties.texture;
-	Phaser.Sprite.call(
-		this,
-		gameState.game,
-		position.x,
-		position.y,
-		textureName
-	);
+	/*
+	var textureName = tiledMapObject.properties.textureName;
+	Phaser.Sprite.call(this, gameState.game, x, y, textureName);
 
-	var groupName = tiledMapObject.group;
+	var groupName = tiledMapObject.properties.group;
 	this.gameState = gameState;
 	this.gameState.groups[groupName].add(this);
+	*/
 }
 Application.inherits(SuperILtan.AbstractPrehab, Phaser.Sprite);
 

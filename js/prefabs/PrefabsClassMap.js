@@ -15,6 +15,6 @@ Application.namespace('SuperILtan');
  */
 SuperILtan.PrefabsClassMap = {
 	'player': SuperILtan.Player,
-	'yukibo-s': "test", //SuperILtan.Yukibo,
-	'yukibo-e': "test2", //SuperILtan.Yukibo2,
+	'yukibo-s': SuperILtan.Yukibo,
+	'yukibo-e': SuperILtan.Yukibo2,
 }
