@@ -4,6 +4,7 @@
  */
 
 Application.namespace('SuperILtan');
+Application.namespace('util.Keyboard');
 
 /**
  * プレイヤークラス
@@ -25,7 +26,7 @@ SuperILtan.Player = function(gameState, x, y, tiledMapObject) {
 	this.animations.add('failed', [6], 10, false);
 	this.play('stand');
 
-	this.body.maxVelocity.y = this.MAX_VELOCITY_Y;
+	this.body.maxVelocity.y = this.gameState.MAX_VELOCITY_Y;
 	this.smoothed = false;
 	this.checkWorldBounds = true;
 	this.body.collideWorldBouns = true;
@@ -36,6 +37,8 @@ SuperILtan.Player = function(gameState, x, y, tiledMapObject) {
 	this.maxHealth = 1;
 //	this.health = this.player.maxHealth;
 //	this.events.onKilled.add(this.killedPlayer_, this, this.player);
+
+	this.keyboard = new util.Keyboard(this.game.input.keyboard);
 }
 Application.inherits(
 	SuperILtan.Player,
@@ -47,28 +50,89 @@ Application.inherits(
  */
 SuperILtan.Player.prototype.update = function() {
 	'use strict';
+	this.keyboard.update();
 	var game = this.gameState.game;
 	var layers = this.gameState.layers;
 	var enemies = this.gameState.groups.enemies;
 
 	this.game.physics.arcade.collide(this, layers['Tile Layer']);
-	/*
-	game.physics.arcade.collide(this, layer);
-	game.physics.arcade.override(this, enemies, this.onHitEnemy, null, this);
 
-	var cursorKeys = this.cursorKeys;
-	if (cursorKeys.right.isDown) {
-		this.direction = 'RIGHT';
-		this.animations.play('walk');
-		this.scale.setTo(-1, 1);
-	} else if (cursorKeys.left.isDown) {
-		this.direction = 'LEFT';
-		this.animations.play('walk');
-		this.scale.setTo(1, 1);
+	var is_pressed_dash_button = this.keyboard.isOn(Phaser.Keyboard.X);
+	if (!is_pressed_dash_button) {
+		this.body.maxVelocity.x = 60;
+		this.body.drag.x = 200;
 	} else {
-		this.animations.play('stand');
+		this.body.maxVelocity.x = 140;
+		this.body.drag.x = 240;
 	}
-	*/
+	this.body.acceleration.x = 0;
+	if (this.keyboard.isOn(Phaser.Keyboard.LEFT)) {
+		if (this.body.velocity.x > 0) {
+			this.body.acceleration.x -= 200;
+		} else {
+			this.body.acceleration.x -= 100;
+		}
+	} else if (this.keyboard.isOn(Phaser.Keyboard.RIGHT)) {
+		if (this.body.velocity.x < 0) {
+			this.body.acceleration.x += 200;
+		} else {
+			this.body.acceleration.x += 100;
+		}
+	}
+
+	// ジャンプ
+	if (this.body.onFloor()) {
+		this.player_can_jump = true;
+	}
+	// ジャンプ
+	if (this.keyboard.isTriggered(Phaser.Keyboard.UP)
+	||  this.keyboard.isTriggered(Phaser.Keyboard.Z)
+	||  this.keyboard.isTriggered(Phaser.Keyboard.SPACEBAR)) {
+		if (this.body.onFloor()) {
+			this.body.velocity.y = -270;
+		}
+	}
+	if (this.keyboard.isPressed(Phaser.Keyboard.UP)
+	||  this.keyboard.isPressed(Phaser.Keyboard.Z)
+	||  this.keyboard.isPressed(Phaser.Keyboard.SPACEBAR)) {
+		if (this.player_can_jump) {
+			this.body.velocity.y -= 17;
+			if (this.body.velocity.y < -400) {
+				this.player_can_jump = false;
+			}
+		}
+	}
+
+	// アニメーション制御
+	if (this.body.velocity.y != 0) {
+		this.play('jump');
+	} else if (this.body.velocity.x < 0) {
+		if (this.keyboard.isOn(Phaser.Keyboard.RIGHT)) {
+			this.scale.x = 1;
+			this.play('quickturn');
+		} else {
+			this.scale.x = -1;
+			if (is_pressed_dash_button) {
+				this.play('run');
+			} else {
+				this.play('walk');
+			}
+		}
+	} else if (this.body.velocity.x > 0) {
+		if (this.keyboard.isOn(Phaser.Keyboard.LEFT)) {
+			this.scale.x = -1;
+			this.play('quickturn');
+		} else {
+			this.scale.x = 1;
+			if (is_pressed_dash_button) {
+				this.play('run');
+			} else {
+				this.play('walk');
+			}
+		}
+	} else {
+		this.play('stand');
+	}
 }
 
 /**

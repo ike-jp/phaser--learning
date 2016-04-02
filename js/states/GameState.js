@@ -117,6 +117,9 @@ SuperILtan.GameState.prototype.create = function() {
 	// オブジェクト生成処理の一般化
 	this.createObjects_();
 	this.createObjectsTemp_();
+
+	this.game.camera.follow(this.prefabs['あいえるたん']);
+	this.game.camera.deadzone = new Phaser.Rectangle(16*6, 16*6, 16*2, 16*4);
 }
 
 /**
@@ -140,7 +143,7 @@ SuperILtan.GameState.prototype.createObjects_ = function() {
 			// オブジェクト生成
 			this.map.objects[objectLayer].forEach(function (tiledObject) {
 				if (classMap.hasOwnProperty(tiledObject.type)) {
-					this.prefabs[objectLayer] = new classMap[tiledObject.type](
+					var prefab = new classMap[tiledObject.type](
 						this,
 						// Tiledは左下座標が基準となっているので
 						// 中心に直してアンカーを中心にする
@@ -148,6 +151,10 @@ SuperILtan.GameState.prototype.createObjects_ = function() {
 						tiledObject.y - (this.map.tileHeight /2),
 						tiledObject
 					);
+					// uniqueカスタムプロパティがtrueの場合は名前をキーにして保持
+					if (tiledObject.properties.unique === 'true') {
+						this.prefabs[tiledObject.name] = prefab;
+					}
 				}
 			}, this);
 		}
@@ -218,7 +225,7 @@ SuperILtan.GameState.prototype.createObjectsTemp_ = function() {
 	this.map.createFromObjects('Items Layer', "goal-symbol", 'goalsymbol_image', 0, true, false, this.goal_symbol);
 	this.goal_symbol.setAll('body.allowGravity', false);
 	this.goal_symbol.setAll('smoothed', false);
-
+/*
 	// プレイヤー設定
 	this.player = this.game.add.sprite(
 		16*5, // this.game.world.centerX,
@@ -246,7 +253,7 @@ SuperILtan.GameState.prototype.createObjectsTemp_ = function() {
 	this.player.animations.add('jump', [5], 10, false);
 	this.player.animations.add('failed', [6], 10, false);
 	this.player.play('stand');
-
+*/
 	// タイマー
 	this.time_limit = 120;
 	this.time_counter = this.time_limit;
@@ -273,7 +280,7 @@ SuperILtan.GameState.prototype.createObjectsTemp_ = function() {
 	t.fixedToCamera = true;
 	t.cameraOffset.setTo(180, 6)
 	this.text_score.text = "999999";
-
+/*
 	// ゲーム設定
 	this.game.camera.follow(this.player);
 	this.game.camera.deadzone = new Phaser.Rectangle(16*6, 16*6, 16*2, 16*4);
@@ -281,7 +288,7 @@ SuperILtan.GameState.prototype.createObjectsTemp_ = function() {
 	this.player.revive();
 	this.player_move_vy = 0;
 	this.player_is_dashed = false;
-
+*/
 	// テスト
 	this.keyboard = new util.Keyboard(this.game.input.keyboard);
 }
@@ -294,7 +301,7 @@ SuperILtan.GameState.prototype.update = function() {
 	this.keyboard.update();
 //	this.game.physics.arcade.collide(this.enemies, this.layers['Tile Layer']);
 //	this.game.physics.arcade.collide(this.enemies);
-
+/*
 	if (!this.player.alive) {
 		return;
 	}
@@ -389,6 +396,7 @@ SuperILtan.GameState.prototype.update = function() {
 	} else {
 		this.player.play('stand');
 	}
+*/
 }
 
 /**
