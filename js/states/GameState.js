@@ -309,6 +309,17 @@ SuperILtan.GameState.prototype.update = function() {
 	this.game.physics.arcade.overlap(this.player, this.goal_symbol, this.levelComplete_, null, this);
 //	this.game.physics.arcade.overlap(this.player, this.enemies, this.collideEnemy_, null, this);
 //	this.game.physics.arcade.overlap(this.player, this.items, this.collideItem_, null, this);
+
+	// テスト用
+	if (this.keyboard.isTriggered(Phaser.Keyboard.Q)) {
+		this.player.kill();
+		return;
+	}
+
+	if (this.keyboard.isTriggered(Phaser.Keyboard.E)) {
+		this.addEffectOfScore(100, 100, 50);
+	}
+*/
 }
 
 /**
@@ -369,8 +380,8 @@ SuperILtan.GameState.prototype.restartLevel = function() {
  *
  * @private
  */
-SuperILtan.GameState.prototype.levelComplete_ = function(player, symbol)
-{
+SuperILtan.GameState.prototype.levelComplete_ = function(player, symbol) {
+	'use strict';
 	console.log('LEVEL COMPLETE!');
 	symbol.kill();
 
@@ -409,8 +420,8 @@ SuperILtan.GameState.prototype.levelComplete_ = function(player, symbol)
  *
  * @private
  */
-SuperILtan.GameState.prototype.toNextLevel_ = function()
-{
+SuperILtan.GameState.prototype.toNextLevel_ = function() {
+	'use strict';
 	console.log('NEXT LEVEL!');
 	// レベル番号加算
 	// ワールド番号加算
@@ -426,8 +437,8 @@ SuperILtan.GameState.prototype.toNextLevel_ = function()
  * @param {integer} y
  * @param {integer} value
  */
-SuperILtan.GameState.prototype.addEffectOfScore = function(x, y, value)
-{
+SuperILtan.GameState.prototype.addEffectOfScore = function(x, y, value) {
+	'use strict';
 	var font = this.game.add.retroFont('myfont-num-s', 4, 5, '0123456789', 10);
 	var image = this.game.add.image(x, y, font);
 	image.smoothed = false;
@@ -448,8 +459,10 @@ SuperILtan.GameState.prototype.addEffectOfScore = function(x, y, value)
  * @param {Phaser.Sprite} player
  * @param {Phaser.Sprite} item
  */
+/*
 SuperILtan.GameState.prototype.collideItem_ = function(player, item)
 {
 	item.kill();
 	// スコア加算
 }
+*/

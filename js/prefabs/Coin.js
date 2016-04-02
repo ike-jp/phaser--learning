@@ -32,18 +32,20 @@ Application.inherits(
  */
 SuperILtan.Coin.prototype.update = function() {
 	'use strict';
-	var game = this.gameState.game;
+	var gameState = this.gameState;
 	var layers = this.gameState.layers;
-	var enemies = this.gameState.groups.enemies;
+	var players = this.gameState.groups.players;
 
-//	this.game.physics.arcade.collide(this, layers['Tile Layer']);
+	this.game.physics.arcade.overlap(this, players, this.onCollectCallback_, null, this);
 }
 
 /**
- * この敵のライフが０になった時に呼ばれるコールバック
+ * コイン取得
  *
  * @private
  */
-SuperILtan.Coin.prototype.onDieCallback_ = function() {
+SuperILtan.Coin.prototype.onCollectCallback_ = function(coin, player) {
 	'use strict';
+	coin.kill();
+	// addScore
 }
