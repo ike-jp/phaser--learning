@@ -10,17 +10,32 @@ Application.namespace('SuperILtan');
  *
  * @constructor
  */
-SuperILtan.Player = function(gameState, position, tiledMapObject) {
+SuperILtan.Player = function(gameState, x, y, tiledMapObject) {
 	'use strict';
-	Phaser.AbstractPrehab.call(this, gameState, position, tiledMapObject);
-	/*
-	var game = this.gameState.game;
-	game.physics.arcade.enable(this);
-	this.body.collideWorldBounds = true;
-	this.direction = 'RIGHT';
-	this.anchor.setTo(0.5);
-	this.cursorKeys = game.input.keyboard.createCursorKeys();
-	*/
+	SuperILtan.AbstractPrehab.call(this, gameState, x, y, tiledMapObject);
+	this.gameState.game.physics.arcade.enable(this);
+
+	this.anchor.setTo(0.5); // for flip
+
+	this.animations.add('stand', [0], 10, false);
+	this.animations.add('walk', [1, 2], 8, true);
+	this.animations.add('run', [2, 3], 15, true);
+	this.animations.add('quickturn', [4], 10, false);
+	this.animations.add('jump', [5], 10, false);
+	this.animations.add('failed', [6], 10, false);
+	this.play('stand');
+
+	this.body.maxVelocity.y = this.MAX_VELOCITY_Y;
+	this.smoothed = false;
+	this.checkWorldBounds = true;
+	this.body.collideWorldBouns = true;
+
+//	this.player.events.onOutOfBounds.add(this.playerOutOfBounds_, this);
+	this.body.linearDamping = 1;
+
+	this.maxHealth = 1;
+//	this.health = this.player.maxHealth;
+//	this.events.onKilled.add(this.killedPlayer_, this, this.player);
 }
 Application.inherits(
 	SuperILtan.Player,
@@ -33,8 +48,10 @@ Application.inherits(
 SuperILtan.Player.prototype.update = function() {
 	'use strict';
 	var game = this.gameState.game;
-	var layer = this.gameState.layer;
+	var layers = this.gameState.layers;
 	var enemies = this.gameState.groups.enemies;
+
+	this.game.physics.arcade.collide(this, layers['Tile Layer']);
 	/*
 	game.physics.arcade.collide(this, layer);
 	game.physics.arcade.override(this, enemies, this.onHitEnemy, null, this);
