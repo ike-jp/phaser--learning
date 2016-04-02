@@ -178,6 +178,7 @@ SuperILtan.GameState.prototype.onCreateObjectCallback_ = function(object) {
 SuperILtan.GameState.prototype.createObjectsTemp_ = function() {
 	'use strict';
 	// item group
+/*
 	this.items = this.game.add.group();
 	this.items.enableBody = true;
 	this.map.createFromObjects('Items Layer', "yuni-", 'items_spritesheet', 0, true, false, this.items);
@@ -186,6 +187,7 @@ SuperILtan.GameState.prototype.createObjectsTemp_ = function() {
 	this.items.setAll('body.allowGravity', false);
 	this.items.setAll('body.maxVelocity.y', this.MAX_VELOCITY_Y);
 	this.items.setAll('smoothed', false);
+*/
 
 	// enemy group
 /*
@@ -299,7 +301,7 @@ SuperILtan.GameState.prototype.update = function() {
 	this.game.physics.arcade.collide(this.player, this.layers['Tile Layer']);
 	this.game.physics.arcade.overlap(this.player, this.goal_symbol, this.levelComplete_, null, this);
 //	this.game.physics.arcade.overlap(this.player, this.enemies, this.collideEnemy_, null, this);
-	this.game.physics.arcade.overlap(this.player, this.items, this.collideItem_, null, this);
+//	this.game.physics.arcade.overlap(this.player, this.items, this.collideItem_, null, this);
 
 	var is_pressed_dash_button = this.keyboard.isOn(Phaser.Keyboard.X);
 	if (!is_pressed_dash_button) {
