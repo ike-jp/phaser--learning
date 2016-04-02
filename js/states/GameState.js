@@ -309,94 +309,6 @@ SuperILtan.GameState.prototype.update = function() {
 	this.game.physics.arcade.overlap(this.player, this.goal_symbol, this.levelComplete_, null, this);
 //	this.game.physics.arcade.overlap(this.player, this.enemies, this.collideEnemy_, null, this);
 //	this.game.physics.arcade.overlap(this.player, this.items, this.collideItem_, null, this);
-
-	var is_pressed_dash_button = this.keyboard.isOn(Phaser.Keyboard.X);
-	if (!is_pressed_dash_button) {
-		this.player.body.maxVelocity.x = 60;
-		this.player.body.drag.x = 200;
-	} else {
-		this.player.body.maxVelocity.x = 140;
-		this.player.body.drag.x = 240;
-	}
-	this.player.body.acceleration.x = 0;
-	if (this.keyboard.isOn(Phaser.Keyboard.LEFT)) {
-		if (this.player.body.velocity.x > 0) {
-			this.player.body.acceleration.x -= 200;
-		} else {
-			this.player.body.acceleration.x -= 100;
-		}
-	} else if (this.keyboard.isOn(Phaser.Keyboard.RIGHT)) {
-		if (this.player.body.velocity.x < 0) {
-			this.player.body.acceleration.x += 200;
-		} else {
-			this.player.body.acceleration.x += 100;
-		}
-	}
-
-	// ジャンプ
-	if (this.player.body.onFloor()) {
-		this.player_can_jump = true;
-	}
-	// ジャンプ
-	if (this.keyboard.isTriggered(Phaser.Keyboard.UP)
-	||  this.keyboard.isTriggered(Phaser.Keyboard.Z)
-	||  this.keyboard.isTriggered(Phaser.Keyboard.SPACEBAR)) {
-		if (this.player.body.onFloor()) {
-			this.player.body.velocity.y = -270;
-		}
-	}
-	if (this.keyboard.isPressed(Phaser.Keyboard.UP)
-	||  this.keyboard.isPressed(Phaser.Keyboard.Z)
-	||  this.keyboard.isPressed(Phaser.Keyboard.SPACEBAR)) {
-		if (this.player_can_jump) {
-			this.player.body.velocity.y -= 17;
-			if (this.player.body.velocity.y < -400) {
-				this.player_can_jump = false;
-			}
-		}
-	}
-
-	// テスト用
-	if (this.keyboard.isTriggered(Phaser.Keyboard.Q)) {
-		this.player.kill();
-		return;
-	}
-
-	if (this.keyboard.isTriggered(Phaser.Keyboard.E)) {
-		this.addEffectOfScore(100, 100, 50);
-	}
-
-	// アニメーション制御
-	if (this.player.body.velocity.y != 0) {
-		this.player.play('jump');
-	} else if (this.player.body.velocity.x < 0) {
-		if (this.keyboard.isOn(Phaser.Keyboard.RIGHT)) {
-			this.player.scale.x = 1;
-			this.player.play('quickturn');
-		} else {
-			this.player.scale.x = -1;
-			if (is_pressed_dash_button) {
-				this.player.play('run');
-			} else {
-				this.player.play('walk');
-			}
-		}
-	} else if (this.player.body.velocity.x > 0) {
-		if (this.keyboard.isOn(Phaser.Keyboard.LEFT)) {
-			this.player.scale.x = -1;
-			this.player.play('quickturn');
-		} else {
-			this.player.scale.x = 1;
-			if (is_pressed_dash_button) {
-				this.player.play('run');
-			} else {
-				this.player.play('walk');
-			}
-		}
-	} else {
-		this.player.play('stand');
-	}
-*/
 }
 
 /**
@@ -430,48 +342,6 @@ SuperILtan.GameState.prototype.updateTimeCounter_ = function() {
 		this.player.kill();
 	}
 }
-
-/**
- * プレイヤーがやられた
- *
- * @private
- * @param {Phaser.Sprite} player
- */
-/*
-SuperILtan.GameState.prototype.killedPlayer_ = function(player) {
-	'use strict';
-	console.log("called killedPlayser_");
-	var dying_player = this.game.add.sprite(
-		player.body.position.x,
-		player.body.position.y,
-		'player_spritesheet'
-	);
-	dying_player.animations.add('failed', [6], 10, false);
-	dying_player.play('failed');
-
-	var duration = 500;
-	var ease = Phaser.Easing.Back.In;
-	var auto_start = true;
-	var delay = 400;
-	var repeat = 0;
-	var yoyo = false;
-
-	// Easingは良さそうなのが無いのでeseInBackを指定。
-	// TODO: 自身で定義することもできるが、重要ではないので後にする
-	// easeに指定されたメソッドには、durationの現在の割合が0.0~1.0で渡されてくる
-	// 詳しくはPhaser.Easingとhttp://easings.net/ja#を見る
-	var tween = this.game.add.tween(dying_player);
-	tween.to(
-		{y: this.game.physics.arcade.bounds.bottom },
-		duration, ease, auto_start, delay, repeat, yoyo
-	);
-	tween.onComplete.add(function() {
-			this.game.time.events.add(Phaser.Timer.SECOND * 3, this.failed_, this);
-		},
-		this
-	);
-}
-*/
 
 /**
  * このゲームを終了してタイトルに戻る
@@ -549,27 +419,6 @@ SuperILtan.GameState.prototype.toNextLevel_ = function()
 }
 
 /**
- * プレイヤーx敵衝突コールバック
- *
- * @private
- * @param {Phaser.Sprite} player
- * @param {Phaser.Sprite} enemy
- */
-/*
-SuperILtan.GameState.prototype.collideEnemy_ = function(player, enemy)
-{
-	if (player.body.touching.down) {
-		player.body.velocity.y = -300;
-		enemy.kill();
-		var score = 100;
-		this.addEffectOfScore(enemy.position.x, enemy.position.y, score);
-	} else {
-		player.damage(1);
-	}
-}
-*/
-
-/**
  * スコアエフェクト
  *
  * @private
@@ -604,20 +453,3 @@ SuperILtan.GameState.prototype.collideItem_ = function(player, item)
 	item.kill();
 	// スコア加算
 }
-
-/**
- * プレイヤーが画面外に出た場合の処理
- *
- * @private
- * @param {Phaser.Sprite} player
- */
-/*
-SuperILtan.GameState.prototype.playerOutOfBounds_ = function(player)
-{
-	console.log(player.position.y);
-	console.log(this.game.physics.arcade.bounds.bottom);
-	if (player.position.y > this.game.physics.arcade.bounds.bottom) {
-		player.damage(1);
-	}
-}
-*/
