@@ -142,18 +142,13 @@ SuperILtan.GameState.prototype.createObjects_ = function() {
 				if (classMap.hasOwnProperty(tiledObject.type)) {
 					this.prefabs[objectLayer] = new classMap[tiledObject.type](
 						this,
+						// Tiledは左下座標が基準となっているので
+						// 中心に直してアンカーを中心にする
 						tiledObject.x + (this.map.tileHeight /2),
 						tiledObject.y - (this.map.tileHeight /2),
 						tiledObject
 					);
 				}
-				// Tiledは左下座標が基準となっているので
-				// 中心に直してアンカーを中心にする
-				this.game.add.sprite(
-					tiledObject.x + (this.map.tileHeight /2),
-					tiledObject.y - (this.map.tileHeight /2),
-					'player_spritesheet'
-				).anchor.setTo(0.5, 0.5);
 			}, this);
 		}
 	}
