@@ -437,6 +437,7 @@ SuperILtan.GameState.prototype.updateTimeCounter_ = function() {
  * @private
  * @param {Phaser.Sprite} player
  */
+/*
 SuperILtan.GameState.prototype.killedPlayer_ = function(player) {
 	'use strict';
 	console.log("called killedPlayser_");
@@ -470,30 +471,17 @@ SuperILtan.GameState.prototype.killedPlayer_ = function(player) {
 		this
 	);
 }
-
-/**
- * ゲーム失敗後の処理
- *
- * @private
- */
-SuperILtan.GameState.prototype.failed_ = function() {
-	'use strict';
-	// 残機チェック
-	if (true) {
-		this.retry_();
-	} else {
-		this.quit_();
-	}
-}
+*/
 
 /**
  * このゲームを終了してタイトルに戻る
  *
  * @private
  */
-SuperILtan.GameState.prototype.quit_ = function() {
+SuperILtan.GameState.prototype.gameOver = function() {
 	'use strict';
-	this.state.start('SceneTitle');
+	this.game.state.start('SceneTitle');
+//	localStorage.clear();
 }
 
 /**
@@ -501,9 +489,9 @@ SuperILtan.GameState.prototype.quit_ = function() {
  *
  * @private
  */
-SuperILtan.GameState.prototype.retry_ = function()
-{
-	this.state.start('SceneLoad');
+SuperILtan.GameState.prototype.restartLevel = function() {
+	'use strict';
+	this.game.state.start('SceneLoad');
 }
 
 /**
@@ -567,6 +555,7 @@ SuperILtan.GameState.prototype.toNextLevel_ = function()
  * @param {Phaser.Sprite} player
  * @param {Phaser.Sprite} enemy
  */
+/*
 SuperILtan.GameState.prototype.collideEnemy_ = function(player, enemy)
 {
 	if (player.body.touching.down) {
@@ -578,6 +567,7 @@ SuperILtan.GameState.prototype.collideEnemy_ = function(player, enemy)
 		player.damage(1);
 	}
 }
+*/
 
 /**
  * スコアエフェクト
@@ -621,6 +611,7 @@ SuperILtan.GameState.prototype.collideItem_ = function(player, item)
  * @private
  * @param {Phaser.Sprite} player
  */
+/*
 SuperILtan.GameState.prototype.playerOutOfBounds_ = function(player)
 {
 	console.log(player.position.y);
@@ -629,3 +620,4 @@ SuperILtan.GameState.prototype.playerOutOfBounds_ = function(player)
 		player.damage(1);
 	}
 }
+*/

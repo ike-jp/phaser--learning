@@ -30,13 +30,12 @@ SuperILtan.Player = function(gameState, x, y, tiledMapObject) {
 	this.smoothed = false;
 	this.checkWorldBounds = true;
 	this.body.collideWorldBouns = true;
-
-//	this.player.events.onOutOfBounds.add(this.playerOutOfBounds_, this);
 	this.body.linearDamping = 1;
+	this.events.onOutOfBounds.add(this.onOutOfBoundsCallback_, this);
 
 	this.maxHealth = 1;
-//	this.health = this.player.maxHealth;
-//	this.events.onKilled.add(this.killedPlayer_, this, this.player);
+	this.health = this.maxHealth;
+	this.events.onKilled.add(this.onKilledCallback_, this, this);
 
 	this.keyboard = new util.Keyboard(this.game.input.keyboard);
 }
@@ -56,6 +55,7 @@ SuperILtan.Player.prototype.update = function() {
 	var enemies = this.gameState.groups.enemies;
 
 	this.game.physics.arcade.collide(this, layers['Tile Layer']);
+	this.game.physics.arcade.overlap(this, enemies, this.onHitEnemyCallback_, null, this);
 
 	var is_pressed_dash_button = this.keyboard.isOn(Phaser.Keyboard.X);
 	if (!is_pressed_dash_button) {
@@ -142,6 +142,13 @@ SuperILtan.Player.prototype.update = function() {
  */
 SuperILtan.Player.prototype.onHitEnemyCallback_ = function(player, enemy) {
 	'use strict';
+	if (player.body.touching.down) {
+		player.body.velocity.y = -300;
+		enemy.kill();
+		//this.addEffectOfScore(enemy.position.x, enemy.position.y, score);
+	} else {
+		player.damage(1);
+	}
 }
 
 /**
@@ -149,14 +156,67 @@ SuperILtan.Player.prototype.onHitEnemyCallback_ = function(player, enemy) {
  *
  * @private
  */
-SuperILtan.Player.prototype.onDieCallback_ = function() {
+SuperILtan.Player.prototype.onKilledCallback_ = function() {
 	'use strict';
-	/*
 	var gameState = this.gameState;
-	if (this.lives > 0) {
+
+	console.log("called killedPlayser_");
+	var dyingPlayer = this.game.add.sprite(
+		this.body.position.x,
+		this.body.position.y,
+		'player_spritesheet'
+	);
+	dyingPlayer.animations.add('failed', [6], 10, false);
+	dyingPlayer.play('failed');
+
+	var duration = 500;
+	var ease = Phaser.Easing.Back.In;
+	var auto_start = true;
+	var delay = 400;
+	var repeat = 0;
+	var yoyo = false;
+
+	// Easingは良さそうなのが無いのでeaseInBackを指定。
+	// TODO: 自身で定義することもできるが、重要ではないので後にする
+	// easeに指定されたメソッドには、durationの現在の割合が0.0~1.0で渡されてくる
+	// 詳しくはPhaser.Easingとhttp://easings.net/ja#を見る
+	var tween = this.game.add.tween(dyingPlayer);
+	tween.to(
+		{y: this.game.physics.arcade.bounds.bottom },
+		duration, ease, auto_start, delay, repeat, yoyo
+	);
+	tween.onComplete.add(function() {
+			this.game.time.events.add(Phaser.Timer.SECOND * 3, this.die_, this);
+		},
+		this
+	);
+}
+
+/**
+ * プレイヤーが画面外に出た場合の処理
+ *
+ * @private
+ * @param {Phaser.Sprite} player
+ */
+SuperILtan.Player.prototype.onOutOfBoundsCallback_ = function(player) {
+	'use strict';
+	console.log(this.position.y);
+	console.log(this.game.physics.arcade.bounds.bottom);
+	if (this.position.y > this.game.physics.arcade.bounds.bottom) {
+		this.damage(1);
+	}
+}
+
+/**
+ * @private
+ */
+SuperILtan.Player.prototype.die_ = function() {
+	'use strict';
+	var gameState = this.gameState;
+	// 残機チェック
+	if (true) {
 		gameState.restartLevel();
 	} else {
 		gameState.gameOver();
 	}
-	*/
 }
