@@ -188,6 +188,7 @@ SuperILtan.GameState.prototype.createObjectsTemp_ = function() {
 	this.items.setAll('smoothed', false);
 
 	// enemy group
+/*
 	this.enemies = this.game.add.group();
 	this.enemies.enableBody = true;
 	//this.physicsBodyType = Phaser.Physics.ARCADE;
@@ -206,7 +207,7 @@ SuperILtan.GameState.prototype.createObjectsTemp_ = function() {
 	this.enemies.setAll('body.collideWorldBouns', true);
 	this.enemies.setAll('body.bounce.x', 1);
 	this.enemies.setAll('body.bounce.y', 0);
-
+*/
 	// ゴールシンボル
 	// TODO: 本来アイテムと一緒にすべきだが、
 	// 16x16のタイルセットから32x32のオブジェクトを生成する方法が分からないので暫定対応
@@ -289,15 +290,15 @@ SuperILtan.GameState.prototype.createObjectsTemp_ = function() {
 SuperILtan.GameState.prototype.update = function() {
 	'use strict';
 	this.keyboard.update();
-	this.game.physics.arcade.collide(this.enemies, this.layers['Tile Layer']);
-	this.game.physics.arcade.collide(this.enemies);
+//	this.game.physics.arcade.collide(this.enemies, this.layers['Tile Layer']);
+//	this.game.physics.arcade.collide(this.enemies);
 
 	if (!this.player.alive) {
 		return;
 	}
 	this.game.physics.arcade.collide(this.player, this.layers['Tile Layer']);
 	this.game.physics.arcade.overlap(this.player, this.goal_symbol, this.levelComplete_, null, this);
-	this.game.physics.arcade.overlap(this.player, this.enemies, this.collideEnemy_, null, this);
+//	this.game.physics.arcade.overlap(this.player, this.enemies, this.collideEnemy_, null, this);
 	this.game.physics.arcade.overlap(this.player, this.items, this.collideItem_, null, this);
 
 	var is_pressed_dash_button = this.keyboard.isOn(Phaser.Keyboard.X);
@@ -395,7 +396,7 @@ SuperILtan.GameState.prototype.render = function() {
 	'use strict';
 	//this.game.debug.bodyInfo(this.player, 0, 0);
 	//this.game.debug.body(this.player);
-	this.game.debug.body(this.enemies);
+//	this.game.debug.body(this.enemies);
 
 	// これを表示するにはindex.htmlのPhaser.gameをnewしているところで、
 	// Phaser.AUTOが指定されている部分をPhaser.CANVASに変更する必要がある。

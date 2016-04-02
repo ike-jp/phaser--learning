@@ -13,14 +13,19 @@ Application.namespace('SuperILtan');
 SuperILtan.Yukibo2 = function(gameState, x, y, tiledMapObject) {
 	'use strict';
 	SuperILtan.AbstractPrehab.call(this, gameState, x, y, tiledMapObject);
-	/*
-	var game = this.gameState.game;
-	game.physics.arcade.enable(this);
-	this.body.collideWorldBounds = true;
-	this.direction = 'RIGHT';
+	this.gameState.game.physics.arcade.enable(this);
 	this.anchor.setTo(0.5);
-	this.cursorKeys = game.input.keyboard.createCursorKeys();
-	*/
+
+	this.animations.add('walk', [0, 1], 6, true);
+	this.animations.play('walk');
+	this.body.velocity.x = -20;
+	this.body.maxVelocity.y = this.gameState.MAX_VELOCITY_Y;
+	this.smoothed = false;
+
+	this.checkWorldBounds = true;
+	this.body.collideWorldBouns = true;
+	this.body.bounce.x = 1;
+	this.body.bounce.y = 0;
 }
 Application.inherits(
 	SuperILtan.Yukibo2,
@@ -33,13 +38,10 @@ Application.inherits(
 SuperILtan.Yukibo2.prototype.update = function() {
 	'use strict';
 	var game = this.gameState.game;
-	var layer = this.gameState.layer;
+	var layers = this.gameState.layers;
 	var enemies = this.gameState.groups.enemies;
 
-	//game.physics.arcade.collide(this, layer);
-	//game.physics.arcade.override(this, enemies, this.onHitEnemy, null, this);
-
-	// 足場がなくなったら反転する処理とか書く
+	this.game.physics.arcade.collide(this, layers['Tile Layer']);
 }
 
 /**
