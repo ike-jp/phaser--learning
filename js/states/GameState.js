@@ -33,9 +33,6 @@ SuperILtan.GameState = function() {
 	this.player_can_jump;
 	this.player_is_dashed;
 
-	// 敵
-	this.enemies;
-
 	// アイテム
 	this.items;
 	this.goal_symbol;
@@ -184,39 +181,7 @@ SuperILtan.GameState.prototype.onCreateObjectCallback_ = function(object) {
  */
 SuperILtan.GameState.prototype.createObjectsTemp_ = function() {
 	'use strict';
-	// item group
-/*
-	this.items = this.game.add.group();
-	this.items.enableBody = true;
-	this.map.createFromObjects('Items Layer', "yuni-", 'items_spritesheet', 0, true, false, this.items);
-	this.items.callAll('animations.add', 'animations', 'idle', [0, 0, 1, 2, 1], 4, true);
-	this.items.callAll('animations.play', 'animations', 'idle');
-	this.items.setAll('body.allowGravity', false);
-	this.items.setAll('body.maxVelocity.y', this.MAX_VELOCITY_Y);
-	this.items.setAll('smoothed', false);
-*/
 
-	// enemy group
-/*
-	this.enemies = this.game.add.group();
-	this.enemies.enableBody = true;
-	//this.physicsBodyType = Phaser.Physics.ARCADE;
-	this.map.createFromObjects('Enemies Layer', "yukibo-s", 'enemies_spritesheet', 0, true, false, this.enemies);
-	this.map.createFromObjects('Enemies Layer', "yukibo-e", 'enemies2', 0, true, false, this.enemies);
-	this.enemies.setAll('anchor.x', 0.5);
-	this.enemies.setAll('anchor.y', 0.5);
-	this.enemies.callAll('animations.add', 'animations', 'walk', [0, 1], 6, true);
-	this.enemies.callAll('animations.play', 'animations', 'walk');
-	this.enemies.setAll('body.velocity.x', -20);
-	this.enemies.setAll('body.maxVelocity.y', this.MAX_VELOCITY_Y);
-	this.enemies.setAll('smoothed', false);
-
-	this.enemies.setAll('checkWorldBounds', true);
-//		this.enemies.callAll('events.onOutOfBounds.add', function() {}, this);
-	this.enemies.setAll('body.collideWorldBouns', true);
-	this.enemies.setAll('body.bounce.x', 1);
-	this.enemies.setAll('body.bounce.y', 0);
-*/
 	// ゴールシンボル
 	// TODO: 本来アイテムと一緒にすべきだが、
 	// 16x16のタイルセットから32x32のオブジェクトを生成する方法が分からないので暫定対応
@@ -350,7 +315,7 @@ SuperILtan.GameState.prototype.updateTimeCounter_ = function() {
 	if (this.time_counter >= 0) {
 		this.text_time.text = 'TIME:' + ('00'+this.time_counter).slice(-3);
 	} else if (this.time_counter == -1) {
-		this.player.kill();
+		this.prefabs['あいえるたん'].kill();
 	}
 }
 
@@ -451,18 +416,3 @@ SuperILtan.GameState.prototype.addEffectOfScore = function(x, y, value) {
 		image.kill();
 	}, this);
 }
-
-/**
- * プレイヤーxアイテム衝突コールバック
- *
- * @private
- * @param {Phaser.Sprite} player
- * @param {Phaser.Sprite} item
- */
-/*
-SuperILtan.GameState.prototype.collideItem_ = function(player, item)
-{
-	item.kill();
-	// スコア加算
-}
-*/
