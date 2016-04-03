@@ -14,9 +14,16 @@ Application.namespace('util.Keyboard');
 SuperILtan.Player = function(gameState, x, y, tiledMapObject) {
 	'use strict';
 	SuperILtan.AbstractPrehab.call(this, gameState, x, y, tiledMapObject);
-	this.gameState.game.physics.arcade.enable(this);
-
-	this.anchor.setTo(0.5); // for flip
+	// Physics物理エンジン有効
+	gameState.game.physics.arcade.enable(this);
+	// ワールドの端で衝突するようにする
+	this.body.collideWorldBounds = true;
+	// ワールドに端でチェックを行う
+	this.checkWorldBounds = true;
+	// checkWorldBoundsが有効なとき、ワールド外に出たときに呼ばれるのコールバック
+	this.events.onOutOfBounds.add(this.onOutOfBoundsCallback_, this);
+	// 左上が基準点になっているのでスケール変更のため中心に直す。
+	this.anchor.setTo(0.5);
 
 	this.animations.add('stand', [0], 10, false);
 	this.animations.add('walk', [1, 2], 8, true);
@@ -27,11 +34,8 @@ SuperILtan.Player = function(gameState, x, y, tiledMapObject) {
 	this.play('stand');
 
 	this.body.maxVelocity.y = this.gameState.MAX_VELOCITY_Y;
-	this.smoothed = false;
-	this.checkWorldBounds = true;
-	this.body.collideWorldBouns = true;
 	this.body.linearDamping = 1;
-	this.events.onOutOfBounds.add(this.onOutOfBoundsCallback_, this);
+	this.smoothed = false;
 
 	this.maxHealth = 1;
 	this.health = this.maxHealth;
