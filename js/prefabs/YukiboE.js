@@ -10,7 +10,7 @@ Application.namespace('SuperILtan');
  *
  * @constructor
  */
-SuperILtan.Yukibo2 = function(gameState, x, y, tiledMapObject) {
+SuperILtan.YukiboE = function(gameState, x, y, tiledMapObject) {
 	'use strict';
 	SuperILtan.AbstractPrehab.call(this, gameState, x, y, tiledMapObject);
 	this.gameState.game.physics.arcade.enable(this);
@@ -28,14 +28,14 @@ SuperILtan.Yukibo2 = function(gameState, x, y, tiledMapObject) {
 	this.body.bounce.y = 0;
 }
 Application.inherits(
-	SuperILtan.Yukibo2,
+	SuperILtan.YukiboE,
 	SuperILtan.AbstractPrehab
 );
 
 /**
  * @override
  */
-SuperILtan.Yukibo2.prototype.update = function() {
+SuperILtan.YukiboE.prototype.update = function() {
 	'use strict';
 	var game = this.gameState.game;
 	var layers = this.gameState.layers;
@@ -49,6 +49,6 @@ SuperILtan.Yukibo2.prototype.update = function() {
  *
  * @private
  */
-SuperILtan.Yukibo2.prototype.onDieCallback_ = function() {
+SuperILtan.YukiboE.prototype.onDieCallback_ = function() {
 	'use strict';
 }

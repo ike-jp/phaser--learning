@@ -16,7 +16,8 @@ Application.namespace('SuperILtan');
 SuperILtan.PrefabsClassMap = {
 	'Player': SuperILtan.Player,
 	'Yukibo': SuperILtan.Yukibo,
-	'YukiboE': SuperILtan.Yukibo2,
+	'YukiboE': SuperILtan.YukiboE,
+	'YukiboJ': SuperILtan.YukiboJ,
 	'Coin': SuperILtan.Coin,
 	'GoalSymbol': SuperILtan.GoalSymbol,
 }
