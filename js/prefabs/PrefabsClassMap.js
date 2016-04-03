@@ -18,4 +18,5 @@ SuperILtan.PrefabsClassMap = {
 	'Yukibo': SuperILtan.Yukibo,
 	'YukiboE': SuperILtan.Yukibo2,
 	'Coin': SuperILtan.Coin,
+	'GoalSymbol': SuperILtan.GoalSymbol,
 }

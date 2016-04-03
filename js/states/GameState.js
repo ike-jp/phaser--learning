@@ -142,14 +142,14 @@ SuperILtan.GameState.prototype.createObjects_ = function() {
 				if (classMap.hasOwnProperty(tiledObject.type)) {
 					var prefab = new classMap[tiledObject.type](
 						this,
-						// Tiledは左下座標が基準となっているので
-						// 中心に直してアンカーを中心にする
-						tiledObject.x + (this.map.tileHeight /2),
-						tiledObject.y - (this.map.tileHeight /2),
+						// Tiledは左下座標が基準となっている
+						// オブジェクトの場合は左上が基準となっている
+						tiledObject.x + (tiledObject.width /2),
+						tiledObject.y + (tiledObject.height /2),
 						tiledObject
 					);
 					// uniqueカスタムプロパティがtrueの場合は名前をキーにして保持
-					if (tiledObject.properties.unique === 'true') {
+					if (tiledObject.properties.unique) {
 						this.prefabs[tiledObject.name] = prefab;
 					}
 				}
@@ -264,6 +264,15 @@ SuperILtan.GameState.prototype.createObjectsTemp_ = function() {
 SuperILtan.GameState.prototype.update = function() {
 	'use strict';
 	this.keyboard.update();
+	if (this.keyboard.isTriggered(Phaser.Keyboard.Q)) {
+		this.prefabs['あいえるたん'].kill();
+		return;
+	}
+
+	if (this.keyboard.isTriggered(Phaser.Keyboard.E)) {
+		this.addEffectOfScore(100, 100, 50);
+	}
+
 //	this.game.physics.arcade.collide(this.enemies, this.layers['Tile Layer']);
 //	this.game.physics.arcade.collide(this.enemies);
 /*
@@ -274,16 +283,6 @@ SuperILtan.GameState.prototype.update = function() {
 	this.game.physics.arcade.overlap(this.player, this.goal_symbol, this.levelComplete_, null, this);
 //	this.game.physics.arcade.overlap(this.player, this.enemies, this.collideEnemy_, null, this);
 //	this.game.physics.arcade.overlap(this.player, this.items, this.collideItem_, null, this);
-
-	// テスト用
-	if (this.keyboard.isTriggered(Phaser.Keyboard.Q)) {
-		this.player.kill();
-		return;
-	}
-
-	if (this.keyboard.isTriggered(Phaser.Keyboard.E)) {
-		this.addEffectOfScore(100, 100, 50);
-	}
 */
 }
 
